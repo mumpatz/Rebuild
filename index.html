@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>REBUILD° — Training Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Oswald:ital,wght@0,400;0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+:root{
+  --paper:#F1ECDF;--paper2:#E3DCC8;--ink:#2A1708;--ink2:#4A3020;
+  --sky:#2E7CFF;--fire:#FF6B47;--fire2:#E34A22;--rule:#C8BEA7;
+}
+body{background:var(--ink);color:var(--ink);font-family:"Archivo Narrow","Helvetica Neue",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* HEADER */
+#appHeader{position:sticky;top:0;z-index:100;background:var(--paper);border-bottom:2px solid var(--ink)}
+.hdr-dateline{display:flex;justify-content:space-between;align-items:center;padding:10px 18px 4px;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.2em;color:var(--ink2);font-weight:700}
+.hdr-wordmark{font-family:"Oswald",sans-serif;font-weight:700;font-style:italic;font-size:58px;color:var(--sky);line-height:.82;letter-spacing:-.04em;padding:0 18px 10px;text-align:center;overflow:hidden}
+.hdr-wordmark span{color:var(--fire);font-style:normal}
+.hdr-tagline{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.34em;text-align:center;color:var(--ink);padding:0 0 10px;font-weight:700}
+.hdr-rule{height:2px;background:var(--ink)}
+.hdr-rule-thin{height:1px;background:var(--ink)}
+.week-rail{display:grid;grid-template-columns:repeat(6,1fr)}
+.wk-btn{appearance:none;cursor:pointer;border:0;background:var(--paper);color:var(--ink);padding:7px 0 5px;font-family:"Oswald",sans-serif;font-size:20px;font-weight:700;border-right:1px solid var(--ink);display:flex;flex-direction:column;align-items:center;gap:0;transition:background .12s}
+.wk-btn:last-child{border-right:none}
+.wk-btn.active{background:var(--sky);color:var(--paper)}
+.wk-sub{font-family:"JetBrains Mono",monospace;font-size:7px;letter-spacing:.18em;font-weight:400;margin-bottom:1px;text-transform:uppercase}
+.day-tabs{display:grid;grid-template-columns:repeat(6,1fr)}
+.day-btn{appearance:none;cursor:pointer;border:0;background:transparent;color:var(--ink);padding:7px 2px 5px;border-right:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;gap:1px;transition:background .12s}
+.day-btn:last-child{border-right:none}
+.day-btn.active{background:var(--ink)}
+.day-lbl{font-family:"Oswald",sans-serif;font-size:17px;font-weight:700;line-height:1;color:var(--ink)}
+.day-btn.active .day-lbl{color:var(--fire)}
+.day-sub{font-family:"JetBrains Mono",monospace;font-size:6px;letter-spacing:.14em;color:var(--ink2)}
+.day-btn.active .day-sub{color:var(--paper)}
+
+/* MAIN */
+#appMain{background:var(--paper);padding-bottom:60px}
+
+/* PHASE DOSSIER */
+.phase-dossier{background:var(--ink);color:var(--paper);padding:26px 22px 22px;border-bottom:2px solid var(--ink)}
+.phase-eye{display:flex;justify-content:space-between;align-items:baseline;font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--paper);letter-spacing:.22em;margin-bottom:6px;opacity:.6;font-weight:700}
+.phase-heading{font-family:"Oswald",sans-serif;font-size:52px;color:var(--paper);line-height:.82;letter-spacing:-.04em;font-style:italic;font-weight:700}
+.ph-sky{color:var(--sky)}
+.ph-fire{color:var(--fire);font-style:normal;font-size:.65em}
+.phase-pills{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.phase-pill{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.18em;padding:4px 12px}
+.pill-rpe{background:var(--fire);color:var(--paper)}
+.pill-focus{border:1px solid var(--paper);color:var(--paper)}
+.deload-notice{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.16em;color:var(--fire);margin-top:10px;font-weight:700}
+
+/* PREHAB */
+.prehab-wrap{padding:20px 22px 10px;border-bottom:1px solid var(--ink)}
+.prehab-toggle{appearance:none;cursor:pointer;border:0;background:transparent;width:100%;padding:0 0 10px;display:flex;justify-content:space-between;align-items:baseline;color:var(--ink)}
+.prehab-toggle-label{display:flex;gap:10px;align-items:baseline}
+.prehab-marker{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--fire);letter-spacing:.22em;font-weight:700}
+.prehab-title{font-family:"Oswald",sans-serif;font-size:22px;color:var(--ink);font-weight:700;text-transform:uppercase}
+.prehab-icon{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink2)}
+.prehab-body{display:none;border-top:1px solid var(--rule)}
+.prehab-body.open{display:block}
+.pb-block-head{font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;letter-spacing:.2em;color:var(--ink2);text-transform:uppercase;padding:10px 0 4px;border-bottom:1px dotted var(--rule)}
+.pb-ex-row{display:grid;grid-template-columns:22px 1fr auto auto;gap:10px;align-items:center;padding:11px 0;border-bottom:1px dotted var(--rule)}
+.pb-ex-row:last-child{border-bottom:none}
+.pb-num{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--ink2);font-weight:700}
+.pb-name{font-size:13px;color:var(--ink);font-weight:600;line-height:1.3}
+.pb-reps{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--fire);font-weight:700;white-space:nowrap}
+
+/* VIDEO BTN */
+.vid-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:30px;padding:0 10px;background:var(--fire);color:var(--paper);border:0;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;flex-shrink:0;border-radius:0}
+.vid-sm{width:34px;height:30px;padding:0}
+
+/* SECTION NOTE */
+.sec-note{font-size:12px;font-style:italic;font-weight:400;color:var(--ink2);line-height:1.5;padding:10px 22px 0}
+
+/* SUPERSET */
+.ss-group{border-bottom:2px solid var(--ink)}
+.ss-header{display:flex;align-items:center;background:var(--fire);color:var(--paper);padding:6px 18px;gap:10px}
+.ss-lbl{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.2em}
+.ss-hint{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.16em;opacity:.85;margin-left:auto}
+.ss-bracket-wrap{position:relative}
+.ss-bracket{position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--fire)}
+.ss-inner{padding-left:5px}
+
+/* EXERCISE CARD */
+.ex-card{border-bottom:2px solid var(--ink);background:var(--paper);overflow:hidden}
+.ex-card.bfr-inactive{opacity:.35}
+.ex-pos{padding:26px 22px 12px}
+.ex-eyebrow{display:flex;justify-content:space-between;align-items:baseline;font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--ink2);letter-spacing:.2em;font-weight:700;margin-bottom:10px}
+.ex-badge{color:var(--fire);font-weight:800}
+.ex-name{font-family:"Oswald",sans-serif;font-size:36px;line-height:.9;color:var(--sky);font-style:italic;letter-spacing:-.025em;font-weight:700;overflow-wrap:break-word;word-break:break-word}
+.ex-card-note{font-size:12px;font-style:italic;font-weight:400;color:var(--ink2);line-height:1.45;margin-top:8px}
+
+/* PRESCRIPTION */
+.ex-neg{background:var(--ink);color:var(--paper);padding:20px 22px 0;overflow:hidden}
+.neg-lbl{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.28em;color:var(--paper);font-weight:700;opacity:.6}
+.reps-hero{display:flex;align-items:baseline;line-height:.78;margin-top:4px;max-width:100%}
+.reps-sets{font-family:"Oswald",sans-serif;font-size:100px;color:var(--sky);letter-spacing:-.08em;font-style:italic;font-weight:700}
+.reps-x{font-family:"Oswald",sans-serif;font-size:48px;color:var(--fire);margin:0 4px;letter-spacing:-.04em;align-self:center}
+.reps-count{font-family:"Oswald",sans-serif;color:var(--sky);letter-spacing:-.08em;font-style:italic;font-weight:700}
+.neg-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,.15)}
+.neg-tempo-lbl{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--paper);letter-spacing:.2em;font-weight:700;opacity:.6}
+.neg-tempo-val{font-family:"JetBrains Mono",monospace;font-size:14px;font-weight:800;color:var(--fire);letter-spacing:.06em;margin-top:2px}
+.set-log-hdr{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.26em;color:var(--paper);font-weight:700;opacity:.6;padding:10px 0 4px;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.15);margin-top:10px}
+.set-row{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:12px;padding:14px 0;border-top:1px solid rgba(255,255,255,.12)}
+.set-cb{appearance:none;cursor:pointer;width:28px;height:28px;border-radius:0;border:2px solid var(--paper);background:transparent;color:var(--fire);font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .1s}
+.set-cb.done{background:var(--paper);color:var(--fire)}
+.set-w-wrap{display:flex;align-items:baseline;gap:6px}
+.set-w-inp{background:transparent;border:0;border-bottom:2px solid var(--paper);color:var(--paper);padding:2px 0;font-family:"Oswald",sans-serif;font-size:28px;font-weight:700;font-style:italic;letter-spacing:-.02em;width:90px;outline:none;border-radius:0;transition:border-color .1s, color .1s}
+.set-w-inp.done{border-bottom-color:var(--fire);color:var(--fire)}
+.set-w-inp::placeholder{color:rgba(255,255,255,.2)}
+.set-kg{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--paper);letter-spacing:.1em;font-weight:700;opacity:.6;flex-shrink:0}
+.set-reps{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--paper);letter-spacing:.04em;font-weight:700;opacity:.6;flex-shrink:0}
+.ex-neg-pad{padding-bottom:14px}
+
+/* CONDITIONING */
+.cond-section{border-bottom:2px solid var(--ink)}
+.cond-label-row{padding:14px 18px 6px;font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--fire);letter-spacing:.2em;font-weight:700}
+.cond-hero{background:var(--ink);color:var(--paper);padding:16px 18px 20px}
+.cond-title{font-family:"Oswald",sans-serif;font-size:52px;line-height:.82;color:var(--sky);font-style:italic;letter-spacing:-.04em;font-weight:700;overflow-wrap:break-word;margin-bottom:12px}
+.cond-body{font-size:14px;line-height:1.55;color:var(--paper);font-weight:600;margin-bottom:16px;opacity:.9}
+.cond-grid{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--paper)}
+.cond-cell{padding:12px 14px}
+.cond-cell:first-child{border-right:2px solid var(--paper)}
+.cond-cell-lbl{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--paper);letter-spacing:.2em;font-weight:700;opacity:.6}
+.cond-cell-val{font-family:"Oswald",sans-serif;font-size:36px;color:var(--fire);font-style:italic;letter-spacing:-.03em;font-weight:700;margin-top:2px;line-height:1}
+.cond-cell-mode{font-family:"Oswald",sans-serif;font-size:20px;color:var(--paper);font-weight:700;margin-top:4px;line-height:1.1}
+
+/* MOBILITY */
+.mob-section{background:var(--ink);color:var(--paper);padding:24px 18px 20px}
+.mob-eyebrow{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--fire);letter-spacing:.2em;font-weight:700}
+.mob-heading{font-family:"Oswald",sans-serif;font-size:58px;line-height:.82;margin:8px 0 20px;color:var(--sky);font-style:italic;letter-spacing:-.04em;font-weight:700;overflow-wrap:break-word}
+.mob-heading span{color:var(--paper)}
+.mob-list{border-top:2px solid var(--paper)}
+.mob-row{display:grid;grid-template-columns:50px 1fr auto;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.13)}
+.mob-n{font-family:"Oswald",sans-serif;font-size:40px;color:var(--sky);line-height:.9;font-style:italic;letter-spacing:-.04em;font-weight:700}
+.mob-name{font-size:14px;color:var(--paper);font-weight:600;line-height:1.2}
+.mob-reps{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--fire);font-weight:700;letter-spacing:.12em;margin-top:3px}
+
+/* FOOTER */
+.session-footer{padding:22px 18px;text-align:center;background:var(--paper);border-top:1px solid var(--rule)}
+.footer-txt{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--ink2);letter-spacing:.28em;font-weight:700}
+
+input[type=text]{-webkit-appearance:none}
+</style>
+</head>
+<body>
+<header id="appHeader"></header>
+<main id="appMain"></main>
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const L={
+  peanut:"https://www.youtube.com/watch?v=D24HExYYQTc",
+  prayer:"https://www.youtube.com/watch?v=lAy0VUob078",
+  quadrupedRot:"https://www.youtube.com/watch?v=snzLuyYgbVI",
+  sideLyingER:"https://www.youtube.com/watch?v=A1_3p0U96Kk",
+  bandedW:"https://www.youtube.com/watch?v=Tj_A17BbgmI",
+  proneLateralR:"https://www.youtube.com/watch?v=pgrWjBfaFe8",
+  foamRollQuads:"https://www.youtube.com/watch?v=7BLdqx1aARo",
+  spanishSquat:"https://www.youtube.com/watch?v=ifBljLvfb3U",
+  lateralBandWalk:"https://www.youtube.com/watch?v=y_bqFDQZSHQ",
+  chinTucks:"https://www.youtube.com/watch?v=HUdnNs-NbJg",
+  catCow:"https://www.youtube.com/watch?v=EUvPS8QFHqU",
+  singleLegBridge:"https://www.youtube.com/watch?v=b1zTCyGJXCQ",
+  landminePress:"https://www.youtube.com/watch?v=qFXojXa-RCU",
+  inclineDB:"https://www.youtube.com/watch?v=SMO17ItT5Wc",
+  bandPullApart:"https://www.youtube.com/watch?v=mHWlgqPvyxI",
+  floorPress:"https://www.youtube.com/watch?v=Bx4QPVH-J1g",
+  pallof:"https://www.youtube.com/watch?v=aNvO1d0Bo7s",
+  ssbBoxSquat:"https://www.youtube.com/watch?v=2bkidbmb8Tk",
+  trapBarRDL:"https://www.youtube.com/watch?v=rKSiBkmNF4k",
+  singleLegHipT:"https://www.youtube.com/watch?v=DhEXrvMsfl4",
+  nordicCurl:"https://www.youtube.com/watch?v=_e9vFU9-tkc",
+  chestSuppRow:"https://www.youtube.com/watch?v=vmX58YYK3-8",
+  bandedLatPD:"https://www.youtube.com/watch?v=o5bXFrdw5iI",
+  extRotPress:"https://www.youtube.com/watch?v=NIK0aJDO7Pk",
+  hammerCurl:"https://www.youtube.com/watch?v=zC3nLlEvin4",
+  tricepPD:"https://www.youtube.com/watch?v=-KVa3M1uZfs",
+  gobletSquat:"https://www.youtube.com/watch?v=9KzZD_n2r64",
+  landmineRow:"https://www.youtube.com/watch?v=tiETx7VNDf0",
+  touchdownSq:"https://www.youtube.com/watch?v=Nj6c9ELsquY",
+  singleLegCalf:"https://www.youtube.com/watch?v=u1Yc75YdiJA",
+  foamRollLats:"https://www.youtube.com/watch?v=VQrNYuh95Vc",
+  lacrossePec:"https://www.youtube.com/watch?v=vzxvgSJ9kQc",
+  boxTSpine:"https://www.youtube.com/watch?v=ANqVcdWkuVM",
+  cornerPec:"https://www.youtube.com/watch?v=B9uY01NoqBg",
+  crossBodyStr:"https://www.youtube.com/watch?v=WaR_T0aUoew",
+  boxLatStretch:"https://www.youtube.com/watch?v=LYJjlj6rmxs",
+  proneAngel:"https://www.youtube.com/watch?v=dOLEGyeP290",
+  deadHang:"https://www.youtube.com/watch?v=5FQJJvUAYx4",
+  hip9090:"https://www.youtube.com/watch?v=qq_Z7sAmVrA",
+  pigeonStretch:"https://www.youtube.com/watch?v=G-M5cPuF5N0",
+  couchStretch:"https://www.youtube.com/watch?v=WKo4APrwfXQ",
+  calfStretch:"https://www.youtube.com/watch?v=Py5GHv--734",
+  rntSquat:"https://www.youtube.com/watch?v=fjuZGrlWLbY",
+  balanceReach:"https://www.youtube.com/watch?v=epbrO1cau9A",
+  kbSwing:"https://www.youtube.com/watch?v=bDCeXbMJVNs",
+};
+const PB={
+  b1:{title:"Block 1 — T-Spine",time:"4 Min",exercises:[
+    {name:"Peanut Mobilization BWS (2 Tennisbälle)",reps:"2×15/Segment",video:L.peanut},
+    {name:"Prayer Stretch (kniend, Foam Roller)",reps:"3×30 Sek",video:L.prayer},
+    {name:"Quadruped Downward Rotation Stretch",reps:"10×10 Sek/Seite",video:L.quadrupedRot},
+  ]},
+  b2f:{title:"Block 2 — Schulter (voll)",time:"4 Min",exercises:[
+    {name:"Side-Lying External Rotation (Handtuch unter Arm)",reps:"2×15–20/Seite",video:L.sideLyingER},
+    {name:"Banded \"W\" (Ellenbogen am Körper, 5 Sek Hold)",reps:"2×15–20",video:L.bandedW},
+    {name:"Prone Lateral Raise (1–2 kg, 5 Sek Hold oben)",reps:"2×10–15",video:L.proneLateralR},
+  ]},
+  b2s:{title:"Block 2 — Schulter (kurz)",time:"1 Min",exercises:[
+    {name:"Banded \"W\" (5 Sek Hold)",reps:"1×15",video:L.bandedW},
+  ]},
+  b3f:{title:"Block 3 — Knie (voll)",time:"4 Min",exercises:[
+    {name:"Foam Roll Quads + lateraler Oberschenkel",reps:"1×60 Sek/Seite",video:L.foamRollQuads},
+    {name:"Spanish Squat (Band hinter Knie, isometrisch)",reps:"3×45 Sek",video:L.spanishSquat},
+    {name:"Lateral Band Walk (Mini-Squat)",reps:"2×15 Schritte/Richtung",video:L.lateralBandWalk},
+  ]},
+  b3s:{title:"Block 3 — Knie (kurz)",time:"2 Min",exercises:[
+    {name:"Spanish Squat (Band hinter Knie, isometrisch)",reps:"2×30 Sek",video:L.spanishSquat},
+  ]},
+  b4:{title:"Block 4 — HWS + Global",time:"3 Min",exercises:[
+    {name:"Chin Tucks (liegend, 3 Sek halten)",reps:"2×10",video:L.chinTucks},
+    {name:"Cat/Cow (langsam, BWS-Fokus)",reps:"1×8",video:L.catCow},
+    {name:"Single-Leg Bridge (5–10 Sek Hold oben)",reps:"2×10/Seite",video:L.singleLegBridge},
+  ]},
+};
+const PREHAB_CFG={
+  A:{blocks:['b1','b2f','b3s','b4'],total:'~12 Min'},
+  B:{blocks:['b1','b2s','b3f','b4'],total:'~15 Min'},
+  C:{blocks:['b1','b2f','b3s','b4'],total:'~12 Min'},
+  D:{blocks:['b1','b2s','b3f','b4'],total:'~15 Min'},
+};
+const PHASES=[
+  {name:"Anpassung",rpe:"RPE 6–7",focus:"Technik + Feedback"},
+  {name:"Anpassung",rpe:"RPE 6–7",focus:"Technik + Feedback"},
+  {name:"Aufbau",rpe:"RPE 7–8",focus:"Gewicht steigern"},
+  {name:"Aufbau",rpe:"RPE 7–8",focus:"Gewicht steigern"},
+  {name:"Intensivierung",rpe:"RPE 8–9",focus:"Peak-Intensität"},
+  {name:"Deload",rpe:"RPE 5–6",focus:"50 % Volumen"},
+];
+const DAY_TABS=[
+  {id:'A',label:'A',sub:'PUSH'},
+  {id:'B',label:'B',sub:'LOWER'},
+  {id:'C',label:'C',sub:'PULL'},
+  {id:'D',label:'D',sub:'FULL'},
+  {id:'RE1',label:'RE·1',sub:'SCHULTER'},
+  {id:'RE2',label:'RE·2',sub:'LOWER'},
+];
+const DAYS={
+  A:{id:'A',sections:[
+    {id:'A2',title:'A2 — Hauptbewegung',note:'Ersetzt Barbell OHP. Schräger Vektor entlastet Schulter + HWS.',exercises:[
+      {name:'Landmine Press (stehend, 1-Arm)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-0-1-1',v:L.landminePress},
+    ]},
+    {id:'A3',title:'A3 — Superset: Push + Korrektur',superset:true,note:'Neutraler Griff. Ellenbogen stoppen auf Schulterhöhe — kein tiefer Stretch.',exercises:[
+      {name:'Incline DB Press 30° (neutral grip)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-1-1-0',v:L.inclineDB},
+      {name:'Band Pull-Apart',w:['3×15','3×15','3×15','3×15','3×15','2×15'],t:'2-1-1-0',v:L.bandPullApart},
+    ]},
+    {id:'A4',title:'A4 — Superset: Accessory',superset:true,note:'Floor Press: ROM durch Boden begrenzt — schützt Schulter.',exercises:[
+      {name:'Floor Press (DB, neutral grip)',w:['3×12','3×12','3×10','3×10','3×8','2×12'],t:'3-0-1-1',v:L.floorPress},
+      {name:'Tall Kneeling Pallof Press',w:['3×10/S','3×10/S','3×10/S','3×10/S','3×12/S','2×10/S'],t:'2-2-2-0',v:L.pallof},
+    ]},
+    {id:'A5',cond:true,note:'Russian KB Swing = Hüfthöhe. Kein American Swing.',weeks:[
+      {text:"3 Runden For Quality: Suitcase Carry 30 m/Seite + 8 Tempo Push-ups + 6 Dead Bug/Seite | 90 Sek Pause",dur:"9 Min"},
+      {text:"EMOM 8: Odd = Ski Erg 12 Cal, Even = Push-ups ×10 + Pallof Hold 10 Sek/Seite",dur:"8 Min"},
+      {text:"4 Runden For Quality: Bike Erg 15 Cal + Russian KB Swing ×10 + Suitcase Carry 20 m/Seite | 75 Sek Pause",dur:"12 Min"},
+      {text:"AMRAP 10 (easy pace): 12 Cal Ski Erg + 8 Tempo Push-ups + Farmers Carry 30 m",dur:"10 Min"},
+      {text:"5 × Bike Erg 40 Sek max / 80 Sek easy — danach 2 Runden: Push-ups ×12 + Carry 30 m/Seite",dur:"12 Min"},
+      {text:"2 Runden For Quality: Ski Erg 10 Cal + Tempo Push-ups ×6 + Dead Bug ×4/Seite",dur:"5 Min"},
+    ]},
+  ]},
+  B:{id:'B',sections:[
+    {id:'B2',title:'B2 — Hauptbewegung',note:'HSR-Protokoll. Schienbein vertikal. Knieflexion unter 60° halten.',exercises:[
+      {name:'SSB Box Squat (parallel, 0–60°)',w:['4×15','4×15','4×12','4×12','4×10','2×15'],t:'3-1-3-0',v:L.ssbBoxSquat},
+    ]},
+    {id:'B2b',bfr:true,note:'Ersetzt B2-Sätze (kein Zusatzvolumen). 20–30 % 1RM. Manschette an Oberschenkel-Basis.',exercises:[
+      {name:'SSB Box Squat mit BFR-Manschette',w:['–','–','4×30-15-15-15','4×30-15-15-15','4×30-15-15-15','2×30-15-15-15'],t:'3-1-3-0',v:L.ssbBoxSquat},
+    ]},
+    {id:'B3',title:'B3 — Superset: Hip Dominant',superset:true,note:'Trap Bar erhöhte Griffe. Hip Thrust vor Quad-Arbeit.',exercises:[
+      {name:'Trap Bar RDL (erhöhte Griffe)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-1-1-0',v:L.trapBarRDL},
+      {name:'Single-Leg Hip Thrust',w:['3×10/S','3×10/S','3×12/S','3×12/S','3×12/S','2×10/S'],t:'2-2-1-0',v:L.singleLegHipT},
+    ]},
+    {id:'B4',title:'B4 — Superset: Knie-Rehab',superset:true,note:'Box-Pause eliminiert Federwirkung der Sehne → minimale patellofemorale Last.',exercises:[
+      {name:'Box Squat parallel (moderat-schwer)',w:['4×15','4×15','4×12','4×12','4×10','2×15'],t:'3-1-3-0',v:L.ssbBoxSquat},
+      {name:'Nordic Hamstring Curl (exzentrisch)',w:['3×5','3×5','3×6','3×6','3×6','2×5'],t:'5-0-assist-0',v:L.nordicCurl},
+    ]},
+    {id:'B5',cond:true,note:'Kein Knie. Sled Push = konzentrisch-dominant.',weeks:[
+      {text:"EMOM 8: Odd = Russian KB Swing ×10, Even = Ski Erg 10 Cal",dur:"8 Min"},
+      {text:"3 Runden For Quality: Sled Push 40 m + KB Swing ×12 + Farmers Carry 40 m | 90 Sek Pause",dur:"9 Min"},
+      {text:"EMOM 10: Odd = Ski Erg 15 Cal, Even = Russian KB Swing ×15",dur:"10 Min"},
+      {text:"4 Runden For Quality: Sled Push 40 m + Farmers Carry 40 m + KB Swing ×12 | 90 Sek Pause",dur:"12 Min"},
+      {text:"6 × Ski Erg 30 Sek max / 60 Sek Pause — danach 2 Runden: Sled Push 40 m + Carry 30 m",dur:"12 Min"},
+      {text:"EMOM 6: Odd = KB Swing ×8, Even = Ski Erg 8 Cal",dur:"6 Min"},
+    ]},
+  ]},
+  C:{id:'C',sections:[
+    {id:'C2',title:'C2 — Hauptbewegung: Pull',note:'Null HWS-Kompression (Brust auf Bank). Squeeze am Top.',exercises:[
+      {name:'Chest-Supported Row (DB, neutral grip, Incline Bank)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-1-1-1',v:L.chestSuppRow},
+    ]},
+    {id:'C3',title:'C3 — Superset: Pull + Schulter',superset:true,note:'Ext. Rotation Press: Row → Ext. Rot. → Overhead Press.',exercises:[
+      {name:'Banded Lat Pulldown (neutral grip, kniend)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-0-1-1',v:L.bandedLatPD},
+      {name:'External Rotation Press (Band, nach Horschig)',w:['2×10','2×10','3×10','3×10','3×10','2×10'],t:'3-3-3-3',v:L.extRotPress},
+    ]},
+    {id:'C4',title:'C4 — Superset: Arm Pump',superset:true,note:'Hammer Curl entlastet Bizepssehne. Pushdown statt Overhead Extension.',exercises:[
+      {name:'Hammer Curl (DB)',w:['3×12','3×12','3×10','3×10','3×10','2×12'],t:'3-0-1-1',v:L.hammerCurl},
+      {name:'Cable Tricep Pushdown',w:['3×12','3×12','3×10','3×10','3×10','2×12'],t:'3-0-1-0',v:L.tricepPD},
+    ]},
+    {id:'C5',cond:true,note:'',weeks:[
+      {text:"3 Runden For Quality: Ring Row ×8 + Bike Erg 12 Cal + Banded TKE ×10/Seite | 90 Sek Pause",dur:"9 Min"},
+      {text:"AMRAP 8 (easy pace): Ring Row ×6 + Row 150 m + Pallof Press ×8/Seite",dur:"8 Min"},
+      {text:"EMOM 12 (4 Runden à 3 Min): Min 1 = Ring Row ×10, Min 2 = Bike Erg 15 Cal, Min 3 = Dead Bug ×6/Seite",dur:"12 Min"},
+      {text:"4 Runden: Bike Erg 20 Cal + Ring Row ×10 + Suitcase Carry 30 m/Seite | 75 Sek Pause",dur:"12 Min"},
+      {text:"5 × Row 250 m / 90 Sek Pause",dur:"12 Min"},
+      {text:"2 Runden: Ring Row ×6 + Bike 10 Cal + Dead Bug ×4/Seite",dur:"6 Min"},
+    ]},
+  ]},
+  D:{id:'D',sections:[
+    {id:'D2',title:'D2 — Komplexe Bewegung',note:'KB vor Brust = weniger axiale Kompression. ROM steigern wenn schmerzfrei.',exercises:[
+      {name:'Goblet Squat auf Box (60–70° Flexion max)',w:['3×12','3×12','3×10','3×10','3×10','2×12'],t:'3-1-1-0',v:L.gobletSquat},
+    ]},
+    {id:'D3',title:'D3 — Superset: Push/Pull',superset:true,note:'',exercises:[
+      {name:'Half-Kneeling Landmine Row (1-Arm)',w:['3×10/S','3×10/S','3×10/S','3×10/S','4×8/S','2×10/S'],t:'3-0-1-1',v:L.landmineRow},
+      {name:'Tempo Push-up (evtl. erhöht)',w:['3×10','3×10','3×12','3×12','3×15','2×10'],t:'3-1-1-0',v:null},
+    ]},
+    {id:'D4',title:'D4 — Superset: Unilateral Lower',superset:true,note:'Touchdown Squat: Ferse tippt Boden. Hüfte zurück, Brust vor.',exercises:[
+      {name:'Touchdown Squat (Horschig, Plattenstapel)',w:['3×10/S','3×10/S','3×12/S','3×12/S','3×15/S','2×10/S'],t:'3-0-1-0',v:L.touchdownSq},
+      {name:'Single-Leg Calf Raise',w:['3×15/S','3×15/S','3×15/S','3×15/S','3×20/S','2×15/S'],t:'2-1-2-0',v:L.singleLegCalf},
+    ]},
+    {id:'D5',cond:true,note:'Step-up: niedriger Box ~20 cm, kontrolliert.',weeks:[
+      {text:"2 Runden: Ski Erg 15 Cal + KB Swing ×10 + Step-up low Box ×8/Seite + Dead Bug ×6/Seite | 2 Min Pause",dur:"8 Min"},
+      {text:"EMOM 10: Min 1 = Bike 15 Cal, Min 2 = KB Swing ×12, Min 3 = Step-up ×8/Seite, Min 4 = Farmers Hold 30 Sek, Min 5 = Pause",dur:"10 Min"},
+      {text:"3 Runden: Bike 20 Cal + KB Swing ×12 + Step-up ×10/Seite + Suitcase Carry 20 m/Seite | 90 Sek Pause",dur:"12 Min"},
+      {text:"AMRAP 12 (moderate pace): 18 Cal Bike + KB Swing ×12 + Step-up ×8/Seite + Carry 30 m",dur:"12 Min"},
+      {text:"5 Runden: Ski Erg 12 Cal + KB Swing ×10 + Step-up ×8/Seite | 60 Sek Pause",dur:"12 Min"},
+      {text:"2 Runden: Bike 12 Cal + KB Swing ×8 + Dead Bug ×6/Seite",dur:"6 Min"},
+    ]},
+  ]},
+  RE1:{id:'RE1',mob:true,focus:'Schulter + T-Spine',exercises:[
+    {name:"Foam Roll Lats (Arm in Außenrotation)",reps:"1×90 Sek/Seite",v:L.foamRollLats},
+    {name:"Lacrosse Ball Pec (an Wand, mit Armbewegung)",reps:"1×90 Sek/Seite",v:L.lacrossePec},
+    {name:"Peanut Mobilization BWS",reps:"2×15/Segment",v:L.peanut},
+    {name:"Box T-Spine Stretch (PVC, kniend)",reps:"3–4×30 Sek",v:L.boxTSpine},
+    {name:"Corner Pec Stretch (Ellenbogen L, in Ecke)",reps:"3×20 Sek",v:L.cornerPec},
+    {name:"Cross-Body Stretch (Schulterblatt fixiert)",reps:"3×30 Sek/Seite",v:L.crossBodyStr},
+    {name:"Box Lat Stretch (kniend, PVC V-Griff)",reps:"3–5×30 Sek",v:L.boxLatStretch},
+    {name:"Prone Floor Angel (bäuchlings, volle Sequenz)",reps:"2×8",v:L.proneAngel},
+    {name:"Half-Prone Angel",reps:"2×8",v:L.proneAngel},
+    {name:"Quadruped Upward Rotation (Rotation + Hold)",reps:"10–20/Seite",v:L.quadrupedRot},
+    {name:"Passive Dead Hang (bei HWS-Symptomen sofort stoppen)",reps:"2×15–20 Sek",v:L.deadHang},
+    {name:"Chin Tucks (liegend)",reps:"2×10",v:L.chinTucks},
+  ]},
+  RE2:{id:'RE2',mob:true,focus:'Lower Body + Hüfte + Knie',exercises:[
+    {name:"Foam Roll Quads (oberhalb Kniescheibe, langsam)",reps:"1×90 Sek/Seite",v:L.foamRollQuads},
+    {name:"Foam Roll lateraler Oberschenkel (VL/TFL)",reps:"1×90 Sek/Seite",v:L.foamRollQuads},
+    {name:"90/90 Hip Switch",reps:"2×8/Seite",v:L.hip9090},
+    {name:"Pigeon Stretch (knieschonend)",reps:"3×30 Sek/Seite",v:L.pigeonStretch},
+    {name:"Couch Stretch (Quad/Hüftbeuger)",reps:"3×30 Sek/Seite",v:L.couchStretch},
+    {name:"Waden-Mobilität (Wand, gerade + gebeugt)",reps:"2×30 Sek/Seite",v:L.calfStretch},
+    {name:"RNT Banded Squat (1.5 Reps, Band um Knie)",reps:"3 Runden",v:L.rntSquat},
+    {name:"Balance and Reach (T-Pattern, Single-Leg)",reps:"2×5/Richtung/S",v:L.balanceReach},
+    {name:"Lateral Band Walk",reps:"2×15/Richtung",v:L.lateralBandWalk},
+    {name:"Unilateral Abduction (Mini-Squat, Bein seitlich)",reps:"2×15/Seite",v:L.lateralBandWalk},
+    {name:"Single-Leg Bridge (5–10 Sek Hold)",reps:"2×12/Seite",v:L.singleLegBridge},
+    {name:"Cat/Cow (langsam)",reps:"1×10",v:L.catCow},
+    {name:"Chin Tucks (liegend)",reps:"2×10",v:L.chinTucks},
+  ]},
+};
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+const S={
+  week:parseInt(localStorage.getItem('rb_week')||'1'),
+  day:localStorage.getItem('rb_day')||'A',
+  phOpen:localStorage.getItem('rb_ph')!=='0',
+  done:{},
+};
+const lsSet=(k,v)=>localStorage.setItem(k,String(v));
+const wKey=(d,s,ei,si)=>`rb_${d}_${s}_${ei}_${si}`;
+const getW=(d,s,ei,si)=>localStorage.getItem(wKey(d,s,ei,si))||'';
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function parseW(str){
+  if(!str||str==='–')return{sets:0,reps:'–',inactive:true};
+  const xi=str.indexOf('×');
+  if(xi<0)return{sets:1,reps:str,inactive:false};
+  return{sets:parseInt(str.slice(0,xi))||1,reps:str.slice(xi+1),inactive:false};
+}
+function tri(){return`<svg width="8" height="10" viewBox="0 0 8 10"><path d="M1 1l6 4-6 4V1z" fill="currentColor"/></svg>`;}
+function vidBtn(url,large){
+  if(!url)return'';
+  if(large)return`<a href="${url}" target="_blank" rel="noopener" class="vid-btn">${tri()}<span>VIDEO</span></a>`;
+  return`<a href="${url}" target="_blank" rel="noopener" class="vid-btn vid-sm">${tri()}</a>`;
+}
+function condFmt(text){
+  const t=text.toUpperCase();
+  if(t.startsWith('EMOM'))return'EMOM';
+  if(t.startsWith('AMRAP'))return'AMRAP';
+  if(t.includes('FOR QUALITY'))return'FOR QUALITY';
+  const m=t.match(/^(\d+)\s*RUNDEN/);if(m)return m[1]+' ROUNDS';
+  const m2=t.match(/^(\d+)\s*[×X]/);if(m2)return'INTERVALS';
+  return'CONDITIONING';
+}
+
+// ── RENDER HELPERS ────────────────────────────────────────────────────────────
+function renderSetRows(dayId,secId,exIdx,parsed){
+  if(parsed.inactive)return'';
+  let out='';
+  for(let i=0;i<parsed.sets;i++){
+    const k=wKey(dayId,secId,exIdx,i);
+    const dk=k+'_d';
+    const isDone=S.done[dk]||false;
+    const wv=getW(dayId,secId,exIdx,i);
+    out+=`<div class="set-row">
+      <button class="set-cb${isDone?' done':''}" data-act="toggle-set" data-dk="${dk}" data-ik="${k}" type="button">${isDone?'✓':i+1}</button>
+      <div class="set-w-wrap">
+        <input class="set-w-inp${isDone?' done':''}" type="text" inputmode="decimal" placeholder="___" data-wk="${k}" value="${wv}" autocomplete="off" autocorrect="off" autocapitalize="off">
+        <span class="set-kg">KG</span>
+      </div>
+      <span class="set-reps">× ${parsed.reps}</span>
+    </div>`;
+  }
+  return out;
+}
+
+function renderExCard(ex,dayId,secId,exIdx,badge){
+  const wStr=ex.w[S.week-1];
+  const p=parseW(wStr);
+  const rl=String(p.reps).length;
+  const rf=rl>6?'52px':rl>4?'72px':'100px';
+  const isBfr=DAYS[dayId].sections.find(s=>s.id===secId)?.bfr||false;
+  return`<article class="ex-card${p.inactive?' bfr-inactive':''}">
+    <div class="ex-pos">
+      <div class="ex-eyebrow">
+        <span>${badge?`<span class="ex-badge">${badge}</span> · `:''}${p.inactive?'AB WOCHE 3':wStr}</span>
+        <span>${p.inactive?'— BFR OPTION —':p.sets+' SÄTZE'}</span>
+      </div>
+      <h3 class="ex-name">${ex.name}</h3>
+    </div>
+    ${!p.inactive?`<div class="ex-neg">
+      <div class="neg-lbl">§ PRESCRIPTION</div>
+      <div class="reps-hero">
+        <span class="reps-sets">${p.sets}</span>
+        <span class="reps-x">×</span>
+        <span class="reps-count" style="font-size:${rf}">${p.reps}</span>
+      </div>
+      <div class="neg-meta">
+        <div>
+          <div class="neg-tempo-lbl">TEMPO</div>
+          <div class="neg-tempo-val">${ex.t}</div>
+        </div>
+        ${vidBtn(ex.v,true)}
+      </div>
+      <div class="set-log-hdr"><span>§ LOG</span><span>KG × REPS</span></div>
+      ${renderSetRows(dayId,secId,exIdx,p)}
+      <div class="ex-neg-pad"></div>
+    </div>`:''}
+  </article>`;
+}
+
+function renderCond(sec,weekIdx){
+  const w=sec.weeks[weekIdx];
+  const fmt=condFmt(w.text);
+  return`<section class="cond-section">
+    <div class="cond-label-row">◉ ${sec.id||'CONDITIONING'} — ${sec.note||'DAILY CONDITIONING'}</div>
+    <div class="cond-hero">
+      <h2 class="cond-title">${fmt}</h2>
+      <p class="cond-body">${w.text}</p>
+      <div class="cond-grid">
+        <div class="cond-cell"><div class="cond-cell-lbl">DURATION</div><div class="cond-cell-val">${w.dur}</div></div>
+        <div class="cond-cell"><div class="cond-cell-lbl">FORMAT</div><div class="cond-cell-mode">${fmt}</div></div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function renderSection(sec,dayId,weekIdx){
+  if(sec.cond)return renderCond(sec,weekIdx);
+  const exHtml=sec.exercises.map((ex,ei)=>{
+    const badge=sec.superset?String.fromCharCode(65+ei):null;
+    return renderExCard(ex,dayId,sec.id,ei,badge);
+  }).join('');
+  if(sec.superset){
+    return`<section class="ss-group">
+      <div class="ss-header">
+        <span class="ss-lbl">SUPERSET ${sec.id}</span>
+        <span class="ss-hint">BACK-TO-BACK · 90S REST</span>
+      </div>
+      ${sec.note?`<div class="sec-note">${sec.note}</div>`:''}
+      <div class="ss-bracket-wrap"><div class="ss-bracket"></div><div class="ss-inner">${exHtml}</div></div>
+    </section>`;
+  }
+  return`<section>
+    ${sec.note?`<div class="sec-note" style="padding-top:14px">${sec.note}</div>`:''}
+    ${exHtml}
+  </section>`;
+}
+
+function renderPrehab(dayId){
+  const cfg=PREHAB_CFG[dayId];if(!cfg)return'';
+  const blocks=cfg.blocks.map(bid=>{
+    const blk=PB[bid];
+    const rows=blk.exercises.map((e,i)=>`
+      <div class="pb-ex-row">
+        <span class="pb-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="pb-name">${e.name}</span>
+        <span class="pb-reps">${e.reps}</span>
+        ${vidBtn(e.video,false)}
+      </div>`).join('');
+    return`<div style="margin-bottom:4px"><div class="pb-block-head">${blk.title} · ${blk.time}</div>${rows}</div>`;
+  }).join('');
+  return`<div class="prehab-wrap">
+    <button class="prehab-toggle" data-act="toggle-ph" type="button">
+      <span class="prehab-toggle-label">
+        <span class="prehab-marker">§ I</span>
+        <span class="prehab-title">Prehabilitation</span>
+      </span>
+      <span class="prehab-icon">${S.phOpen?'[−]':'[+]'}</span>
+    </button>
+    <div class="prehab-body${S.phOpen?' open':''}">${blocks}</div>
+  </div>`;
+}
+
+function renderMob(dayData){
+  const isRE1=dayData.id==='RE1';
+  const heading=isRE1?`Restore<br><span>& Flow</span>`:`Lower<br><span>Restore</span>`;
+  const sub=isRE1?'RE 1 · SCHULTER + T-SPINE · ~30 MIN':'RE 2 · LOWER + KNIE · ~30 MIN';
+  const rows=dayData.exercises.map((ex,i)=>`
+    <div class="mob-row">
+      <span class="mob-n">${String(i+1).padStart(2,'0')}</span>
+      <div><div class="mob-name">${ex.name}</div><div class="mob-reps">${ex.reps}</div></div>
+      ${vidBtn(ex.v,false)}
+    </div>`).join('');
+  return`<section class="mob-section">
+    <div class="mob-eyebrow">◉ ${sub}</div>
+    <h2 class="mob-heading">${heading}</h2>
+    <div class="mob-list">${rows}</div>
+  </section>`;
+}
+
+function renderPhase(wi){
+  const ph=PHASES[wi];
+  const isDeload=wi===5;
+  const phases=['Anpas-<br><span class="ph-sky">sung</span>','Anpas-<br><span class="ph-sky">sung</span>','Auf-<br><span class="ph-sky">bau</span>','Auf-<br><span class="ph-sky">bau</span>','Inten-<br><span class="ph-sky">sivierung</span>','<span class="ph-sky">Deload</span>'];
+  return`<div class="phase-dossier">
+    <div class="phase-eye"><span>§ PHASE DOSSIER</span><span>WEEK 0${S.week} / 06</span></div>
+    <div class="phase-heading">${phases[wi]}<span class="ph-fire"> ·0${S.week}</span></div>
+    ${isDeload?`<div class="deload-notice">⚠ DELOAD — 50 % VOLUMEN · TECHNIK-FOKUS</div>`:''}
+    <div class="phase-pills">
+      <span class="phase-pill pill-rpe">${ph.rpe}</span>
+      <span class="phase-pill pill-focus">${ph.focus}</span>
+    </div>
+  </div>`;
+}
+
+// ── FULL RENDER ───────────────────────────────────────────────────────────────
+function renderHeader(){
+  const now=new Date();
+  const dd=String(now.getDate()).padStart(2,'0');
+  const mm=String(now.getMonth()+1).padStart(2,'0');
+  const yy=String(now.getFullYear()).slice(2);
+  const dn=['SO','MO','DI','MI','DO','FR','SA'][now.getDay()];
+  const wkBtns=[1,2,3,4,5,6].map(w=>`<button class="wk-btn${S.week===w?' active':''}" data-act="set-week" data-w="${w}" type="button"><span class="wk-sub">Wk</span>${w}</button>`).join('');
+  const dayBtns=DAY_TABS.map(d=>`<button class="day-btn${S.day===d.id?' active':''}" data-act="set-day" data-d="${d.id}" type="button"><span class="day-lbl">${d.label}</span><span class="day-sub">${d.sub}</span></button>`).join('');
+  document.getElementById('appHeader').innerHTML=`
+    <div class="hdr-dateline"><span>NO. 0${S.week} · VOL. VI</span><span>${dn} / ${dd}.${mm}.${yy}</span></div>
+    <div class="hdr-wordmark">REBUILD<span>°</span></div>
+    <div class="hdr-tagline">— A TRAINING LEDGER —</div>
+    <div class="hdr-rule"></div>
+    <div class="week-rail">${wkBtns}</div>
+    <div class="hdr-rule-thin"></div>
+    <div class="day-tabs">${dayBtns}</div>`;
+}
+
+function renderMain(){
+  const d=DAYS[S.day];
+  const wi=S.week-1;
+  let html='';
+  if(d.mob){
+    html+=renderMob(d);
+  } else {
+    html+=renderPhase(wi);
+    html+=renderPrehab(S.day);
+    for(const sec of d.sections) html+=renderSection(sec,S.day,wi);
+  }
+  const now=new Date();
+  html+=`<div class="session-footer"><div class="footer-txt">— FIN · W0${S.week} · ${S.day} · ${now.getFullYear()} —</div></div>`;
+  document.getElementById('appMain').innerHTML=html;
+}
+
+function render(){renderHeader();renderMain();}
+
+// ── EVENTS ────────────────────────────────────────────────────────────────────
+document.addEventListener('click',e=>{
+  const btn=e.target.closest('[data-act]');
+  if(!btn)return;
+  const act=btn.dataset.act;
+  if(act==='set-week'){
+    S.week=parseInt(btn.dataset.w);
+    lsSet('rb_week',S.week);
+    render();window.scrollTo(0,0);
+  } else if(act==='set-day'){
+    S.day=btn.dataset.d;
+    lsSet('rb_day',S.day);
+    render();window.scrollTo(0,0);
+  } else if(act==='toggle-ph'){
+    S.phOpen=!S.phOpen;
+    lsSet('rb_ph',S.phOpen?'1':'0');
+    document.querySelector('.prehab-body')?.classList.toggle('open',S.phOpen);
+    document.querySelector('.prehab-icon').textContent=S.phOpen?'[−]':'[+]';
+  } else if(act==='toggle-set'){
+    const dk=btn.dataset.dk;
+    const ik=btn.dataset.ik;
+    S.done[dk]=!S.done[dk];
+    const done=S.done[dk];
+    btn.classList.toggle('done',done);
+    btn.textContent=done?'✓':parseInt(ik.split('_').pop())+1;
+    const inp=document.querySelector(`input[data-wk="${ik}"]`);
+    if(inp)inp.classList.toggle('done',done);
+  }
+});
+
+document.addEventListener('input',e=>{
+  const inp=e.target;
+  if(inp.dataset.wk)localStorage.setItem(inp.dataset.wk,inp.value);
+});
+
+render();
+</script>
+</body>
+</html>
