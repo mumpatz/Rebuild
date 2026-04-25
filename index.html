@@ -2,706 +2,1401 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>REBUILD° — Training Ledger</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Oswald:ital,wght@0,400;0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#ffffff">
+<link rel="manifest" href="manifest.json">
+<title>Knie Rehab</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-:root{
-  --paper:#F1ECDF;--paper2:#E3DCC8;--ink:#2A1708;--ink2:#4A3020;
-  --sky:#2E7CFF;--fire:#FF6B47;--fire2:#E34A22;--rule:#C8BEA7;
-}
-body{background:var(--ink);color:var(--ink);font-family:"Archivo Narrow","Helvetica Neue",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  @font-face {
+    font-family: 'ImageFuture';
+    src: url('ImageFuture-SemiBold.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* HEADER */
-#appHeader{position:sticky;top:0;z-index:100;background:var(--paper);border-bottom:2px solid var(--ink)}
-.hdr-dateline{display:flex;justify-content:space-between;align-items:center;padding:10px 18px 4px;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.2em;color:var(--ink2);font-weight:700}
-.hdr-wordmark{font-family:"Oswald",sans-serif;font-weight:700;font-style:italic;font-size:58px;color:var(--sky);line-height:.82;letter-spacing:-.04em;padding:0 18px 10px;text-align:center;overflow:hidden}
-.hdr-wordmark span{color:var(--fire);font-style:normal}
-.hdr-tagline{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.34em;text-align:center;color:var(--ink);padding:0 0 10px;font-weight:700}
-.hdr-rule{height:2px;background:var(--ink)}
-.hdr-rule-thin{height:1px;background:var(--ink)}
-.week-rail{display:grid;grid-template-columns:repeat(6,1fr)}
-.wk-btn{appearance:none;cursor:pointer;border:0;background:var(--paper);color:var(--ink);padding:7px 0 5px;font-family:"Oswald",sans-serif;font-size:20px;font-weight:700;border-right:1px solid var(--ink);display:flex;flex-direction:column;align-items:center;gap:0;transition:background .12s}
-.wk-btn:last-child{border-right:none}
-.wk-btn.active{background:var(--sky);color:var(--paper)}
-.wk-sub{font-family:"JetBrains Mono",monospace;font-size:7px;letter-spacing:.18em;font-weight:400;margin-bottom:1px;text-transform:uppercase}
-.day-tabs{display:grid;grid-template-columns:repeat(6,1fr)}
-.day-btn{appearance:none;cursor:pointer;border:0;background:transparent;color:var(--ink);padding:7px 2px 5px;border-right:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;gap:1px;transition:background .12s}
-.day-btn:last-child{border-right:none}
-.day-btn.active{background:var(--ink)}
-.day-lbl{font-family:"Oswald",sans-serif;font-size:17px;font-weight:700;line-height:1;color:var(--ink)}
-.day-btn.active .day-lbl{color:var(--fire)}
-.day-sub{font-family:"JetBrains Mono",monospace;font-size:6px;letter-spacing:.14em;color:var(--ink2)}
-.day-btn.active .day-sub{color:var(--paper)}
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-/* MAIN */
-#appMain{background:var(--paper);padding-bottom:60px}
+  :root {
+    --purple: #C8A2E8;
+    --green: #A8E6A3;
+    --yellow: #F5E190;
+    --orange: #F58D2D;
+    --blue: #93C5FD;
+    --pink: #F9A8D4;
+    --text: #1A1A1A;
+    --text2: #888;
+    --bg: #fff;
+    --card: #F5F5F5;
+    --card2: #EBEBEB;
+    --r: 24px;
+    --gap: 8px;
+  }
 
-/* PHASE DOSSIER */
-.phase-dossier{background:var(--ink);color:var(--paper);padding:26px 24px 52px;border-bottom:2px solid var(--ink)}
-.phase-eye{display:flex;justify-content:space-between;align-items:baseline;font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--paper);letter-spacing:.22em;margin-bottom:6px;opacity:.6;font-weight:700}
-.phase-heading{font-family:"Oswald",sans-serif;font-size:64px;color:var(--paper);line-height:.82;letter-spacing:-.04em;font-style:italic;font-weight:700;text-transform:uppercase}
-.ph-sky{color:var(--sky)}
-.ph-fire{color:var(--fire);font-style:normal}
-.phase-pills{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.phase-pill{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.18em;padding:4px 12px}
-.pill-rpe{background:var(--fire);color:var(--paper)}
-.pill-focus{border:1px solid var(--paper);color:var(--paper)}
-.deload-notice{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.16em;color:var(--fire);margin-top:10px;font-weight:700}
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100dvh;
+    padding: env(safe-area-inset-top) 0 calc(80px + env(safe-area-inset-bottom)) 0;
+    -webkit-font-smoothing: antialiased;
+  }
 
-/* PREHAB */
-.prehab-wrap{padding:20px 24px 10px;border-bottom:1px solid var(--ink)}
-.prehab-toggle{appearance:none;cursor:pointer;border:0;background:transparent;width:100%;padding:0 0 10px;display:flex;justify-content:space-between;align-items:flex-end;color:var(--ink)}
-.prehab-toggle-label{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
-.prehab-marker{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--fire);letter-spacing:.22em;font-weight:700}
-.prehab-title{font-family:"Oswald",sans-serif;font-size:22px;color:var(--ink);font-weight:700;text-transform:uppercase}
-.prehab-icon{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink2)}
-.prehab-body{display:none;border-top:1px solid var(--rule)}
-.prehab-body.open{display:block}
-.pb-block-head{font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;letter-spacing:.22em;color:var(--ink2);text-transform:uppercase;padding:18px 0 8px;border-bottom:1px solid var(--ink);margin-top:6px}
-.pb-ex-row{display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:center;padding:16px 0;border-bottom:1px dotted var(--rule)}
-.pb-ex-row:last-child{border-bottom:none}
-.pb-num{font-family:"Oswald",sans-serif;font-size:44px;color:var(--sky);line-height:.85;font-style:italic;letter-spacing:-.04em;font-weight:700}
-.pb-ex-info{display:flex;flex-direction:column;gap:4px;min-width:0}
-.pb-name{font-size:16px;color:var(--ink);font-weight:700;line-height:1.2}
-.pb-reps{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--fire);font-weight:700;letter-spacing:.12em;white-space:nowrap}
+  .hl {
+    font-family: 'ImageFuture', 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
 
-/* VIDEO BTN */
-.vid-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:30px;padding:0 10px;background:var(--fire);color:var(--paper);border:0;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;flex-shrink:0;border-radius:0}
-.vid-sm{width:34px;height:30px;padding:0}
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px 16px;
+  }
 
-/* SECTION NOTE */
-.sec-note{font-family:"JetBrains Mono",monospace;font-size:11px;font-style:italic;font-weight:400;color:var(--ink2);line-height:1.55;padding:10px 24px 0}
+  /* Hero */
+  .hero { margin-bottom: 28px; }
+  .hero h1 {
+    font-size: clamp(52px, 13vw, 76px);
+    line-height: 0.92;
+    margin-bottom: 14px;
+  }
+  .hero-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text2);
+    font-weight: 500;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--yellow);
+    color: var(--text);
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .badge svg { width: 13px; height: 13px; }
 
-/* STRENGTH WRAPPER (collapsible) */
-.strength-wrap{background:var(--paper);border-bottom:1px solid var(--ink)}
-.strength-body .sec-note{color:var(--paper);opacity:.7}
-.strength-toggle{appearance:none;cursor:pointer;border:0;background:var(--paper);width:100%;padding:20px 24px 18px;display:flex;justify-content:space-between;align-items:flex-end;color:var(--ink)}
-.strength-toggle-label{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
-.strength-marker{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--fire);letter-spacing:.22em;font-weight:700}
-.strength-title{font-family:"Oswald",sans-serif;font-size:22px;color:var(--ink);font-weight:700;text-transform:uppercase}
-.strength-icon{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink2)}
-.strength-body{display:none;background:var(--ink);color:var(--paper);border-top:1px solid var(--ink)}
-.strength-body.open{display:block}
+  /* Nav */
+  .nav {
+    display: flex;
+    gap: var(--gap);
+    margin-bottom: 20px;
+  }
+  .nav button {
+    flex: 1;
+    padding: 14px 8px;
+    border-radius: var(--r);
+    border: none;
+    font-family: 'ImageFuture', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text);
+    transition: transform 0.12s;
+  }
+  .nav button:active { transform: scale(0.97); }
+  .nav .on { background: var(--text); color: #fff; }
+  .nav .off { background: #F0F0F0; }
 
-/* CONDITIONING WRAPPER (collapsible) */
-.cond-wrap{background:var(--paper);border-bottom:1px solid var(--ink)}
-.cond-toggle{appearance:none;cursor:pointer;border:0;background:transparent;width:100%;padding:20px 24px 18px;display:flex;justify-content:space-between;align-items:flex-end;color:var(--ink)}
-.cond-toggle-label{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
-.cond-marker{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--fire);letter-spacing:.22em;font-weight:700}
-.cond-title-hd{font-family:"Oswald",sans-serif;font-size:22px;color:var(--ink);font-weight:700;text-transform:uppercase}
-.cond-icon{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink2)}
-.cond-body-wrap{display:none;border-top:1px solid var(--rule)}
-.cond-body-wrap.open{display:block}
+  /* Info Block */
+  .info {
+    background: var(--blue);
+    border-radius: var(--r);
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .info b { display: block; margin-bottom: 3px; font-size: 14px; }
 
-/* SUPERSET */
-.ss-group{border-bottom:2px solid rgba(241,236,223,.12)}
-.ss-bracket-wrap{position:relative}
-.ss-bracket{position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--fire)}
-.ss-inner{padding-left:0}
+  /* Phase */
+  .phase { margin-bottom: var(--gap); }
+  .phase-head {
+    border-radius: var(--r);
+    padding: 18px 22px;
+    margin-bottom: var(--gap);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .phase-head h2 {
+    font-size: clamp(26px, 7vw, 34px);
+    line-height: 1;
+  }
+  .phase-head span {
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.5;
+  }
 
-/* BLOCK CAP (L2 headline — Filly category) */
-.blk-cap{background:var(--paper);color:var(--ink);padding:44px 24px 16px}
-.blk-cap.first{padding-top:28px}
-.blk-cap-ttl{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;letter-spacing:.22em;color:var(--fire);text-transform:uppercase;border:1px solid var(--fire);padding:5px 9px 4px}
-.blk-cap-sub{font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;letter-spacing:.22em;color:var(--fire);text-transform:uppercase;margin-top:10px}
+  /* Card */
+  .card {
+    background: var(--card);
+    border-radius: var(--r);
+    margin-bottom: var(--gap);
+    overflow: hidden;
+  }
+  .card.done { opacity: 0.35; }
+  .card.done .cname { text-decoration: line-through; }
 
-/* EXERCISE CARD */
-.ex-card{border-bottom:1px solid rgba(241,236,223,.12);background:var(--ink);color:var(--paper);overflow:hidden}
-.ex-card:last-child{border-bottom:none}
-.ex-card.bfr-inactive{opacity:.35}
-.ex-pos{padding:26px 24px 14px}
-.ex-eyebrow{display:flex;justify-content:space-between;align-items:baseline;font-family:"JetBrains Mono",monospace;font-size:9px;color:rgba(241,236,223,.55);letter-spacing:.2em;font-weight:700;margin-bottom:10px}
-.ex-badge{color:var(--fire);font-weight:800}
-.ex-name{font-family:"Oswald",sans-serif;font-size:36px;line-height:.9;color:var(--sky);font-style:italic;letter-spacing:-.025em;font-weight:700;text-transform:uppercase;overflow-wrap:break-word;word-break:break-word}
-.ex-card-note{font-family:"JetBrains Mono",monospace;font-size:11px;font-style:italic;font-weight:400;color:var(--paper);opacity:.65;line-height:1.55;margin-top:8px}
+  .ctop {
+    display: flex;
+    align-items: center;
+    padding: 16px 18px;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
 
-/* PRESCRIPTION */
-.ex-neg{background:var(--ink);color:var(--paper);padding:14px 24px 0;overflow:hidden}
-.neg-lbl{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.28em;color:var(--paper);font-weight:700;opacity:.6}
-.reps-hero{display:flex;align-items:baseline;line-height:.78;margin-top:16px;margin-bottom:28px;max-width:100%}
-.reps-sets{font-family:"Oswald",sans-serif;font-size:100px;color:var(--sky);letter-spacing:-.08em;font-style:italic;font-weight:700}
-.reps-x{font-family:"Oswald",sans-serif;font-size:48px;color:var(--fire);margin:0 -4px 0 22px;letter-spacing:0;align-self:center}
-.reps-count{font-family:"Oswald",sans-serif;color:var(--sky);letter-spacing:-.08em;font-style:italic;font-weight:700}
-.neg-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,.15)}
-.neg-tempo-lbl{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--paper);letter-spacing:.2em;font-weight:700;opacity:.6}
-.neg-tempo-val{font-family:"JetBrains Mono",monospace;font-size:14px;font-weight:800;color:var(--fire);letter-spacing:.06em;margin-top:2px}
-.set-log-hdr{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.26em;color:var(--paper);font-weight:700;opacity:.6;padding:10px 0 4px;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.15);margin-top:10px}
-.set-row{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:12px;padding:14px 0;border-top:1px solid rgba(255,255,255,.12)}
-.set-cb{appearance:none;cursor:pointer;width:28px;height:28px;border-radius:0;border:2px solid var(--paper);background:transparent;color:var(--fire);font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .1s}
-.set-cb.done{background:var(--paper);color:var(--fire)}
-.set-w-wrap{display:flex;align-items:baseline;gap:6px}
-.set-w-inp{background:transparent;border:0;border-bottom:2px solid var(--paper);color:var(--paper);padding:2px 0;font-family:"Oswald",sans-serif;font-size:28px;font-weight:700;font-style:italic;letter-spacing:-.02em;width:90px;outline:none;border-radius:0;transition:border-color .1s, color .1s}
-.set-w-inp.done{border-bottom-color:var(--fire);color:var(--fire)}
-.set-w-inp::placeholder{color:rgba(255,255,255,.2)}
-.set-kg{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--paper);letter-spacing:.1em;font-weight:700;opacity:.6;flex-shrink:0}
-.set-reps{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--paper);letter-spacing:.04em;font-weight:700;opacity:.6;flex-shrink:0}
-.ex-neg-pad{padding-bottom:52px}
+  .chk {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: #E0E0E0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .chk svg { opacity: 0; }
+  .chk.on { background: var(--text); }
+  .chk.on svg { opacity: 1; }
 
-/* CONDITIONING */
-.cond-section{background:var(--paper)}
-.cond-section + .cond-section{border-top:1px solid var(--rule)}
-.cond-hero{background:var(--paper);color:var(--ink);padding:16px 24px 24px}
-.cond-title{font-family:"Oswald",sans-serif;font-size:52px;line-height:.82;color:var(--sky);font-style:italic;letter-spacing:-.04em;font-weight:700;text-transform:uppercase;overflow-wrap:break-word;margin-bottom:12px}
-.cond-body{font-size:14px;line-height:1.55;color:var(--ink);font-weight:600;margin-bottom:16px;opacity:.9}
-.cond-grid{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--ink)}
-.cond-cell{padding:12px 14px}
-.cond-cell:first-child{border-right:2px solid var(--ink)}
-.cond-cell-lbl{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--ink2);letter-spacing:.2em;font-weight:700;opacity:.75}
-.cond-cell-val{font-family:"Oswald",sans-serif;font-size:36px;color:var(--fire);font-style:italic;letter-spacing:-.03em;font-weight:700;margin-top:2px;line-height:1}
-.cond-cell-mode{font-family:"Oswald",sans-serif;font-size:20px;color:var(--ink);font-weight:700;margin-top:4px;line-height:1.1}
+  .cname { font-size: 15px; font-weight: 600; line-height: 1.3; }
+  .csub { font-size: 12px; color: var(--text2); margin-top: 1px; font-weight: 500; }
 
-/* MOBILITY */
-.mob-section{background:var(--ink);color:var(--paper);padding:24px 24px 20px}
-.mob-eyebrow{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--fire);letter-spacing:.2em;font-weight:700}
-.mob-heading{font-family:"Oswald",sans-serif;font-size:58px;line-height:.82;margin:8px 0 20px;color:var(--sky);font-style:italic;letter-spacing:-.04em;font-weight:700;text-transform:uppercase;overflow-wrap:break-word}
-.mob-heading span{color:var(--paper)}
-.mob-list{border-top:2px solid var(--paper)}
-.mob-row{display:grid;grid-template-columns:50px 1fr auto;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.13)}
-.mob-n{font-family:"Oswald",sans-serif;font-size:40px;color:var(--sky);line-height:.9;font-style:italic;letter-spacing:-.04em;font-weight:700}
-.mob-name{font-size:14px;color:var(--paper);font-weight:600;line-height:1.2}
-.mob-reps{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--fire);font-weight:700;letter-spacing:.12em;margin-top:3px}
+  .cchev {
+    margin-left: auto;
+    flex-shrink: 0;
+    color: #CCC;
+    transition: transform 0.2s;
+  }
+  .cchev.open { transform: rotate(180deg); }
 
-/* FOOTER */
-.session-footer{padding:22px 24px;text-align:center;background:var(--paper);border-top:1px solid var(--rule)}
-.footer-txt{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--ink2);letter-spacing:.28em;font-weight:700}
+  /* Detail */
+  .cdet { display: none; padding: 0 18px 18px; }
+  .cdet.open { display: block; }
 
-input[type=text]{-webkit-appearance:none}
+  .cbox {
+    background: var(--card2);
+    border-radius: 16px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #555;
+    margin-bottom: 12px;
+  }
+  .cbox strong { color: var(--text); }
+
+  .csteps {
+    font-size: 13px;
+    line-height: 1.6;
+    padding-left: 18px;
+    margin-bottom: 14px;
+    color: #555;
+  }
+  .csteps li { margin-bottom: 3px; }
+  .csteps li::marker { color: #CCC; }
+
+  /* Timer */
+  .tmr {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    background: var(--card2);
+    border-radius: 16px;
+    padding: 10px 14px;
+  }
+  .tmr-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--text);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .tmr-btn:active { transform: scale(0.95); }
+  .tmr-btn.run { background: #DC2626; }
+  .tmr-btn svg { width: 11px; height: 11px; }
+  .tmr-time {
+    font-family: 'ImageFuture', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .tmr-tot { font-size: 12px; color: var(--text2); margin-left: auto; }
+
+  /* Video */
+  .vid {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #E0E0E0;
+  }
+  .vid iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  /* Bottom bar */
+  .bottombar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #fff;
+    padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+    z-index: 100;
+  }
+  .bottombar.hidden { display: none; }
+  .binner {
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btrack {
+    flex: 1;
+    height: 6px;
+    background: #EAEAEA;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .bfill {
+    height: 100%;
+    background: var(--text);
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+  .blabel {
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 40px;
+    text-align: right;
+  }
+
+  /* Reset */
+  .rst {
+    display: flex;
+    width: 100%;
+    margin: 12px 0;
+    padding: 14px;
+    background: #F0F0F0;
+    border: none;
+    border-radius: var(--r);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text2);
+    cursor: pointer;
+    font-family: inherit;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .rst svg { width: 14px; height: 14px; }
+
+  .disc {
+    font-size: 11px;
+    color: #CCC;
+    text-align: center;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* ===== HUB STYLES ===== */
+
+  .hub-section {
+    margin-bottom: 20px;
+  }
+  .hub-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text2);
+    margin-bottom: 10px;
+  }
+
+  /* Readiness */
+  .rdy-card {
+    background: var(--card);
+    border-radius: var(--r);
+    padding: 18px 20px;
+    margin-bottom: var(--gap);
+  }
+  .rdy-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .rdy-row:last-child { margin-bottom: 0; }
+  .rdy-label {
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 80px;
+  }
+  .rdy-dots {
+    display: flex;
+    gap: 6px;
+  }
+  .rdy-dot {
+    width: 36px; height: 36px;
+    border-radius: 12px;
+    border: none;
+    background: var(--card2);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text2);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .rdy-dot:active { transform: scale(0.9); }
+  .rdy-dot.on {
+    color: #fff;
+  }
+  .rdy-dot.on.c-green { background: #6BC46A; }
+  .rdy-dot.on.c-yellow { background: #E8C840; }
+  .rdy-dot.on.c-orange { background: var(--orange); }
+  .rdy-dot.on.c-red { background: #DC2626; }
+  .rdy-val {
+    font-family: 'ImageFuture', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    min-width: 24px;
+    text-align: right;
+  }
+
+  /* Chart card */
+  .chart-card {
+    background: var(--card);
+    border-radius: var(--r);
+    padding: 18px 20px;
+    margin-bottom: var(--gap);
+  }
+  .chart-card svg {
+    width: 100%;
+    display: block;
+  }
+  .chart-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .chart-sub {
+    font-size: 12px;
+    color: var(--text2);
+    margin-bottom: 14px;
+  }
+
+  /* Body parts */
+  .bp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--gap);
+  }
+  .bp-card {
+    border-radius: var(--r);
+    padding: 16px 14px;
+    text-align: center;
+  }
+  .bp-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .bp-load {
+    font-family: 'ImageFuture', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .bp-unit {
+    font-size: 11px;
+    color: rgba(0,0,0,0.4);
+    font-weight: 500;
+  }
+  .bp-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  /* Session list */
+  .sess-card {
+    background: var(--card);
+    border-radius: var(--r);
+    padding: 16px 18px;
+    margin-bottom: var(--gap);
+  }
+  .sess-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .sess-type {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+  .sess-date {
+    font-size: 12px;
+    color: var(--text2);
+    font-weight: 500;
+  }
+  .sess-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .sess-meta {
+    font-size: 12px;
+    color: var(--text2);
+    font-weight: 500;
+  }
+  .sess-del {
+    background: none;
+    border: none;
+    color: #CCC;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .sess-del:active { color: #DC2626; }
+
+  /* HR Zones bar */
+  .zones-bar {
+    margin-top: 10px;
+  }
+  .zones-bar svg { height: 24px; }
+  .zones-legend {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .zones-legend span {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .zones-legend .zd {
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  /* Add button */
+  .add-btn {
+    display: flex;
+    width: 100%;
+    padding: 14px;
+    background: var(--text);
+    color: #fff;
+    border: none;
+    border-radius: var(--r);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: var(--gap);
+    transition: transform 0.12s;
+  }
+  .add-btn:active { transform: scale(0.97); }
+  .add-btn.sec {
+    background: #F0F0F0;
+    color: var(--text);
+  }
+
+  /* Modal overlay */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-sheet {
+    background: #fff;
+    border-radius: var(--r) var(--r) 0 0;
+    padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+    width: 100%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: slideUp 0.25s ease-out;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .modal-close {
+    float: right;
+    background: var(--card);
+    border: none;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Form fields */
+  .field {
+    margin-bottom: 16px;
+  }
+  .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text2);
+  }
+  .field input, .field select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #EAEAEA;
+    border-radius: 14px;
+    font-size: 15px;
+    font-family: inherit;
+    font-weight: 500;
+    background: #fff;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .field input:focus, .field select:focus {
+    border-color: var(--text);
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .field-row3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  .field-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .field-pill {
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 2px solid #EAEAEA;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--text);
+    transition: all 0.12s;
+  }
+  .field-pill:active { transform: scale(0.95); }
+  .field-pill.on {
+    border-color: var(--text);
+    background: var(--text);
+    color: #fff;
+  }
+
+  /* Strength exercises in form */
+  .ex-entry {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .ex-entry-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .ex-entry-top input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 2px solid #EAEAEA;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 500;
+    background: #fff;
+    color: var(--text);
+    outline: none;
+  }
+  .ex-entry-top input:focus { border-color: var(--text); }
+  .ex-rm {
+    background: none;
+    border: none;
+    color: #CCC;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  /* Donut */
+  .donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .donut-legend {
+    flex: 1;
+  }
+  .donut-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .donut-legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .donut-legend-val {
+    margin-left: auto;
+    font-weight: 700;
+    font-family: 'ImageFuture', sans-serif;
+    font-size: 14px;
+  }
+
+  /* Sparkline readiness */
+  .spark-row {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    height: 20px;
+    margin-top: 4px;
+  }
+  .spark-bar {
+    flex: 1;
+    border-radius: 2px;
+    min-height: 2px;
+  }
 </style>
 </head>
 <body>
-<header id="appHeader"></header>
-<main id="appMain"></main>
+
+<div class="container" id="app"></div>
+
+<div class="bottombar" id="bb">
+  <div class="binner">
+    <div class="btrack"><div class="bfill" id="bf" style="width:0%"></div></div>
+    <div class="blabel" id="bl">0/0</div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal"></div>
+
 <script>
-// ── DATA ─────────────────────────────────────────────────────────────────────
-const L={
-  peanut:"https://www.youtube.com/watch?v=D24HExYYQTc",
-  prayer:"https://www.youtube.com/watch?v=lAy0VUob078",
-  quadrupedRot:"https://www.youtube.com/watch?v=snzLuyYgbVI",
-  sideLyingER:"https://www.youtube.com/watch?v=A1_3p0U96Kk",
-  bandedW:"https://www.youtube.com/watch?v=Tj_A17BbgmI",
-  proneLateralR:"https://www.youtube.com/watch?v=pgrWjBfaFe8",
-  foamRollQuads:"https://www.youtube.com/watch?v=7BLdqx1aARo",
-  spanishSquat:"https://www.youtube.com/watch?v=ifBljLvfb3U",
-  lateralBandWalk:"https://www.youtube.com/watch?v=y_bqFDQZSHQ",
-  cervGazeMob:"https://www.youtube.com/watch?v=AiTt-zCdluc",
-  neuralFlossC7:"https://www.youtube.com/watch?v=oYOASLgip28",
-  chinTucks:"https://www.youtube.com/watch?v=HUdnNs-NbJg",
-  catCow:"https://www.youtube.com/watch?v=EUvPS8QFHqU",
-  singleLegBridge:"https://www.youtube.com/watch?v=b1zTCyGJXCQ",
-  landminePress:"https://www.youtube.com/watch?v=qFXojXa-RCU",
-  inclineDB:"https://www.youtube.com/watch?v=SMO17ItT5Wc",
-  bandPullApart:"https://www.youtube.com/watch?v=mHWlgqPvyxI",
-  floorPress:"https://www.youtube.com/watch?v=Bx4QPVH-J1g",
-  pallof:"https://www.youtube.com/watch?v=aNvO1d0Bo7s",
-  ssbBoxSquat:"https://www.youtube.com/watch?v=2bkidbmb8Tk",
-  trapBarRDL:"https://www.youtube.com/watch?v=rKSiBkmNF4k",
-  singleLegHipT:"https://www.youtube.com/watch?v=DhEXrvMsfl4",
-  nordicCurl:"https://www.youtube.com/watch?v=_e9vFU9-tkc",
-  chestSuppRow:"https://www.youtube.com/watch?v=vmX58YYK3-8",
-  bandedLatPD:"https://www.youtube.com/watch?v=o5bXFrdw5iI",
-  extRotPress:"https://www.youtube.com/watch?v=NIK0aJDO7Pk",
-  hammerCurl:"https://www.youtube.com/watch?v=zC3nLlEvin4",
-  tricepPD:"https://www.youtube.com/watch?v=-KVa3M1uZfs",
-  gobletSquat:"https://www.youtube.com/watch?v=9KzZD_n2r64",
-  landmineRow:"https://www.youtube.com/watch?v=tiETx7VNDf0",
-  touchdownSq:"https://www.youtube.com/watch?v=Nj6c9ELsquY",
-  singleLegCalf:"https://www.youtube.com/watch?v=u1Yc75YdiJA",
-  foamRollLats:"https://www.youtube.com/watch?v=VQrNYuh95Vc",
-  lacrossePec:"https://www.youtube.com/watch?v=vzxvgSJ9kQc",
-  boxTSpine:"https://www.youtube.com/watch?v=ANqVcdWkuVM",
-  cornerPec:"https://www.youtube.com/watch?v=B9uY01NoqBg",
-  crossBodyStr:"https://www.youtube.com/watch?v=WaR_T0aUoew",
-  boxLatStretch:"https://www.youtube.com/watch?v=LYJjlj6rmxs",
-  proneAngel:"https://www.youtube.com/watch?v=dOLEGyeP290",
-  deadHang:"https://www.youtube.com/watch?v=5FQJJvUAYx4",
-  hip9090:"https://www.youtube.com/watch?v=qq_Z7sAmVrA",
-  pigeonStretch:"https://www.youtube.com/watch?v=G-M5cPuF5N0",
-  couchStretch:"https://www.youtube.com/watch?v=WKo4APrwfXQ",
-  calfStretch:"https://www.youtube.com/watch?v=Py5GHv--734",
-  rntSquat:"https://www.youtube.com/watch?v=fjuZGrlWLbY",
-  balanceReach:"https://www.youtube.com/watch?v=epbrO1cau9A",
-  kbSwing:"https://www.youtube.com/watch?v=bDCeXbMJVNs",
-};
-const PB={
-  b1:{title:"Block 1 — T-Spine",time:"4 Min",exercises:[
-    {name:"Peanut Mobilization BWS (2 Tennisbälle)",reps:"2×15/Segment",video:L.peanut},
-    {name:"Prayer Stretch (kniend, Foam Roller)",reps:"3×30 Sek",video:L.prayer},
-    {name:"Quadruped Downward Rotation Stretch",reps:"10×10 Sek/Seite",video:L.quadrupedRot},
-  ]},
-  b2f:{title:"Block 2 — Schulter (voll)",time:"4 Min",exercises:[
-    {name:"Side-Lying External Rotation (Handtuch unter Arm)",reps:"2×15–20/Seite",video:L.sideLyingER},
-    {name:"Banded \"W\" (Ellenbogen am Körper, 5 Sek Hold)",reps:"2×15–20",video:L.bandedW},
-    {name:"Prone Lateral Raise (1–2 kg, 5 Sek Hold oben)",reps:"2×10–15",video:L.proneLateralR},
-  ]},
-  b2s:{title:"Block 2 — Schulter (kurz)",time:"1 Min",exercises:[
-    {name:"Banded \"W\" (5 Sek Hold)",reps:"1×15",video:L.bandedW},
-  ]},
-  b3f:{title:"Block 3 — Knie (voll)",time:"4 Min",exercises:[
-    {name:"Foam Roll Quads + lateraler Oberschenkel",reps:"1×60 Sek/Seite",video:L.foamRollQuads},
-    {name:"Spanish Squat (Band hinter Knie, isometrisch)",reps:"3×45 Sek",video:L.spanishSquat},
-    {name:"Lateral Band Walk (Mini-Squat)",reps:"2×15 Schritte/Richtung",video:L.lateralBandWalk},
-  ]},
-  b3s:{title:"Block 3 — Knie (kurz)",time:"2 Min",exercises:[
-    {name:"Spanish Squat (Band hinter Knie, isometrisch)",reps:"2×30 Sek",video:L.spanishSquat},
-  ]},
-  b4:{title:"Block 4 — HWS",time:"4 Min",exercises:[
-    {name:"Chin Tucks (liegend, 3 Sek halten)",reps:"2×10",video:L.chinTucks},
-    {name:"HWS-Mobilität: 10× Rotation + 10× Nicken + 10× Neigen (Physio, sitzend)",reps:"1 Sequenz",video:L.cervGazeMob},
-    {name:"Wand-Retraktion + Thorax-Atmung (FR zwischen Knien, tief ein → Brustkorb öffnet, gerade aufbauen)",reps:"1×10 Atemzüge",video:L.chinTucks},
-  ]},
-};
-const PREHAB_CFG={
-  A:{blocks:['b1','b2f','b3s','b4'],total:'~12 Min'},
-  B:{blocks:['b1','b2s','b3f','b4'],total:'~15 Min'},
-  C:{blocks:['b1','b2f','b3s','b4'],total:'~12 Min'},
-  D:{blocks:['b1','b2s','b3f','b4'],total:'~15 Min'},
-};
-const PHASES=[
-  {name:"Anpassung",rpe:"RPE 6–7",focus:"Technik + Feedback"},
-  {name:"Anpassung",rpe:"RPE 6–7",focus:"Technik + Feedback"},
-  {name:"Aufbau",rpe:"RPE 7–8",focus:"Gewicht steigern"},
-  {name:"Aufbau",rpe:"RPE 7–8",focus:"Gewicht steigern"},
-  {name:"Intensivierung",rpe:"RPE 8–9",focus:"Peak-Intensität"},
-  {name:"Deload",rpe:"RPE 5–6",focus:"50 % Volumen"},
-];
-const DAY_TABS=[
-  {id:'A',label:'A',sub:'PUSH'},
-  {id:'B',label:'B',sub:'LOWER'},
-  {id:'RE1',label:'RE·1',sub:'SCHULTER'},
-  {id:'C',label:'C',sub:'PULL'},
-  {id:'D',label:'D',sub:'FULL'},
-  {id:'RE2',label:'RE·2',sub:'LOWER'},
-];
-const DAYS={
-  A:{id:'A',sections:[
-    {id:'A2',cat:'intensity',title:'A2 — Hauptbewegung',note:'Ersetzt Barbell OHP. Schräger Vektor entlastet Schulter + HWS.',exercises:[
-      {name:'Landmine Press (stehend, 1-Arm)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-0-1-1',v:L.landminePress},
-    ]},
-    {id:'A3',cat:'balance',title:'A3 — Superset: Push + Korrektur',superset:true,note:'Neutraler Griff. Ellenbogen stoppen auf Schulterhöhe — kein tiefer Stretch.',exercises:[
-      {name:'Incline DB Press 30° (neutral grip)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-1-1-0',v:L.inclineDB},
-      {name:'Band Pull-Apart',w:['3×15','3×15','3×15','3×15','3×15','2×15'],t:'2-1-1-0',v:L.bandPullApart},
-    ]},
-    {id:'A4',cat:'accessory',title:'A4 — Superset: Accessory',superset:true,note:'Floor Press: ROM durch Boden begrenzt — schützt Schulter.',exercises:[
-      {name:'Floor Press (DB, neutral grip)',w:['3×12','3×12','3×10','3×10','3×8','2×12'],t:'3-0-1-1',v:L.floorPress},
-      {name:'Tall Kneeling Pallof Press',w:['3×10/S','3×10/S','3×10/S','3×10/S','3×12/S','2×10/S'],t:'2-2-2-0',v:L.pallof},
-    ]},
-    {id:'A5',cond:true,weeks:[
-      {text:"3 Runden For Quality: Suitcase Carry 30 m/Seite + 8 Tempo Push-ups + 6 Dead Bug/Seite | 90 Sek Pause",dur:"9 Min",note:"Tempo Push-ups: 3-1-1-0. Schulterblätter stabil."},
-      {text:"EMOM 8: Odd = Ski Erg 12 Cal, Even = Push-ups ×10 + Pallof Hold 10 Sek/Seite",dur:"8 Min",note:"Pallof: Hüfte nicht rotieren."},
-      {text:"4 Runden For Quality: Bike Erg 15 Cal + Russian KB Swing ×10 + Suitcase Carry 20 m/Seite | 75 Sek Pause",dur:"12 Min",note:"Russian KB Swing = Hüfthöhe. Kein American Swing."},
-      {text:"AMRAP 10 (easy pace): 12 Cal Ski Erg + 8 Tempo Push-ups + Farmers Carry 30 m",dur:"10 Min",note:"Easy Pace: Nase-Atmung möglich."},
-      {text:"5 × Bike Erg 40 Sek max / 80 Sek easy — danach 2 Runden: Push-ups ×12 + Carry 30 m/Seite",dur:"12 Min",note:"Intervall: max Effort auf Bike."},
-      {text:"2 Runden For Quality: Ski Erg 10 Cal + Tempo Push-ups ×6 + Dead Bug ×4/Seite",dur:"5 Min",note:"Deload: Technik vor Output."},
-    ]},
-  ]},
-  B:{id:'B',sections:[
-    {id:'B2',cat:'intensity',title:'B2 — Hauptbewegung',note:'HSR-Protokoll. Schienbein vertikal. Knieflexion unter 60° halten.',exercises:[
-      {name:'SSB Box Squat (parallel, 0–60°)',w:['4×15','4×15','4×12','4×12','4×10','2×15'],t:'3-1-3-0',v:L.ssbBoxSquat},
-    ]},
-    {id:'B2b',cat:'bfr',bfr:true,note:'Ersetzt ab Woche 3 die Box Squats (B2) — kein zusätzliches Volumen, nur diese Variante statt der schweren Sätze. 20–30 % 1RM, Manschette an der Oberschenkel-Basis.',exercises:[
-      {name:'SSB Box Squat mit BFR-Manschette',w:['–','–','4×30-15-15-15','4×30-15-15-15','4×30-15-15-15','2×30-15-15-15'],t:'3-1-3-0',v:L.ssbBoxSquat},
-    ]},
-    {id:'B3',cat:'balance',title:'B3 — Superset: Hip Dominant',superset:true,note:'Trap Bar erhöhte Griffe. Hip Thrust vor Quad-Arbeit.',exercises:[
-      {name:'Trap Bar RDL (erhöhte Griffe)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-1-1-0',v:L.trapBarRDL},
-      {name:'Single-Leg Hip Thrust',w:['3×10/S','3×10/S','3×12/S','3×12/S','3×12/S','2×10/S'],t:'2-2-1-0',v:L.singleLegHipT},
-    ]},
-    {id:'B4',cat:'accessory',title:'B4 — Superset: Knie-Rehab',superset:true,note:'Box-Pause eliminiert Federwirkung der Sehne → minimale patellofemorale Last.',exercises:[
-      {name:'Box Squat parallel (moderat-schwer)',w:['4×15','4×15','4×12','4×12','4×10','2×15'],t:'3-1-3-0',v:L.ssbBoxSquat},
-      {name:'Nordic Hamstring Curl (exzentrisch)',w:['3×5','3×5','3×6','3×6','3×6','2×5'],t:'5-0-assist-0',v:L.nordicCurl},
-    ]},
-    {id:'B5',cond:true,weeks:[
-      {text:"EMOM 8: Odd = Russian KB Swing ×10, Even = Ski Erg 10 Cal",dur:"8 Min",note:"KB Swing = Hüfthöhe. Kein American Swing."},
-      {text:"3 Runden For Quality: Sled Push 40 m + KB Swing ×12 + Farmers Carry 40 m | 90 Sek Pause",dur:"9 Min",note:"Sled Push = konzentrisch-dominant. Kein Knie."},
-      {text:"EMOM 10: Odd = Ski Erg 15 Cal, Even = Russian KB Swing ×15",dur:"10 Min",note:"KB Swing = Hüfthöhe. Kein American Swing."},
-      {text:"4 Runden For Quality: Sled Push 40 m + Farmers Carry 40 m + KB Swing ×12 | 90 Sek Pause",dur:"12 Min",note:"Sled Push kontrolliert, ohne Kniestress."},
-      {text:"6 × Ski Erg 30 Sek max / 60 Sek Pause — danach 2 Runden: Sled Push 40 m + Carry 30 m",dur:"12 Min",note:"Intervall: max Effort auf Ski Erg."},
-      {text:"EMOM 6: Odd = KB Swing ×8, Even = Ski Erg 8 Cal",dur:"6 Min",note:"Deload: leicht und sauber."},
-    ]},
-  ]},
-  C:{id:'C',sections:[
-    {id:'C2',cat:'intensity',title:'C2 — Hauptbewegung: Pull',note:'Null HWS-Kompression (Brust auf Bank). Squeeze am Top.',exercises:[
-      {name:'Chest-Supported Row (DB, neutral grip, Incline Bank)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-1-1-1',v:L.chestSuppRow},
-    ]},
-    {id:'C3',cat:'balance',title:'C3 — Superset: Pull + Schulter',superset:true,note:'Ext. Rotation Press: Row → Ext. Rot. → Overhead Press.',exercises:[
-      {name:'Banded Lat Pulldown (neutral grip, kniend)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-0-1-1',v:L.bandedLatPD},
-      {name:'External Rotation Press (Band, nach Horschig)',w:['2×10','2×10','3×10','3×10','3×10','2×10'],t:'3-3-3-3',v:L.extRotPress},
-    ]},
-    {id:'C4',cat:'accessory',title:'C4 — Superset: Arm Pump',superset:true,note:'Hammer Curl entlastet Bizepssehne. Pushdown statt Overhead Extension.',exercises:[
-      {name:'Hammer Curl (DB)',w:['3×12','3×12','3×10','3×10','3×10','2×12'],t:'3-0-1-1',v:L.hammerCurl},
-      {name:'Cable Tricep Pushdown',w:['3×12','3×12','3×10','3×10','3×10','2×12'],t:'3-0-1-0',v:L.tricepPD},
-    ]},
-    {id:'C5',cond:true,weeks:[
-      {text:"3 Runden For Quality: Ring Row ×8 + Bike Erg 12 Cal + Banded TKE ×10/Seite | 90 Sek Pause",dur:"9 Min",note:"Ring Row: Brust zur Ringhöhe. Keine HWS-Kompression."},
-      {text:"AMRAP 8 (easy pace): Ring Row ×6 + Row 150 m + Pallof Press ×8/Seite",dur:"8 Min",note:"Easy Pace: Nase-Atmung möglich."},
-      {text:"EMOM 12 (4 Runden à 3 Min): Min 1 = Ring Row ×10, Min 2 = Bike Erg 15 Cal, Min 3 = Dead Bug ×6/Seite",dur:"12 Min",note:"Dead Bug: LWS am Boden — kein Hohlkreuz."},
-      {text:"4 Runden: Bike Erg 20 Cal + Ring Row ×10 + Suitcase Carry 30 m/Seite | 75 Sek Pause",dur:"12 Min",note:"Suitcase: Schulter passiv ziehen, nicht hochziehen."},
-      {text:"5 × Row 250 m / 90 Sek Pause",dur:"12 Min",note:"Row: Beine zuerst, dann Hüfte, dann Arme."},
-      {text:"2 Runden: Ring Row ×6 + Bike 10 Cal + Dead Bug ×4/Seite",dur:"6 Min",note:"Deload: Technik vor Output."},
-    ]},
-  ]},
-  D:{id:'D',sections:[
-    {id:'D2',cat:'intensity',title:'D2 — Komplexe Bewegung',note:'KB vor Brust = weniger axiale Kompression. ROM steigern wenn schmerzfrei.',exercises:[
-      {name:'Goblet Squat auf Box (60–70° Flexion max)',w:['3×12','3×12','3×10','3×10','3×10','2×12'],t:'3-1-1-0',v:L.gobletSquat},
-    ]},
-    {id:'D3',cat:'balance',title:'D3 — Superset: Push/Pull',superset:true,note:'',exercises:[
-      {name:'Half-Kneeling Landmine Row (1-Arm)',w:['3×10/S','3×10/S','3×10/S','3×10/S','4×8/S','2×10/S'],t:'3-0-1-1',v:L.landmineRow},
-      {name:'Tempo Push-up (evtl. erhöht)',w:['3×10','3×10','3×12','3×12','3×15','2×10'],t:'3-1-1-0',v:null},
-    ]},
-    {id:'D4',cat:'accessory',title:'D4 — Superset: Unilateral Lower',superset:true,note:'Touchdown Squat: Ferse tippt Boden. Hüfte zurück, Brust vor.',exercises:[
-      {name:'Touchdown Squat (Horschig, Plattenstapel)',w:['3×10/S','3×10/S','3×12/S','3×12/S','3×15/S','2×10/S'],t:'3-0-1-0',v:L.touchdownSq},
-      {name:'Single-Leg Calf Raise',w:['3×15/S','3×15/S','3×15/S','3×15/S','3×20/S','2×15/S'],t:'2-1-2-0',v:L.singleLegCalf},
-    ]},
-    {id:'D5',cond:true,weeks:[
-      {text:"2 Runden: Ski Erg 15 Cal + KB Swing ×10 + Step-up low Box ×8/Seite + Dead Bug ×6/Seite | 2 Min Pause",dur:"8 Min",note:"Step-up: niedrige Box ~20 cm, kontrolliert."},
-      {text:"EMOM 10: Min 1 = Bike 15 Cal, Min 2 = KB Swing ×12, Min 3 = Step-up ×8/Seite, Min 4 = Farmers Hold 30 Sek, Min 5 = Pause",dur:"10 Min",note:"Step-up: niedrige Box ~20 cm, kontrolliert."},
-      {text:"3 Runden: Bike 20 Cal + KB Swing ×12 + Step-up ×10/Seite + Suitcase Carry 20 m/Seite | 90 Sek Pause",dur:"12 Min",note:"Step-up Box unverändert. KB = Hüfthöhe."},
-      {text:"AMRAP 12 (moderate pace): 18 Cal Bike + KB Swing ×12 + Step-up ×8/Seite + Carry 30 m",dur:"12 Min",note:"Moderate Pace: Gespräch schwer möglich."},
-      {text:"5 Runden: Ski Erg 12 Cal + KB Swing ×10 + Step-up ×8/Seite | 60 Sek Pause",dur:"12 Min",note:"Intensivierung: Pausen knapp halten."},
-      {text:"2 Runden: Bike 12 Cal + KB Swing ×8 + Dead Bug ×6/Seite",dur:"6 Min",note:"Deload: Technik vor Output."},
-    ]},
-  ]},
-  RE1:{id:'RE1',mob:true,focus:'Schulter + T-Spine',exercises:[
-    {name:"Foam Roll Lats (Arm in Außenrotation)",reps:"1×90 Sek/Seite",v:L.foamRollLats},
-    {name:"Lacrosse Ball Pec (an Wand, mit Armbewegung)",reps:"1×90 Sek/Seite",v:L.lacrossePec},
-    {name:"Peanut Mobilization BWS",reps:"2×15/Segment",v:L.peanut},
-    {name:"Box T-Spine Stretch (PVC, kniend)",reps:"3–4×30 Sek",v:L.boxTSpine},
-    {name:"Corner Pec Stretch (Ellenbogen L, in Ecke)",reps:"3×20 Sek",v:L.cornerPec},
-    {name:"Cross-Body Stretch (Schulterblatt fixiert)",reps:"3×30 Sek/Seite",v:L.crossBodyStr},
-    {name:"Box Lat Stretch (kniend, PVC V-Griff)",reps:"3–5×30 Sek",v:L.boxLatStretch},
-    {name:"Prone Floor Angel (bäuchlings, volle Sequenz)",reps:"2×8",v:L.proneAngel},
-    {name:"Neural Flossing C7 (Ulnaris-Glide, Finger III–V)",reps:"2×10/Seite",v:L.neuralFlossC7},
-    {name:"Quadruped Upward Rotation (Rotation + Hold)",reps:"10–20/Seite",v:L.quadrupedRot},
-    {name:"Passive Dead Hang (bei HWS-Symptomen sofort stoppen)",reps:"2×15–20 Sek",v:L.deadHang},
-    {name:"Chin Tucks (liegend)",reps:"2×10",v:L.chinTucks},
-  ]},
-  RE2:{id:'RE2',mob:true,focus:'Lower Body + Hüfte + Knie',exercises:[
-    {name:"Foam Roll Quads (oberhalb Kniescheibe, langsam)",reps:"1×90 Sek/Seite",v:L.foamRollQuads},
-    {name:"Foam Roll lateraler Oberschenkel (VL/TFL)",reps:"1×90 Sek/Seite",v:L.foamRollQuads},
-    {name:"90/90 Hip Switch",reps:"2×8/Seite",v:L.hip9090},
-    {name:"Pigeon Stretch (knieschonend)",reps:"3×30 Sek/Seite",v:L.pigeonStretch},
-    {name:"Couch Stretch (Quad/Hüftbeuger)",reps:"3×30 Sek/Seite",v:L.couchStretch},
-    {name:"Waden-Mobilität (Wand, gerade + gebeugt)",reps:"2×30 Sek/Seite",v:L.calfStretch},
-    {name:"RNT Banded Squat (1.5 Reps, Band um Knie)",reps:"3 Runden",v:L.rntSquat},
-    {name:"Balance and Reach (T-Pattern, Single-Leg)",reps:"2×5/Richtung/S",v:L.balanceReach},
-    {name:"Lateral Band Walk",reps:"2×15/Richtung",v:L.lateralBandWalk},
-    {name:"Unilateral Abduction (Mini-Squat, Bein seitlich)",reps:"2×15/Seite",v:L.lateralBandWalk},
-    {name:"Single-Leg Bridge (5–10 Sek Hold)",reps:"2×12/Seite",v:L.singleLegBridge},
-    {name:"Cat/Cow (langsam)",reps:"1×10",v:L.catCow},
-    {name:"Chin Tucks (liegend)",reps:"2×10",v:L.chinTucks},
-  ]},
-};
-
-// ── STATE ────────────────────────────────────────────────────────────────────
-const S={
-  week:parseInt(localStorage.getItem('rb_week')||'1'),
-  day:localStorage.getItem('rb_day')||'A',
-  phOpen:localStorage.getItem('rb_ph')!=='0',
-  strOpen:localStorage.getItem('rb_str')!=='0',
-  coOpen:localStorage.getItem('rb_co')!=='0',
-  done:{},
-};
-const lsSet=(k,v)=>localStorage.setItem(k,String(v));
-const wKey=(d,s,ei,si)=>`rb_${d}_${s}_${ei}_${si}`;
-const getW=(d,s,ei,si)=>localStorage.getItem(wKey(d,s,ei,si))||'';
-
-// ── HELPERS ──────────────────────────────────────────────────────────────────
-function parseW(str){
-  if(!str||str==='–')return{sets:0,reps:'–',inactive:true};
-  const xi=str.indexOf('×');
-  if(xi<0)return{sets:1,reps:str,inactive:false};
-  return{sets:parseInt(str.slice(0,xi))||1,reps:str.slice(xi+1),inactive:false};
-}
-function tri(){return`<svg width="8" height="10" viewBox="0 0 8 10"><path d="M1 1l6 4-6 4V1z" fill="currentColor"/></svg>`;}
-function vidBtn(url,large){
-  if(!url)return'';
-  if(large)return`<a href="${url}" target="_blank" rel="noopener" class="vid-btn">${tri()}<span>VIDEO</span></a>`;
-  return`<a href="${url}" target="_blank" rel="noopener" class="vid-btn vid-sm">${tri()}</a>`;
-}
-function condFmt(text){
-  const t=text.toUpperCase();
-  if(t.startsWith('EMOM'))return'EMOM';
-  if(t.startsWith('AMRAP'))return'AMRAP';
-  if(t.includes('FOR QUALITY'))return'FOR QUALITY';
-  const m=t.match(/^(\d+)\s*RUNDEN/);if(m)return m[1]+' ROUNDS';
-  const m2=t.match(/^(\d+)\s*[×X]/);if(m2)return'INTERVALS';
-  return'CONDITIONING';
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
 }
 
-// ── RENDER HELPERS ────────────────────────────────────────────────────────────
-function renderSetRows(dayId,secId,exIdx,parsed){
-  if(parsed.inactive)return'';
-  let out='';
-  for(let i=0;i<parsed.sets;i++){
-    const k=wKey(dayId,secId,exIdx,i);
-    const dk=k+'_d';
-    const isDone=S.done[dk]||false;
-    const wv=getW(dayId,secId,exIdx,i);
-    out+=`<div class="set-row">
-      <button class="set-cb${isDone?' done':''}" data-act="toggle-set" data-dk="${dk}" data-ik="${k}" type="button">${isDone?'✓':i+1}</button>
-      <div class="set-w-wrap">
-        <input class="set-w-inp${isDone?' done':''}" type="text" inputmode="decimal" placeholder="___" data-wk="${k}" value="${wv}" autocomplete="off" autocorrect="off" autocapitalize="off">
-        <span class="set-kg">KG</span>
-      </div>
-      <span class="set-reps">× ${parsed.reps}</span>
-    </div>`;
+const I = {
+  chk: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  chv: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>',
+  fire: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 23c-4.97 0-9-3.58-9-8 0-3.07 2.31-6.64 4-8.5.82-.9 1.97-.59 2.29.47.4 1.33 1.12 2.53 2.21 3.53.3-2.2 1.13-4.4 2.86-6.5.64-.78 1.78-.55 2.14.36C18.31 8.86 21 12.33 21 15c0 4.42-4.03 8-9 8z"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>',
+  stop: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>',
+  rst: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>',
+  plus: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+};
+
+const CM = {orange:'#F58D2D',green:'#A8E6A3',purple:'#C8A2E8',yellow:'#F5E190',blue:'#93C5FD',pink:'#F9A8D4'};
+const ZC = {z1:'#93C5FD',z2:'#A8E6A3',z3:'#F5E190',z4:'#F58D2D',z5:'#F9A8D4'};
+const ZN = {z1:'Zone 1',z2:'Zone 2',z3:'Zone 3',z4:'Zone 4',z5:'Zone 5'};
+const BPC = {knie:'#A8E6A3',schulter:'#93C5FD',hws:'#C8A2E8',allgemein:'#F5E190'};
+const BPN = {knie:'Knie',schulter:'Schulter',hws:'HWS',allgemein:'Allgemein'};
+const DAYS = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+
+const P = {
+  daily: {
+    label: "Alltag",
+    phases: [
+      { name: "Soft Tissue", time: "~5 Min", color: "orange", exercises: [
+        { name: "Foam Rolling Quads", meta: "2 Min pro Seite",
+          why: "<strong>Warum:</strong> Lockert den Vastus medialis und verbessert die Durchblutung um die Patella. Bei Grad-4-Knorpelschaden ist gute Knorpelernahrung entscheidend.",
+          steps: ["Foam Roller unter den vorderen Oberschenkel","Langsam von Hufte bis oberhalb des Knies rollen","Fokus Innenseite (VMO)","Bei Triggerpunkten 20-30s verweilen","Nicht direkt auf der Kniescheibe"],
+          vid: "4SGMbKMKgRk", timer: 120 },
+        { name: "Narbengewebe-Massage", meta: "2 Min, oberhalb inneres Knie",
+          why: "<strong>Warum:</strong> Vernarbtes Gewebe von der alten Langhantel-Verletzung braucht Cross-Friction-Massage um Adhasionen aufzubrechen.",
+          steps: ["Sitz bequem, Knie leicht gebeugt","Verhartetes Gewebe oberhalb inneres Knie finden","Daumen quer zur Faserrichtung massieren","Mittlerer Druck","30s Cross-Friction, 10s kreisend"],
+          vid: "V4xOrzHGJ4s", timer: 120 },
+        { name: "Waden + Hamstring Stretch", meta: "2x30s pro Seite",
+          why: "<strong>Warum:</strong> Baker-Zyste = Flussigkeit in der Kniekehle. Lockere Waden/Hamstrings reduzieren den Druck und verbessern die Streckung.",
+          steps: ["Wade: Ausfallschritt an Wand, Ferse am Boden, 30s","Seite wechseln","Hamstring: Bein gestreckt auf Stuhl, vorwarts lehnen, 30s"],
+          vid: "gJio0lPysF8", timer: 30 }
+      ]},
+      { name: "Kraftigung", time: "~10 Min", color: "green", exercises: [
+        { name: "Quad Sets", meta: "3x10, je 10s halten",
+          why: "<strong>Warum:</strong> Basisubung bei Grad-4-Knorpelschaden. Aktiviert Quadrizeps ohne Gelenkbewegung, minimiert Belastung auf den retropatellaren Knorpel.",
+          steps: ["Ruckenlage, Bein gestreckt","Handtuchrolle unter Kniekehle","Quad anspannen, Kniescheibe zieht Richtung Hufte","10s halten, losen","10 Wdh, 3 Satze"],
+          vid: "9EhHFemc8WQ", timer: 10 },
+        { name: "Straight Leg Raise", meta: "3x10, 3s oben",
+          why: "<strong>Warum:</strong> Starkt VMO durch Fus-Ausenrotation. Besseres Patella-Tracking korrigiert Fehlbelastung an der medialen Facette.",
+          steps: ["Ruckenlage, gesundes Bein angewinkelt","Betroffenes Bein strecken, Fus leicht nach ausen","Quad anspannen, Bein 30cm heben","3s oben, ablegen","10x, 3 Satze"],
+          vid: "zo2pqw794B0", timer: 0 },
+        { name: "TKE mit Band", meta: "3x15",
+          why: "<strong>Warum:</strong> Isoliert die letzten 20-30 Grad der Kniestreckung, wo der VMO am starksten arbeitet.",
+          steps: ["Band auf Kniehohe an Rack","Band hinter betroffenes Knie","Zurucktreten fur Spannung","Knie gegen Band vollstandig strecken","15 Wdh, 3 Satze"],
+          vid: "W7n9dUiEbLM", timer: 0 },
+        { name: "Spanish Squat", meta: "3x30s",
+          why: "<strong>Warum:</strong> Belastet Quad stark ohne patellofemorale Kompression. Band zieht Tibia zuruck und entlastet die Patella.",
+          steps: ["Band auf Kniehohe, hinter beide Knie","Fuse huftbreit, Gewicht auf Fersen","Hufte nach hinten-unten, ca. 60-70 Grad","30s halten, 3 Satze","Nur so tief wie schmerzfrei"],
+          vid: "mik90mAS6fU", timer: 30 }
+      ]},
+      { name: "Cooldown", time: "~3 Min", color: "purple", exercises: [
+        { name: "Knie-Pendel", meta: "2x20",
+          why: "<strong>Warum:</strong> Sanfte Bewegung fordert synoviale Flussigkeitsproduktion und nahrt den Knorpel. Hilft gegen Baker-Zyste.",
+          steps: ["Am Tischrand sitzen, Beine frei","Knie sanft vor und zuruck pendeln","Komplett entspannt, 20x, Pause, 20x"],
+          vid: "ubCsg3Msvpg", timer: 0 },
+        { name: "Quad Stretch", meta: "2x30s",
+          why: "<strong>Warum:</strong> Dehnt Quadrizeps, verbessert Kniebeugung und reduziert den Zug auf die Patella.",
+          steps: ["Bauchlage","Ferse zum Gesas ziehen","Sanft dehnen, 30s","Nur so weit wie schmerzfrei"],
+          vid: "YoVQ3Wjz7os", timer: 30 }
+      ]}
+    ]
+  },
+  training: {
+    label: "Training",
+    phases: [
+      { name: "Pre-Workout", time: "~5 Min", color: "yellow", exercises: [
+        { name: "Foam Rolling Quads", meta: "90s pro Seite",
+          why: "<strong>Warum:</strong> Quads vor Box Squats und RDLs aufwarmen und Adhasionen losen.",
+          steps: ["Foam Roller unter Oberschenkel","Fokus VMO (innen)","90s pro Seite"],
+          vid: "4SGMbKMKgRk", timer: 90 },
+        { name: "Narbengewebe kurz", meta: "60s",
+          why: "<strong>Warum:</strong> Schnelle Mobilisation vor Belastung.",
+          steps: ["Cross-Friction oberhalb inneres Knie","60s, mittlerer Druck"],
+          vid: "V4xOrzHGJ4s", timer: 60 },
+        { name: "TKE Aktivierung", meta: "2x10, leichtes Band",
+          why: "<strong>Warum:</strong> VMO-Aktivierung vor schwerem Training. Verbessert Patella-Tracking wahrend Box Squats.",
+          steps: ["Leichtes Band, 2x10","Saubere volle Kniestreckung","Nur Aktivierung"],
+          vid: "W7n9dUiEbLM", timer: 0 }
+      ]},
+      { name: "Post-Workout", time: "~5 Min", color: "pink", exercises: [
+        { name: "Knie-Pendel", meta: "2x30",
+          why: "<strong>Warum:</strong> Synovialflussigkeit verteilen nach Belastung. Reduziert Schwellung.",
+          steps: ["Tischrand sitzen","Bein pendeln lassen, 30x","Entspannt"],
+          vid: "ubCsg3Msvpg", timer: 0 },
+        { name: "Waden + Hamstring", meta: "2x30s pro Seite",
+          why: "<strong>Warum:</strong> Baker-Zyste-Management nach Belastung.",
+          steps: ["Wade: Ausfallschritt, 30s/Seite","Hamstring: Bein auf Stuhl, 30s"],
+          vid: "gJio0lPysF8", timer: 30 },
+        { name: "Quad Stretch", meta: "2x30s",
+          why: "<strong>Warum:</strong> Quad nach Box Squats dehnen. Reduziert patellaren Zug.",
+          steps: ["Bauchlage, Ferse zum Gesas","30s halten"],
+          vid: "YoVQ3Wjz7os", timer: 30 }
+      ]}
+    ]
   }
-  return out;
+};
+
+// === Rehab State ===
+let S = { p:'daily', d:{}, o:{}, t:{}, streak:0, last:null };
+try { const x=localStorage.getItem('kr3'); if(x) S={...S,...JSON.parse(x)}; } catch(e){}
+function save(){ try{localStorage.setItem('kr3',JSON.stringify({...S,t:{}}));}catch(e){} }
+
+// === Load Tracking State ===
+let LD = { readiness:{}, sessions:[] };
+try { const x=localStorage.getItem('kr3_load'); if(x) LD={...LD,...JSON.parse(x)}; } catch(e){}
+function saveLd(){ try{localStorage.setItem('kr3_load',JSON.stringify(LD));}catch(e){} }
+
+// === Helpers ===
+function id(a,b){ return S.p+'-'+a+'-'+b; }
+function tot(){ let n=0; P[S.p].phases.forEach(p=>n+=p.exercises.length); return n; }
+function dn(){ let n=0; P[S.p].phases.forEach((p,i)=>p.exercises.forEach((_,j)=>{if(S.d[id(i,j)])n++;})); return n; }
+function tog(a,b){ S.d[id(a,b)]=!S.d[id(a,b)]; if(dn()===tot()){S.last=new Date().toDateString();} save();render(); }
+function exp(a,b){ S.o[id(a,b)]=!S.o[id(a,b)]; render(); }
+function sp(k){ S.p=k; render(); }
+function res(){ P[S.p].phases.forEach((p,i)=>p.exercises.forEach((_,j)=>{delete S.d[id(i,j)];}));
+  Object.keys(S.t).forEach(k=>{if(S.t[k].iv)clearInterval(S.t[k].iv);delete S.t[k];}); save();render(); }
+function fmt(s){ return Math.floor(s/60)+':'+(s%60).toString().padStart(2,'0'); }
+
+function tmr(k,s){
+  if(S.t[k]&&S.t[k].iv){clearInterval(S.t[k].iv);delete S.t[k];render();return;}
+  S.t[k]={rem:s,iv:setInterval(()=>{
+    S.t[k].rem--;
+    if(S.t[k].rem<=0){
+      clearInterval(S.t[k].iv);
+      try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator();const g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=800;g.gain.value=0.3;o.start();setTimeout(()=>{o.stop();c.close();},300);}catch(e){}
+      delete S.t[k];render();return;
+    }
+    const el=document.getElementById('t-'+k);if(el)el.textContent=fmt(S.t[k].rem);
+  },1000)};
+  render();
 }
 
-function renderExCard(ex,dayId,secId,exIdx,badge){
-  const wStr=ex.w[S.week-1];
-  const p=parseW(wStr);
-  const rl=String(p.reps).length;
-  const rf=rl>6?'52px':rl>4?'72px':'100px';
-  const isBfr=DAYS[dayId].sections.find(s=>s.id===secId)?.bfr||false;
-  return`<article class="ex-card${p.inactive?' bfr-inactive':''}">
-    <div class="ex-pos">
-      <div class="ex-eyebrow">
-        <span>${badge?`<span class="ex-badge">${badge}</span> · `:''}${p.inactive?'AB WOCHE 3':wStr}</span>
-        <span>${p.inactive?'— BFR OPTION —':p.sets+' SÄTZE'}</span>
-      </div>
-      <h3 class="ex-name">${ex.name}</h3>
-    </div>
-    ${!p.inactive?`<div class="ex-neg">
-      <div class="neg-lbl">PRESCRIPTION</div>
-      <div class="reps-hero">
-        <span class="reps-sets">${p.sets}</span>
-        <span class="reps-x">×</span>
-        <span class="reps-count" style="font-size:${rf}">${p.reps}</span>
-      </div>
-      <div class="neg-meta">
-        <div>
-          <div class="neg-tempo-lbl">TEMPO</div>
-          <div class="neg-tempo-val">${ex.t}</div>
-        </div>
-        ${vidBtn(ex.v,true)}
-      </div>
-      <div class="set-log-hdr"><span>LOG</span><span>KG × REPS</span></div>
-      ${renderSetRows(dayId,secId,exIdx,p)}
-      <div class="ex-neg-pad"></div>
-    </div>`:''}
-  </article>`;
+// === Date helpers ===
+function ds(d){ return d.toISOString().split('T')[0]; }
+function today(){ return ds(new Date()); }
+function weekStart(){
+  const d=new Date(); const day=d.getDay(); const diff=d.getDate()-day+(day===0?-6:1);
+  return new Date(d.setDate(diff));
+}
+function getWeekDays(){
+  const ws=weekStart(); const days=[];
+  for(let i=0;i<7;i++){const d=new Date(ws);d.setDate(ws.getDate()+i);days.push(ds(d));}
+  return days;
+}
+function fmtDate(s){
+  const d=new Date(s+'T12:00:00');
+  return d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});
+}
+function dayName(s){
+  const d=new Date(s+'T12:00:00');
+  return DAYS[((d.getDay()+6)%7)];
 }
 
-function renderCond(sec,weekIdx){
-  const w=sec.weeks[weekIdx];
-  const fmt=condFmt(w.text);
-  const note=w.note||sec.note||'';
-  return`<section class="cond-section">
-    ${note?`<div class="sec-note" style="padding-top:14px">${note}</div>`:''}
-    <div class="cond-hero">
-      <h2 class="cond-title">${fmt}</h2>
-      <p class="cond-body">${w.text}</p>
-      <div class="cond-grid">
-        <div class="cond-cell"><div class="cond-cell-lbl">DURATION</div><div class="cond-cell-val">${w.dur}</div></div>
-        <div class="cond-cell"><div class="cond-cell-lbl">FORMAT</div><div class="cond-cell-mode">${fmt}</div></div>
-      </div>
-    </div>
-  </section>`;
+// === Load calculations ===
+function weekSessions(){
+  const days=getWeekDays();
+  return LD.sessions.filter(s=>days.includes(s.date));
 }
 
-function renderSection(sec,dayId,weekIdx){
-  if(sec.cond)return renderCond(sec,weekIdx);
-  const exHtml=sec.exercises.map((ex,ei)=>{
-    const badge=sec.superset?String.fromCharCode(65+ei):null;
-    return renderExCard(ex,dayId,sec.id,ei,badge);
-  }).join('');
-  if(sec.superset){
-    return`<section class="ss-group">
-      <div class="ss-bracket-wrap"><div class="ss-bracket"></div><div class="ss-inner">${sec.note?`<div class="sec-note">${sec.note}</div>`:''}${exHtml}</div></div>
-    </section>`;
+function dailyLoads(){
+  const days=getWeekDays();
+  const loads={};
+  days.forEach(d=>loads[d]=0);
+  weekSessions().forEach(s=>{
+    const srpe=(s.rpe||5)*(s.duration||30);
+    loads[s.date]=(loads[s.date]||0)+srpe;
+  });
+  return loads;
+}
+
+function bpWeekVolume(){
+  const vol={knie:0,schulter:0,hws:0,allgemein:0};
+  weekSessions().filter(s=>s.type==='strength').forEach(s=>{
+    const bp=s.bodyPart||'allgemein';
+    if(s.exercises){
+      s.exercises.forEach(ex=>{
+        vol[bp]+=(ex.sets||0)*(ex.reps||0)*(ex.weight||0);
+      });
+    }
+  });
+  return vol;
+}
+
+function bpStatus(vol){
+  if(vol===0) return {color:'#E0E0E0',label:'--'};
+  if(vol<2000) return {color:'#6BC46A',label:'Leicht'};
+  if(vol<5000) return {color:'#E8C840',label:'Moderat'};
+  if(vol<8000) return {color:'var(--orange)',label:'Hoch'};
+  return {color:'#DC2626',label:'Sehr hoch'};
+}
+
+function weekTotalLoad(){
+  let t=0;
+  weekSessions().forEach(s=>t+=(s.rpe||5)*(s.duration||30));
+  return t;
+}
+
+// === Readiness ===
+function setRdy(key, val){
+  const t=today();
+  if(!LD.readiness[t]) LD.readiness[t]={sleep:0,soreness:0,mood:0};
+  LD.readiness[t][key]=val;
+  saveLd();
+  render();
+}
+
+function rdyColor(key, val){
+  if(key==='soreness'){
+    if(val<=2) return 'c-green';
+    if(val<=3) return 'c-yellow';
+    if(val<=4) return 'c-orange';
+    return 'c-red';
   }
-  return`<section>
-    ${sec.note?`<div class="sec-note" style="padding-top:14px">${sec.note}</div>`:''}
-    ${exHtml}
-  </section>`;
+  if(val>=4) return 'c-green';
+  if(val>=3) return 'c-yellow';
+  if(val>=2) return 'c-orange';
+  return 'c-red';
 }
 
-function renderPrehab(dayId){
-  const cfg=PREHAB_CFG[dayId];if(!cfg)return'';
-  let n=0;
-  const blocks=cfg.blocks.map(bid=>{
-    const blk=PB[bid];
-    const rows=blk.exercises.map(e=>{
-      n++;
-      return`
-      <div class="pb-ex-row">
-        <span class="pb-num">${String(n).padStart(2,'0')}</span>
-        <div class="pb-ex-info">
-          <span class="pb-name">${e.name}</span>
-          <span class="pb-reps">${e.reps}</span>
-        </div>
-        ${vidBtn(e.video,false)}
-      </div>`;
-    }).join('');
-    return`<div style="margin-bottom:4px"><div class="pb-block-head">${blk.title} · ${blk.time}</div>${rows}</div>`;
-  }).join('');
-  return`<div class="prehab-wrap">
-    <button class="prehab-toggle" data-act="toggle-ph" type="button">
-      <span class="prehab-toggle-label">
-        <span class="prehab-marker">I</span>
-        <span class="prehab-title">Prehabilitation</span>
-      </span>
-      <span class="prehab-icon">${S.phOpen?'[−]':'[+]'}</span>
-    </button>
-    <div class="prehab-body${S.phOpen?' open':''}">${blocks}</div>
-  </div>`;
+function rdyAvg(){
+  const r=LD.readiness[today()];
+  if(!r||(!r.sleep&&!r.soreness&&!r.mood)) return null;
+  const sl=r.sleep||3, so=r.soreness||3, mo=r.mood||3;
+  return Math.round(((sl+(6-so)+mo)/3)*10)/10;
 }
 
-function renderMob(dayData){
-  const isRE1=dayData.id==='RE1';
-  const heading=isRE1?`Restore<br><span>& Flow</span>`:`Lower<br><span>Restore</span>`;
-  const sub=isRE1?'RE 1 · SCHULTER + T-SPINE · ~30 MIN':'RE 2 · LOWER + KNIE · ~30 MIN';
-  const rows=dayData.exercises.map((ex,i)=>`
-    <div class="mob-row">
-      <span class="mob-n">${String(i+1).padStart(2,'0')}</span>
-      <div><div class="mob-name">${ex.name}</div><div class="mob-reps">${ex.reps}</div></div>
-      ${vidBtn(ex.v,false)}
-    </div>`).join('');
-  return`<section class="mob-section">
-    <div class="mob-eyebrow">◉ ${sub}</div>
-    <h2 class="mob-heading">${heading}</h2>
-    <div class="mob-list">${rows}</div>
-  </section>`;
+// === SVG Charts ===
+function svgBarChart(loads){
+  const days=getWeekDays();
+  const vals=days.map(d=>loads[d]||0);
+  const max=Math.max(...vals,100);
+  const w=320, h=140, bw=32, gap=14, ox=0, oy=10;
+  const totalW=7*bw+6*gap;
+  const startX=(w-totalW)/2;
+
+  let svg=`<svg viewBox="0 0 ${w} ${h+30}" xmlns="http://www.w3.org/2000/svg">`;
+
+  // Grid lines
+  for(let i=0;i<=4;i++){
+    const y=oy+h-(h*i/4);
+    svg+=`<line x1="${startX}" y1="${y}" x2="${startX+totalW}" y2="${y}" stroke="#EAEAEA" stroke-width="1"/>`;
+  }
+
+  // Bars
+  days.forEach((d,i)=>{
+    const v=vals[i];
+    const bh=max>0?(v/max)*h:0;
+    const x=startX+i*(bw+gap);
+    const y=oy+h-bh;
+    const isToday=d===today();
+    const col=isToday?'var(--text)':'#D4D4D4';
+    const r=Math.min(6,bh/2);
+
+    if(bh>0){
+      svg+=`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="${r}" fill="${col}"/>`;
+    }
+    if(v>0){
+      svg+=`<text x="${x+bw/2}" y="${y-6}" text-anchor="middle" font-size="10" font-weight="700" fill="var(--text)" font-family="Inter,sans-serif">${v}</text>`;
+    }
+    // Day label
+    const dn=dayName(d);
+    svg+=`<text x="${x+bw/2}" y="${oy+h+16}" text-anchor="middle" font-size="11" fill="${isToday?'var(--text)':'#AAA'}" font-weight="${isToday?'700':'500'}" font-family="Inter,sans-serif">${dn}</text>`;
+  });
+
+  svg+=`</svg>`;
+  return svg;
 }
 
-function renderPhase(wi){
-  const ph=PHASES[wi];
-  const isDeload=wi===5;
-  const phases=['Anpas-<br><span class="ph-sky">sung</span>','Anpas-<br><span class="ph-sky">sung</span>','Auf-<br><span class="ph-sky">bau</span>','Auf-<br><span class="ph-sky">bau</span>','Inten-<br><span class="ph-sky">sivierung</span>','<span class="ph-sky">Deload</span>'];
-  return`<div class="phase-dossier">
-    <div class="phase-eye"><span>PHASE DOSSIER</span><span>WEEK 0${S.week} / 06</span></div>
-    <div class="phase-heading">${phases[wi]}<span class="ph-fire"> ·0${S.week}</span></div>
-    ${isDeload?`<div class="deload-notice">⚠ DELOAD — 50 % VOLUMEN · TECHNIK-FOKUS</div>`:''}
-    <div class="phase-pills">
-      <span class="phase-pill pill-rpe">${ph.rpe}</span>
-      <span class="phase-pill pill-focus">${ph.focus}</span>
-    </div>
-  </div>`;
+function svgZonesBar(zones){
+  const total=Object.values(zones).reduce((a,b)=>a+b,0);
+  if(total===0) return '';
+  const w=300, h=20, r=6;
+
+  let svg=`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">`;
+  let x=0;
+  const keys=['z1','z2','z3','z4','z5'];
+  keys.forEach((k,i)=>{
+    const v=zones[k]||0;
+    if(v===0) return;
+    const bw=(v/total)*w;
+    const rx=i===0?`${r}`:0;
+    const isLast=keys.slice(i+1).every(kk=>(zones[kk]||0)===0);
+    svg+=`<rect x="${x}" y="0" width="${bw}" height="${h}" fill="${ZC[k]}" rx="${i===0||isLast?r:0}"/>`;
+    if(bw>24){
+      svg+=`<text x="${x+bw/2}" y="${h/2+1}" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="700" fill="rgba(0,0,0,0.5)" font-family="Inter,sans-serif">${v}m</text>`;
+    }
+    x+=bw;
+  });
+  svg+=`</svg>`;
+  return svg;
 }
 
-// ── FULL RENDER ───────────────────────────────────────────────────────────────
-function renderHeader(){
-  const now=new Date();
-  const dd=String(now.getDate()).padStart(2,'0');
-  const mm=String(now.getMonth()+1).padStart(2,'0');
-  const yy=String(now.getFullYear()).slice(2);
-  const dn=['SO','MO','DI','MI','DO','FR','SA'][now.getDay()];
-  const wkBtns=[1,2,3,4,5,6].map(w=>`<button class="wk-btn${S.week===w?' active':''}" data-act="set-week" data-w="${w}" type="button"><span class="wk-sub">Wk</span>${w}</button>`).join('');
-  const dayBtns=DAY_TABS.map(d=>`<button class="day-btn${S.day===d.id?' active':''}" data-act="set-day" data-d="${d.id}" type="button"><span class="day-lbl">${d.label}</span><span class="day-sub">${d.sub}</span></button>`).join('');
-  document.getElementById('appHeader').innerHTML=`
-    <div class="hdr-dateline"><span>NO. 0${S.week} · VOL. VI</span><span>${dn} / ${dd}.${mm}.${yy}</span></div>
-    <div class="hdr-wordmark">REBUILD<span>°</span></div>
-    <div class="hdr-tagline">— A TRAINING LEDGER —</div>
-    <div class="hdr-rule"></div>
-    <div class="week-rail">${wkBtns}</div>
-    <div class="hdr-rule-thin"></div>
-    <div class="day-tabs">${dayBtns}</div>`;
+function svgDonut(data, size){
+  // data: [{label, value, color}]
+  const total=data.reduce((a,b)=>a+b.value,0);
+  if(total===0) return '';
+  const cx=size/2, cy=size/2, r=size/2-12, sw=10;
+  const circ=2*Math.PI*r;
+  let offset=0;
+
+  let svg=`<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">`;
+  // Background ring
+  svg+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#EAEAEA" stroke-width="${sw}"/>`;
+
+  data.forEach(d=>{
+    if(d.value===0) return;
+    const pct=d.value/total;
+    const dash=pct*circ;
+    const gap=circ-dash;
+    svg+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${sw}" stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})" stroke-linecap="round"/>`;
+    offset+=dash;
+  });
+
+  // Center text
+  svg+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="18" font-weight="700" fill="var(--text)" font-family="ImageFuture,Inter,sans-serif">${total}</text>`;
+  svg+=`<text x="${cx}" y="${cy+10}" text-anchor="middle" font-size="9" fill="var(--text2)" font-family="Inter,sans-serif">sRPE</text>`;
+  svg+=`</svg>`;
+  return svg;
 }
 
-function renderMain(){
-  const d=DAYS[S.day];
-  const wi=S.week-1;
-  let html='';
-  if(d.mob){
-    html+=renderMob(d);
-  } else {
-    html+=renderPhase(wi);
-    html+=renderPrehab(S.day);
-    const strengthSecs=d.sections.filter(s=>!s.cond);
-    const condSecs=d.sections.filter(s=>s.cond);
-    if(strengthSecs.length){
-      const catLbl={intensity:'Strength Intensity',balance:'Strength Balance',accessory:'Strength Accessory',bfr:'BFR Option'};
-      let strBody='';
-      for(let i=0;i<strengthSecs.length;i++){
-        const sec=strengthSecs[i];
-        const title=catLbl[sec.cat]||'Strength';
-        const sub=sec.superset?'Superset · Back-to-back · 90s Rest':'';
-        strBody+=`<div class="blk-cap${i===0?' first':''}"><div class="blk-cap-ttl">${title}</div>${sub?`<div class="blk-cap-sub">${sub}</div>`:''}</div>`;
-        strBody+=renderSection(sec,S.day,wi);
+function svgSparkline(values, color){
+  const h=20, bw=4, gap=2;
+  const w=values.length*(bw+gap);
+  const max=Math.max(...values,5);
+  let svg=`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:${w}px;height:${h}px">`;
+  values.forEach((v,i)=>{
+    const bh=max>0?(v/max)*h:2;
+    svg+=`<rect x="${i*(bw+gap)}" y="${h-bh}" width="${bw}" height="${Math.max(bh,2)}" rx="1.5" fill="${v>0?color:'#E0E0E0'}"/>`;
+  });
+  svg+=`</svg>`;
+  return svg;
+}
+
+// === Modal ===
+function openModal(html){
+  const m=document.getElementById('modal');
+  m.innerHTML=`<div class="modal-sheet">${html}</div>`;
+  m.classList.add('open');
+  m.addEventListener('click',function handler(e){if(e.target===m){closeModal();m.removeEventListener('click',handler);}});
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+
+// === Session Management ===
+function delSession(idx){
+  LD.sessions.splice(idx,1);
+  saveLd();
+  render();
+}
+
+function openCardioForm(){
+  let h=`<button class="modal-close" onclick="closeModal()">&times;</button>`;
+  h+=`<div class="modal-title hl">Kardio Session</div>`;
+  h+=`<div class="field"><label>Datum</label><input type="date" id="f-date" value="${today()}"></div>`;
+  h+=`<div class="field"><label>Aktivitat</label><input type="text" id="f-name" placeholder="z.B. Laufen, Radfahren, Rudern"></div>`;
+  h+=`<div class="field-row"><div class="field"><label>Dauer (Min)</label><input type="number" id="f-dur" placeholder="30" inputmode="numeric"></div>`;
+  h+=`<div class="field"><label>RPE (1-10)</label><input type="number" id="f-rpe" placeholder="6" min="1" max="10" inputmode="numeric"></div></div>`;
+  h+=`<div class="field"><label>Durchschnitts-HR</label><input type="number" id="f-hr" placeholder="145" inputmode="numeric"></div>`;
+  h+=`<div class="hub-section-title" style="margin-top:8px">Zeit pro HR-Zone (Min)</div>`;
+  h+=`<div class="field-row3">`;
+  ['z1','z2','z3','z4','z5'].forEach((z,i)=>{
+    if(i===3) h+=`</div><div class="field-row3" style="margin-top:4px">`;
+    h+=`<div class="field"><label style="display:flex;align-items:center;gap:4px"><span class="zd" style="background:${ZC[z]};width:8px;height:8px;border-radius:2px;display:inline-block"></span>Z${i+1}</label><input type="number" id="f-${z}" placeholder="0" inputmode="numeric"></div>`;
+  });
+  h+=`<div></div></div>`;
+  h+=`<button class="add-btn" style="margin-top:20px" onclick="saveCardio()">Speichern</button>`;
+  openModal(h);
+}
+
+function saveCardio(){
+  const s={
+    id: Date.now(),
+    date: document.getElementById('f-date').value||today(),
+    type: 'cardio',
+    name: document.getElementById('f-name').value||'Kardio',
+    duration: parseInt(document.getElementById('f-dur').value)||30,
+    rpe: parseInt(document.getElementById('f-rpe').value)||5,
+    avgHR: parseInt(document.getElementById('f-hr').value)||0,
+    zones: {
+      z1: parseInt(document.getElementById('f-z1').value)||0,
+      z2: parseInt(document.getElementById('f-z2').value)||0,
+      z3: parseInt(document.getElementById('f-z3').value)||0,
+      z4: parseInt(document.getElementById('f-z4').value)||0,
+      z5: parseInt(document.getElementById('f-z5').value)||0
+    }
+  };
+  LD.sessions.push(s);
+  saveLd();
+  closeModal();
+  render();
+}
+
+function openStrengthForm(){
+  let h=`<button class="modal-close" onclick="closeModal()">&times;</button>`;
+  h+=`<div class="modal-title hl">Kraft Session</div>`;
+  h+=`<div class="field"><label>Datum</label><input type="date" id="f-date" value="${today()}"></div>`;
+  h+=`<div class="field"><label>Session-Name</label><input type="text" id="f-name" placeholder="z.B. Upper Body, Persist Day 1"></div>`;
+  h+=`<div class="field-row"><div class="field"><label>Dauer (Min)</label><input type="number" id="f-dur" placeholder="60" inputmode="numeric"></div>`;
+  h+=`<div class="field"><label>RPE (1-10)</label><input type="number" id="f-rpe" placeholder="7" min="1" max="10" inputmode="numeric"></div></div>`;
+  h+=`<div class="field"><label>Korperteil</label><div class="field-pills" id="f-bp">`;
+  Object.entries(BPN).forEach(([k,v])=>{
+    h+=`<button class="field-pill" data-bp="${k}" onclick="pickBp(this,'${k}')">${v}</button>`;
+  });
+  h+=`</div></div>`;
+  h+=`<div class="hub-section-title" style="margin-top:4px">Ubungen</div>`;
+  h+=`<div id="f-exlist"></div>`;
+  h+=`<button class="add-btn sec" onclick="addExField()" style="margin-bottom:16px">${I.plus} Ubung hinzufugen</button>`;
+  h+=`<button class="add-btn" onclick="saveStrength()">Speichern</button>`;
+  openModal(h);
+  window._selBp='allgemein';
+  addExField();
+}
+
+let _exCount=0;
+function addExField(){
+  _exCount++;
+  const div=document.getElementById('f-exlist');
+  const el=document.createElement('div');
+  el.className='ex-entry';
+  el.id='ex-'+_exCount;
+  el.innerHTML=`<div class="ex-entry-top"><input type="text" placeholder="Ubungsname" class="ex-name"><button class="ex-rm" onclick="this.parentElement.parentElement.remove()">&times;</button></div>
+    <div class="field-row3"><div class="field"><label>Sets</label><input type="number" class="ex-sets" placeholder="3" inputmode="numeric"></div>
+    <div class="field"><label>Reps</label><input type="number" class="ex-reps" placeholder="10" inputmode="numeric"></div>
+    <div class="field"><label>Gewicht</label><input type="number" class="ex-weight" placeholder="kg" inputmode="numeric"></div></div>`;
+  div.appendChild(el);
+}
+
+function pickBp(el, bp){
+  window._selBp=bp;
+  document.querySelectorAll('#f-bp .field-pill').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function saveStrength(){
+  const exEls=document.querySelectorAll('#f-exlist .ex-entry');
+  const exercises=[];
+  exEls.forEach(el=>{
+    const name=el.querySelector('.ex-name').value;
+    const sets=parseInt(el.querySelector('.ex-sets').value)||0;
+    const reps=parseInt(el.querySelector('.ex-reps').value)||0;
+    const weight=parseInt(el.querySelector('.ex-weight').value)||0;
+    if(name||sets||reps) exercises.push({name:name||'Ubung',sets,reps,weight});
+  });
+  const s={
+    id: Date.now(),
+    date: document.getElementById('f-date').value||today(),
+    type: 'strength',
+    name: document.getElementById('f-name').value||'Kraft',
+    duration: parseInt(document.getElementById('f-dur').value)||60,
+    rpe: parseInt(document.getElementById('f-rpe').value)||5,
+    bodyPart: window._selBp||'allgemein',
+    exercises
+  };
+  LD.sessions.push(s);
+  saveLd();
+  closeModal();
+  render();
+}
+
+// === Hub Render ===
+function renderHub(){
+  const rdy=LD.readiness[today()]||{sleep:0,soreness:0,mood:0};
+  const loads=dailyLoads();
+  const bpVol=bpWeekVolume();
+  const wTotal=weekTotalLoad();
+  const ws=weekSessions();
+
+  let h='<div class="hero"><h1 class="hl">Load<br>Hub</h1><div class="hero-row">';
+  const avg=rdyAvg();
+  if(avg!==null) h+=`<div class="badge">${avg>=3.5?'&#9889;':'&#9888;'} Readiness ${avg.toFixed(1)}</div>`;
+  h+=`<span>KW ${getWeekNumber()}</span></div></div>`;
+
+  // Nav
+  h+=renderNav();
+
+  // Readiness
+  h+=`<div class="hub-section"><div class="hub-section-title">Readiness Check</div>`;
+  h+=`<div class="rdy-card">`;
+  [{key:'sleep',label:'Schlaf'},{key:'soreness',label:'Soreness'},{key:'mood',label:'Stimmung'}].forEach(r=>{
+    h+=`<div class="rdy-row"><div class="rdy-label">${r.label}</div><div class="rdy-dots">`;
+    for(let i=1;i<=5;i++){
+      const on=rdy[r.key]===i;
+      const cls=on?'on '+rdyColor(r.key,i):'';
+      h+=`<button class="rdy-dot ${cls}" onclick="setRdy('${r.key}',${i})">${i}</button>`;
+    }
+    h+=`</div></div>`;
+  });
+  h+=`</div></div>`;
+
+  // Weekly Load Chart
+  h+=`<div class="hub-section"><div class="hub-section-title">Wochen-Load (sRPE)</div>`;
+  h+=`<div class="chart-card">`;
+  h+=`<div class="donut-wrap"><div style="width:100px;flex-shrink:0">${svgDonut([
+    {label:'Kardio',value:ws.filter(s=>s.type==='cardio').reduce((a,s)=>(s.rpe||5)*(s.duration||30)+a,0),color:CM.blue},
+    {label:'Kraft',value:ws.filter(s=>s.type==='strength').reduce((a,s)=>(s.rpe||5)*(s.duration||30)+a,0),color:CM.green}
+  ],100)}</div>`;
+  h+=`<div class="donut-legend">`;
+  h+=`<div class="donut-legend-item"><span class="donut-legend-dot" style="background:${CM.blue}"></span>Kardio<span class="donut-legend-val">${ws.filter(s=>s.type==='cardio').reduce((a,s)=>(s.rpe||5)*(s.duration||30)+a,0)}</span></div>`;
+  h+=`<div class="donut-legend-item"><span class="donut-legend-dot" style="background:${CM.green}"></span>Kraft<span class="donut-legend-val">${ws.filter(s=>s.type==='strength').reduce((a,s)=>(s.rpe||5)*(s.duration||30)+a,0)}</span></div>`;
+  h+=`</div></div>`;
+  h+=`<div style="margin-top:16px">${svgBarChart(loads)}</div>`;
+  h+=`</div></div>`;
+
+  // Body Part Status
+  h+=`<div class="hub-section"><div class="hub-section-title">Korperteil-Status</div>`;
+  h+=`<div class="bp-grid">`;
+  Object.entries(BPN).forEach(([k,v])=>{
+    if(k==='allgemein') return;
+    const vol=bpVol[k];
+    const st=bpStatus(vol);
+    h+=`<div class="bp-card" style="background:${BPC[k]}">`;
+    h+=`<div class="bp-name">${v}</div>`;
+    h+=`<div class="bp-load">${vol>0?formatVol(vol):'--'}</div>`;
+    h+=`<div class="bp-unit"><span class="bp-dot" style="background:${st.color}"></span>${st.label}</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></div>`;
+
+  // Add session buttons
+  h+=`<div class="hub-section">`;
+  h+=`<button class="add-btn" onclick="openCardioForm()">${I.plus} Kardio Session</button>`;
+  h+=`<button class="add-btn sec" onclick="openStrengthForm()">${I.plus} Kraft Session</button>`;
+  h+=`</div>`;
+
+  // Recent Sessions
+  const recent=LD.sessions.slice().sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id).slice(0,10);
+  if(recent.length>0){
+    h+=`<div class="hub-section"><div class="hub-section-title">Sessions</div>`;
+    recent.forEach((s,ri)=>{
+      const idx=LD.sessions.indexOf(s);
+      const srpe=(s.rpe||5)*(s.duration||30);
+      const isCardio=s.type==='cardio';
+      h+=`<div class="sess-card">`;
+      h+=`<div class="sess-top"><span class="sess-type" style="background:${isCardio?CM.blue:CM.green}">${isCardio?'Kardio':'Kraft'}</span>`;
+      h+=`<span class="sess-date">${fmtDate(s.date)}</span>`;
+      h+=`<button class="sess-del" onclick="if(confirm('Session loschen?'))delSession(${idx})">&times;</button></div>`;
+      h+=`<div class="sess-title">${s.name||'Session'}</div>`;
+      h+=`<div class="sess-meta">${s.duration} Min · RPE ${s.rpe} · sRPE ${srpe}`;
+      if(isCardio&&s.avgHR) h+=` · ${s.avgHR} bpm`;
+      if(!isCardio&&s.bodyPart) h+=` · ${BPN[s.bodyPart]||s.bodyPart}`;
+      h+=`</div>`;
+
+      // Cardio: HR zones bar
+      if(isCardio&&s.zones){
+        const zTotal=Object.values(s.zones).reduce((a,b)=>a+b,0);
+        if(zTotal>0){
+          h+=`<div class="zones-bar">${svgZonesBar(s.zones)}`;
+          h+=`<div class="zones-legend">`;
+          ['z1','z2','z3','z4','z5'].forEach((z,i)=>{
+            if(s.zones[z]>0) h+=`<span><span class="zd" style="background:${ZC[z]}"></span>Z${i+1}: ${s.zones[z]}m</span>`;
+          });
+          h+=`</div></div>`;
+        }
       }
-      html+=`<div class="strength-wrap">
-        <button class="strength-toggle" data-act="toggle-str" type="button">
-          <span class="strength-toggle-label">
-            <span class="strength-marker">II</span>
-            <span class="strength-title">Strength</span>
-          </span>
-          <span class="strength-icon">${S.strOpen?'[−]':'[+]'}</span>
-        </button>
-        <div class="strength-body${S.strOpen?' open':''}">${strBody}</div>
-      </div>`;
-    }
-    if(condSecs.length){
-      const condBody=condSecs.map(sec=>renderSection(sec,S.day,wi)).join('');
-      html+=`<div class="cond-wrap">
-        <button class="cond-toggle" data-act="toggle-co" type="button">
-          <span class="cond-toggle-label">
-            <span class="cond-marker">III</span>
-            <span class="cond-title-hd">Conditioning</span>
-          </span>
-          <span class="cond-icon">${S.coOpen?'[−]':'[+]'}</span>
-        </button>
-        <div class="cond-body-wrap${S.coOpen?' open':''}">${condBody}</div>
-      </div>`;
-    }
+
+      // Strength: exercise list
+      if(!isCardio&&s.exercises&&s.exercises.length>0){
+        let totalVol=0;
+        h+=`<div style="margin-top:8px">`;
+        s.exercises.forEach(ex=>{
+          const v=ex.sets*ex.reps*ex.weight;
+          totalVol+=v;
+          h+=`<div style="display:flex;justify-content:space-between;font-size:12px;color:#666;padding:2px 0"><span>${ex.name}</span><span>${ex.sets}x${ex.reps} @ ${ex.weight}kg = ${formatVol(v)}</span></div>`;
+        });
+        h+=`<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;padding-top:4px;border-top:1px solid #E0E0E0;margin-top:4px"><span>Volume Load</span><span>${formatVol(totalVol)}</span></div>`;
+        h+=`</div>`;
+      }
+      h+=`</div>`;
+    });
+    h+=`</div>`;
   }
-  const now=new Date();
-  html+=`<div class="session-footer"><div class="footer-txt">— FIN · W0${S.week} · ${S.day} · ${now.getFullYear()} —</div></div>`;
-  document.getElementById('appMain').innerHTML=html;
+
+  h+=`<p class="disc">Lokale Daten. Kein Export. Alle Angaben manuell.</p>`;
+  return h;
 }
 
-function render(){renderHeader();renderMain();}
+function formatVol(v){
+  if(v>=1000) return (v/1000).toFixed(1)+'k';
+  return v.toString();
+}
 
-// ── EVENTS ────────────────────────────────────────────────────────────────────
-document.addEventListener('click',e=>{
-  const btn=e.target.closest('[data-act]');
-  if(!btn)return;
-  const act=btn.dataset.act;
-  if(act==='set-week'){
-    S.week=parseInt(btn.dataset.w);
-    lsSet('rb_week',S.week);
-    render();window.scrollTo(0,0);
-  } else if(act==='set-day'){
-    S.day=btn.dataset.d;
-    lsSet('rb_day',S.day);
-    render();window.scrollTo(0,0);
-  } else if(act==='toggle-ph'){
-    S.phOpen=!S.phOpen;
-    lsSet('rb_ph',S.phOpen?'1':'0');
-    document.querySelector('.prehab-body')?.classList.toggle('open',S.phOpen);
-    document.querySelector('.prehab-icon').textContent=S.phOpen?'[−]':'[+]';
-  } else if(act==='toggle-str'){
-    S.strOpen=!S.strOpen;
-    lsSet('rb_str',S.strOpen?'1':'0');
-    document.querySelector('.strength-body')?.classList.toggle('open',S.strOpen);
-    document.querySelector('.strength-icon').textContent=S.strOpen?'[−]':'[+]';
-  } else if(act==='toggle-co'){
-    S.coOpen=!S.coOpen;
-    lsSet('rb_co',S.coOpen?'1':'0');
-    document.querySelector('.cond-body-wrap')?.classList.toggle('open',S.coOpen);
-    document.querySelector('.cond-icon').textContent=S.coOpen?'[−]':'[+]';
-  } else if(act==='toggle-set'){
-    const dk=btn.dataset.dk;
-    const ik=btn.dataset.ik;
-    S.done[dk]=!S.done[dk];
-    const done=S.done[dk];
-    btn.classList.toggle('done',done);
-    btn.textContent=done?'✓':parseInt(ik.split('_').pop())+1;
-    const inp=document.querySelector(`input[data-wk="${ik}"]`);
-    if(inp)inp.classList.toggle('done',done);
+function getWeekNumber(){
+  const d=new Date();
+  const start=new Date(d.getFullYear(),0,1);
+  const diff=(d-start+(start.getTimezoneOffset()-d.getTimezoneOffset())*60000);
+  const oneWeek=604800000;
+  return Math.ceil((diff/oneWeek)+0.5);
+}
+
+function renderNav(){
+  let h='<div class="nav">';
+  const tabs=[['daily','Alltag'],['training','Training'],['hub','Hub']];
+  tabs.forEach(([k,v])=>{
+    h+=`<button class="${S.p===k?'on':'off'} hl" onclick="sp('${k}')">${v}</button>`;
+  });
+  h+='</div>';
+  return h;
+}
+
+// === Main Render ===
+function render(){
+  const app=document.getElementById('app');
+  const bb=document.getElementById('bb');
+
+  if(S.p==='hub'){
+    bb.classList.add('hidden');
+    app.innerHTML=renderHub();
+    return;
   }
-});
 
-document.addEventListener('input',e=>{
-  const inp=e.target;
-  if(inp.dataset.wk)localStorage.setItem(inp.dataset.wk,inp.value);
-});
+  bb.classList.remove('hidden');
+  const prog=P[S.p], d=dn(), t=tot(), pct=t?Math.round(d/t*100):0;
+  document.getElementById('bf').style.width=pct+'%';
+  document.getElementById('bl').textContent=d+'/'+t;
 
+  let h='<div class="hero"><h1 class="hl">Knie<br>Rehab</h1><div class="hero-row">';
+  h+='<div class="badge">'+I.fire+' '+S.streak+' Tage</div>';
+  h+='<span>15-20 Min</span></div></div>';
+
+  h+=renderNav();
+
+  h+='<div class="info"><b>MRT 18.02.2026</b>Grad-4-Knorpeldefekte retropatellar (med. Facette) + zentrale Trochlea femoris. Subchondrales Knochenmarksodem. Baker-Zyste. Vernarbtes Gewebe oberhalb inneres Knie.</div>';
+
+  prog.phases.forEach((ph,pi)=>{
+    h+='<div class="phase"><div class="phase-head" style="background:'+CM[ph.color]+'">';
+    h+='<h2 class="hl">'+ph.name+'</h2><span>'+ph.time+'</span></div>';
+    ph.exercises.forEach((ex,ei)=>{
+      const k=id(pi,ei), done=!!S.d[k], open=!!S.o[k];
+      const ta=S.t[k]&&S.t[k].iv, tr=S.t[k]?S.t[k].rem:ex.timer;
+      h+='<div class="card'+(done?' done':'')+'">';
+      h+='<div class="ctop" onclick="exp('+pi+','+ei+')">';
+      h+='<div class="chk'+(done?' on':'')+'" onclick="event.stopPropagation();tog('+pi+','+ei+')">'+I.chk+'</div>';
+      h+='<div><div class="cname">'+ex.name+'</div><div class="csub">'+ex.meta+'</div></div>';
+      h+='<div class="cchev'+(open?' open':'')+'">'+I.chv+'</div></div>';
+      h+='<div class="cdet'+(open?' open':'')+'">';
+      h+='<div class="cbox">'+ex.why+'</div>';
+      h+='<ol class="csteps">';ex.steps.forEach(s=>h+='<li>'+s+'</li>');h+='</ol>';
+      if(ex.timer>0){
+        h+='<div class="tmr"><button class="tmr-btn'+(ta?' run':'')+'" onclick="tmr(\''+k+'\','+ex.timer+')">'+(ta?I.stop+' Stop':I.play+' Start')+'</button>';
+        h+='<div class="tmr-time" id="t-'+k+'">'+fmt(tr||ex.timer)+'</div>';
+        h+='<div class="tmr-tot">'+fmt(ex.timer)+'</div></div>';
+      }
+      h+='<div class="vid"><iframe src="https://www.youtube.com/embed/'+ex.vid+'" allowfullscreen loading="lazy"></iframe></div>';
+      h+='</div></div>';
+    });
+    h+='</div>';
+  });
+
+  h+='<button class="rst" onclick="res()">'+I.rst+' Tag zurucksetzen</button>';
+  h+='<p class="disc">Kein Ersatz fur arztliche Beratung. Ubungen schmerzfrei ausfuhren.</p>';
+  app.innerHTML=h;
+}
 render();
 </script>
 </body>
