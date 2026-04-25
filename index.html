@@ -18,7 +18,22 @@ body{background:var(--ink);color:var(--ink);font-family:"Archivo Narrow","Helvet
 
 /* HEADER */
 #appHeader{position:sticky;top:0;z-index:100;background:var(--paper);border-bottom:2px solid var(--ink)}
-.hdr-dateline{display:flex;justify-content:space-between;align-items:center;padding:10px 18px 4px;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.2em;color:var(--ink2);font-weight:700}
+.hdr-dateline{display:flex;justify-content:space-between;align-items:center;padding:8px 14px 4px;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.2em;color:var(--ink2);font-weight:700}
+.wk-nav{display:flex;align-items:center;gap:0}
+.wk-nav-btn{appearance:none;border:0;background:transparent;color:var(--ink);cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:16px;font-weight:700;padding:4px 8px;line-height:1;transition:color .12s}
+.wk-nav-btn:active{color:var(--sky)}
+.wk-nav-display{display:flex;align-items:baseline;gap:4px;font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;letter-spacing:.16em;color:var(--ink);min-width:52px;justify-content:center}
+.wk-nav-num{font-family:"Oswald",sans-serif;font-size:18px;font-style:italic;font-weight:700;color:var(--sky);letter-spacing:-.02em;line-height:1}
+.wk-nav-of{opacity:.4;font-size:8px}
+.hub-strip{appearance:none;cursor:pointer;border:0;background:var(--ink);color:var(--paper);width:100%;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;transition:background .12s}
+.hub-strip:active,.hub-strip-active{background:#1a0d04}
+.hub-strip-left{display:flex;align-items:center;gap:10px}
+.hub-strip-icon{font-size:16px;color:var(--fire);flex-shrink:0;line-height:1}
+.hub-strip-text{font-family:"Oswald",sans-serif;font-size:18px;font-style:italic;font-weight:700;letter-spacing:-.02em;color:var(--paper)}
+.hub-strip-active .hub-strip-text{color:var(--fire)}
+.hub-strip-sub{font-family:"JetBrains Mono",monospace;font-size:7px;letter-spacing:.18em;color:rgba(241,236,223,.4);font-weight:700}
+.hub-strip-arrow{font-family:"JetBrains Mono",monospace;font-size:14px;color:var(--fire);font-weight:700;transition:transform .15s}
+.hub-strip-active .hub-strip-arrow{transform:rotate(90deg)}
 .hdr-wordmark{font-family:"Oswald",sans-serif;font-weight:700;font-style:italic;font-size:58px;color:var(--sky);line-height:.82;letter-spacing:-.04em;padding:0 18px 10px;text-align:center;overflow:hidden}
 .hdr-wordmark span{color:var(--fire);font-style:normal}
 .hdr-tagline{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.34em;text-align:center;color:var(--ink);padding:0 0 10px;font-weight:700}
@@ -29,7 +44,7 @@ body{background:var(--ink);color:var(--ink);font-family:"Archivo Narrow","Helvet
 .wk-btn:last-child{border-right:none}
 .wk-btn.active{background:var(--sky);color:var(--paper)}
 .wk-sub{font-family:"JetBrains Mono",monospace;font-size:7px;letter-spacing:.18em;font-weight:400;margin-bottom:1px;text-transform:uppercase}
-.day-tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.day-tabs{display:grid;grid-template-columns:repeat(6,1fr)}
 .day-btn{appearance:none;cursor:pointer;border:0;background:transparent;color:var(--ink);padding:7px 2px 5px;border-right:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;gap:1px;transition:background .12s}
 .day-btn:last-child{border-right:none}
 .day-btn.active{background:var(--ink)}
@@ -813,16 +828,32 @@ function renderHeader(){
   const mm=String(now.getMonth()+1).padStart(2,'0');
   const yy=String(now.getFullYear()).slice(2);
   const dn=['SO','MO','DI','MI','DO','FR','SA'][now.getDay()];
-  const wkBtns=[1,2,3,4,5,6].map(w=>`<button class="wk-btn${S.week===w?' active':''}" data-act="set-week" data-w="${w}" type="button"><span class="wk-sub">Wk</span>${w}</button>`).join('');
-  const dayBtns=DAY_TABS.map(d=>`<button class="day-btn${S.day===d.id?' active':''}" data-act="set-day" data-d="${d.id}" type="button"><span class="day-lbl">${d.label}</span><span class="day-sub">${d.sub}</span></button>`).join('');
+  const wkNum=String(S.week).padStart(2,'0');
+  const dayBtns=DAY_TABS.filter(d=>d.id!=='HUB').map(d=>`<button class="day-btn${S.day===d.id?' active':''}" data-act="set-day" data-d="${d.id}" type="button"><span class="day-lbl">${d.label}</span><span class="day-sub">${d.sub}</span></button>`).join('');
+  const isHub=S.day==='HUB';
   document.getElementById('appHeader').innerHTML=`
-    <div class="hdr-dateline"><span>NO. 0${S.week} · VOL. VI</span><span>${dn} / ${dd}.${mm}.${yy}</span></div>
+    <div class="hdr-dateline">
+      <span>NO. ${wkNum} · VOL. VI</span>
+      <div class="wk-nav">
+        <button class="wk-nav-btn" data-act="prev-week" type="button">‹</button>
+        <div class="wk-nav-display"><span style="opacity:.5;font-size:7px;letter-spacing:.18em">WK</span><span class="wk-nav-num">${wkNum}</span><span class="wk-nav-of">/ 06</span></div>
+        <button class="wk-nav-btn" data-act="next-week" type="button">›</button>
+      </div>
+      <span>${dn} / ${dd}.${mm}.${yy}</span>
+    </div>
     <div class="hdr-wordmark">REBUILD<span>°</span></div>
     <div class="hdr-tagline">— A TRAINING LEDGER —</div>
     <div class="hdr-rule"></div>
-    <div class="week-rail">${wkBtns}</div>
+    <div class="day-tabs">${dayBtns}</div>
     <div class="hdr-rule-thin"></div>
-    <div class="day-tabs">${dayBtns}</div>`;
+    <button class="hub-strip${isHub?' hub-strip-active':''}" data-act="set-day" data-d="HUB" type="button">
+      <span class="hub-strip-left">
+        <span class="hub-strip-icon">◉</span>
+        <span class="hub-strip-text">BELASTUNG HUB</span>
+        <span class="hub-strip-sub">LOAD · READINESS · STATUS</span>
+      </span>
+      <span class="hub-strip-arrow">${isHub?'↓':'→'}</span>
+    </button>`;
 }
 
 function renderMain(){
@@ -887,7 +918,15 @@ document.addEventListener('click',e=>{
   const btn=e.target.closest('[data-act]');
   if(!btn)return;
   const act=btn.dataset.act;
-  if(act==='set-week'){
+  if(act==='prev-week'){
+    S.week=Math.max(1,S.week-1);
+    lsSet('rb_week',S.week);
+    render();window.scrollTo(0,0);
+  } else if(act==='next-week'){
+    S.week=Math.min(6,S.week+1);
+    lsSet('rb_week',S.week);
+    render();window.scrollTo(0,0);
+  } else if(act==='set-week'){
     S.week=parseInt(btn.dataset.w);
     lsSet('rb_week',S.week);
     render();window.scrollTo(0,0);
