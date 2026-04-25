@@ -29,7 +29,7 @@ body{background:var(--ink);color:var(--ink);font-family:"Archivo Narrow","Helvet
 .wk-btn:last-child{border-right:none}
 .wk-btn.active{background:var(--sky);color:var(--paper)}
 .wk-sub{font-family:"JetBrains Mono",monospace;font-size:7px;letter-spacing:.18em;font-weight:400;margin-bottom:1px;text-transform:uppercase}
-.day-tabs{display:grid;grid-template-columns:repeat(6,1fr)}
+.day-tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
 .day-btn{appearance:none;cursor:pointer;border:0;background:transparent;color:var(--ink);padding:7px 2px 5px;border-right:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;gap:1px;transition:background .12s}
 .day-btn:last-child{border-right:none}
 .day-btn.active{background:var(--ink)}
@@ -171,6 +171,64 @@ body{background:var(--ink);color:var(--ink);font-family:"Archivo Narrow","Helvet
 .footer-txt{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--ink2);letter-spacing:.28em;font-weight:700}
 
 input[type=text]{-webkit-appearance:none}
+
+/* ── HUB ── */
+.hub-dossier{background:var(--ink);color:var(--paper);padding:28px 24px 40px;position:relative;overflow:hidden}
+.hub-dossier::after{content:'◉';position:absolute;right:-10px;bottom:-30px;font-size:200px;color:rgba(255,107,71,.06);pointer-events:none;line-height:1}
+.hub-eye{font-family:"JetBrains Mono",monospace;font-size:9px;color:rgba(241,236,223,.45);letter-spacing:.22em;font-weight:700;margin-bottom:10px;display:flex;justify-content:space-between}
+.hub-heading{font-family:"Oswald",sans-serif;font-size:80px;color:var(--fire);line-height:.8;letter-spacing:-.05em;font-style:italic;font-weight:700;text-transform:uppercase}
+.hub-sub{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--sky);letter-spacing:.28em;font-weight:700;margin-top:18px}
+.hub-section{padding:20px 24px;border-bottom:1px solid var(--ink);background:var(--paper)}
+.hub-section-lbl{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--fire);letter-spacing:.28em;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;align-items:baseline}
+.hub-section-num{font-family:"Oswald",sans-serif;font-size:22px;color:var(--ink);font-style:italic;font-weight:700}
+.readiness-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.rd-item{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px;border:1px solid var(--rule);cursor:pointer;transition:border-color .15s;user-select:none}
+.rd-item:active{border-color:var(--sky)}
+.rd-lbl{font-family:"JetBrains Mono",monospace;font-size:7px;letter-spacing:.18em;color:var(--ink2);font-weight:700;text-align:center}
+.rd-val{font-family:"Oswald",sans-serif;font-size:54px;font-style:italic;font-weight:700;line-height:.85}
+.rd-val.v0{color:var(--rule)}.rd-val.v1{color:var(--fire2)}.rd-val.v2{color:var(--fire)}.rd-val.v3{color:#EAB308}.rd-val.v4{color:var(--sky)}.rd-val.v5{color:#22C55E}
+.rd-dots{display:flex;gap:4px}
+.rd-dot{width:8px;height:8px;border-radius:50%;background:var(--rule)}
+.rd-dot.on{background:var(--sky)}
+.koerper-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.kp-item{padding:14px 8px;border:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:border-color .15s;user-select:none}
+.kp-item:active{opacity:.75}
+.kp-lbl{font-family:"JetBrains Mono",monospace;font-size:8px;letter-spacing:.18em;color:var(--ink);font-weight:700;text-transform:uppercase;text-align:center}
+.kp-dot{width:22px;height:22px;border-radius:50%;transition:background .2s}
+.kp-dot.gruen{background:#22C55E}.kp-dot.gelb{background:#EAB308}.kp-dot.rot{background:var(--fire2)}
+.kp-status{font-family:"JetBrains Mono",monospace;font-size:6px;letter-spacing:.16em;font-weight:700;color:var(--ink2);text-transform:uppercase}
+.hub-session{background:var(--ink);color:var(--paper);padding:24px 24px 32px;border-bottom:1px solid rgba(241,236,223,.08)}
+.ses-eyebrow{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--fire);letter-spacing:.22em;font-weight:700;margin-bottom:10px;display:flex;justify-content:space-between}
+.ses-title{font-family:"Oswald",sans-serif;font-size:44px;color:var(--sky);line-height:.85;font-style:italic;letter-spacing:-.03em;font-weight:700;text-transform:uppercase;margin-bottom:20px}
+.ses-meta{display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid rgba(241,236,223,.18);margin-bottom:20px}
+.ses-meta-cell{padding:12px 10px;border-right:1px solid rgba(241,236,223,.18)}
+.ses-meta-cell:last-child{border-right:none}
+.ses-meta-lbl{font-family:"JetBrains Mono",monospace;font-size:7px;letter-spacing:.18em;color:rgba(241,236,223,.45);font-weight:700}
+.ses-meta-val{font-family:"Oswald",sans-serif;font-size:34px;color:var(--paper);font-style:italic;letter-spacing:-.03em;font-weight:700;margin-top:2px;line-height:1}
+.ses-meta-unit{font-family:"JetBrains Mono",monospace;font-size:8px;color:var(--fire);letter-spacing:.12em;font-weight:700;margin-top:2px}
+.ses-rpe-row{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid rgba(241,236,223,.12)}
+.ses-rpe-lbl{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.22em;color:rgba(241,236,223,.5);font-weight:700}
+.ses-rpe-ctrl{display:flex;align-items:center;gap:12px}
+.rpe-btn{appearance:none;border:1px solid rgba(241,236,223,.25);background:transparent;color:var(--paper);font-family:"JetBrains Mono",monospace;font-size:16px;font-weight:700;width:32px;height:32px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;border-radius:0;line-height:1}
+.rpe-val{font-family:"Oswald",sans-serif;font-size:48px;color:var(--fire);font-style:italic;font-weight:700;line-height:.9;min-width:34px;text-align:center}
+.ses-load-badge{display:inline-flex;align-items:baseline;gap:6px;margin-bottom:4px}
+.ses-load-lbl{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.22em;color:rgba(241,236,223,.5);font-weight:700;margin-bottom:10px}
+.ses-load-num{font-family:"Oswald",sans-serif;font-size:52px;color:var(--sky);font-style:italic;font-weight:700;letter-spacing:-.04em;line-height:.85}
+.ses-load-unit{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.18em;color:rgba(241,236,223,.4);font-weight:700}
+.zone-bar-lbl{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.2em;color:rgba(241,236,223,.5);font-weight:700;margin-bottom:10px}
+.zone-legend{display:flex;gap:0;margin-top:10px}
+.zone-leg-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.zone-leg-dot{width:8px;height:8px;border-radius:50%}
+.zone-leg-lbl{font-family:"JetBrains Mono",monospace;font-size:7px;color:rgba(241,236,223,.45);letter-spacing:.1em;font-weight:700}
+.zone-leg-time{font-family:"JetBrains Mono",monospace;font-size:8px;color:var(--paper);font-weight:700}
+.hub-week{padding:20px 24px;background:var(--paper);border-bottom:1px solid var(--ink)}
+.week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
+.wk-day{display:flex;flex-direction:column;align-items:center;gap:5px}
+.wk-day-lbl{font-family:"JetBrains Mono",monospace;font-size:7px;letter-spacing:.12em;color:var(--ink2);font-weight:700}
+.wk-day-dot{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--rule);display:flex;align-items:center;justify-content:center;position:relative}
+.wk-day-dot.has-cardio{background:var(--fire);border-color:var(--fire)}
+.wk-day-dot.is-today{border-color:var(--sky)}
+.wk-day-date{font-family:"JetBrains Mono",monospace;font-size:7px;color:var(--ink2);font-weight:700}
 </style>
 </head>
 <body>
@@ -276,6 +334,7 @@ const DAY_TABS=[
   {id:'C',label:'C',sub:'PULL'},
   {id:'D',label:'D',sub:'FULL'},
   {id:'RE2',label:'RE·2',sub:'LOWER'},
+  {id:'HUB',label:'HUB',sub:'LOAD'},
 ];
 const DAYS={
   A:{id:'A',sections:[
@@ -369,10 +428,9 @@ const DAYS={
     {name:"Foam Roll Lats (Arm in Außenrotation)",reps:"1×90 Sek/Seite",v:L.foamRollLats},
     {name:"Lacrosse Ball Pec (an Wand, mit Armbewegung)",reps:"1×90 Sek/Seite",v:L.lacrossePec},
     {name:"Peanut Mobilization BWS",reps:"2×15/Segment",v:L.peanut},
-    {name:"Box T-Spine Stretch (PVC, kniend)",reps:"3–4×30 Sek",v:L.boxTSpine},
+    {name:"Box T-Spine / Lat Stretch (PVC, kniend — T-Spine-Variante + V-Griff-Variante)",reps:"3–4×30 Sek",v:L.boxTSpine},
     {name:"Corner Pec Stretch (Ellenbogen L, in Ecke)",reps:"3×20 Sek",v:L.cornerPec},
     {name:"Cross-Body Stretch (Schulterblatt fixiert)",reps:"3×30 Sek/Seite",v:L.crossBodyStr},
-    {name:"Box Lat Stretch (kniend, PVC V-Griff)",reps:"3–5×30 Sek",v:L.boxLatStretch},
     {name:"Prone Floor Angel (bäuchlings, volle Sequenz)",reps:"2×8",v:L.proneAngel},
     {name:"Neural Flossing C7 (Ulnaris-Glide, Finger III–V)",reps:"2×10/Seite",v:L.neuralFlossC7},
     {name:"Quadruped Upward Rotation (Rotation + Hold)",reps:"10–20/Seite",v:L.quadrupedRot},
@@ -406,6 +464,28 @@ const S={
   done:{},
 };
 const lsSet=(k,v)=>localStorage.setItem(k,String(v));
+
+// ── HUB DATA ──────────────────────────────────────────────────────────────────
+const HUB_KEY='rb_hub_v1';
+const TODAY=(()=>{const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`})();
+const ZONE_COLORS=['#2E7CFF','#00C9A7','#A8D400','#FF9500','#FF2D78'];
+const ZONE_LABELS=['Z1','Z2','Z3','Z4','Z5'];
+const ZONE_RANGES=['<128','129–139','140–150','151–162','163+'];
+function hubGet(){try{return JSON.parse(localStorage.getItem(HUB_KEY))||{};}catch(e){return{};}}
+function hubSet(data){localStorage.setItem(HUB_KEY,JSON.stringify(data));}
+function hubEnsureToday(){
+  const h=hubGet();
+  if(!h[TODAY]){
+    h[TODAY]={
+      readiness:{schlaf:0,soreness:0,stimmung:0},
+      koerper:{hws:'gelb',schulter:'gelb',knie:'gelb'},
+      kardio:[{type:'Bike Conditioning',dur:40,avgHR:154,rpe:7,zones:[0.41,1.88,10.98,10.65,8.20]}],
+      kraft:[]
+    };
+    hubSet(h);
+  }
+  return h;
+}
 const wKey=(d,s,ei,si)=>`rb_${d}_${s}_${ei}_${si}`;
 const getW=(d,s,ei,si)=>localStorage.getItem(wKey(d,s,ei,si))||'';
 
@@ -585,6 +665,147 @@ function renderPhase(wi){
   </div>`;
 }
 
+// ── HUB RENDER ────────────────────────────────────────────────────────────────
+function renderHub(){
+  const h=hubEnsureToday();
+  const td=h[TODAY];
+  const r=td.readiness;
+  const k=td.koerper;
+  const kardio=td.kardio[0];
+
+  // Zone bar SVG
+  const zones=kardio.zones;
+  const total=zones.reduce((a,b)=>a+b,0);
+  const W=360;
+  let cx=0;
+  const zoneRects=zones.map((z,i)=>{
+    const w=(z/total)*W;
+    const r=`<rect x="${cx.toFixed(2)}" y="0" width="${w.toFixed(2)}" height="32" fill="${ZONE_COLORS[i]}"/>`;
+    cx+=w;return r;
+  }).join('');
+  const ZONE_TIMES_FMT=['0:25','1:53','10:59','10:39','8:12'];
+
+  // Readiness helper
+  const rdItem=(field,label)=>{
+    const v=r[field]||0;
+    const cls=['v0','v1','v2','v3','v4','v5'][v];
+    const dots=[1,2,3,4,5].map(i=>`<div class="rd-dot${v>=i?' on':''}"></div>`).join('');
+    return`<div class="rd-item" data-act="rd-inc" data-field="${field}">
+      <span class="rd-lbl">${label}</span>
+      <span class="rd-val ${cls}">${v||'–'}</span>
+      <div class="rd-dots">${dots}</div>
+    </div>`;
+  };
+
+  // Körperstatus helper
+  const kpCycle={gruen:'gelb',gelb:'rot',rot:'gruen'};
+  const kpTxt={gruen:'STABIL',gelb:'MONITORING',rot:'CRITICAL'};
+  const kpItem=(key,label)=>`<div class="kp-item" data-act="kp-cycle" data-key="${key}">
+    <div class="kp-dot ${k[key]}"></div>
+    <span class="kp-lbl">${label}</span>
+    <span class="kp-status">${kpTxt[k[key]]}</span>
+  </div>`;
+
+  // sRPE
+  const rpe=kardio.rpe||7;
+  const load=rpe*kardio.dur;
+
+  // Week strip
+  const now=new Date();
+  const dow=(now.getDay()+6)%7;
+  const wkStart=new Date(now);wkStart.setDate(now.getDate()-dow);
+  const DE_DAYS=['MO','DI','MI','DO','FR','SA','SO'];
+  const weekDays=Array.from({length:7},(_,i)=>{
+    const d=new Date(wkStart);d.setDate(wkStart.getDate()+i);
+    const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const hasK=h[key]?.kardio?.length>0;
+    const isT=key===TODAY;
+    const dd=String(d.getDate()).padStart(2,'0');
+    return`<div class="wk-day">
+      <span class="wk-day-lbl">${DE_DAYS[i]}</span>
+      <div class="wk-day-dot${hasK?' has-cardio':isT?' is-today':''}">
+        ${hasK?`<svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4" fill="white" opacity=".9"/></svg>`:''}
+      </div>
+      <span class="wk-day-date">${dd}</span>
+    </div>`;
+  }).join('');
+
+  return`
+  <div class="hub-dossier">
+    <div class="hub-eye"><span>BELASTUNG · MONITORING</span><span>${TODAY.split('-').reverse().join('.')}</span></div>
+    <div class="hub-heading">BELAS-<br>TUNG</div>
+    <div class="hub-sub">◉ LOAD · READINESS · STATUS</div>
+  </div>
+
+  <div class="hub-section">
+    <div class="hub-section-lbl"><span>READINESS CHECK</span><span class="hub-section-num">I</span></div>
+    <div class="readiness-grid">
+      ${rdItem('schlaf','SCHLAF')}
+      ${rdItem('soreness','SORENESS')}
+      ${rdItem('stimmung','STIMMUNG')}
+    </div>
+    <div style="margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ink2);letter-spacing:.12em;font-weight:700">Tippe um zu bewerten — 1 (schlecht) bis 5 (top)</div>
+  </div>
+
+  <div class="hub-section">
+    <div class="hub-section-lbl"><span>KÖRPER-STATUS</span><span class="hub-section-num">II</span></div>
+    <div class="koerper-grid">
+      ${kpItem('hws','HWS C6/7')}
+      ${kpItem('schulter','SCHULTER')}
+      ${kpItem('knie','KNIE RE.')}
+    </div>
+    <div style="margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ink2);letter-spacing:.12em;font-weight:700">Tippe zum Wechseln: Stabil → Monitoring → Critical</div>
+  </div>
+
+  <div class="hub-session">
+    <div class="ses-eyebrow"><span>◉ SESSION · SA 25.04.26</span><span>KARDIO</span></div>
+    <div class="ses-title">${kardio.type}</div>
+    <div class="ses-meta">
+      <div class="ses-meta-cell">
+        <div class="ses-meta-lbl">DAUER</div>
+        <div class="ses-meta-val">${kardio.dur}</div>
+        <div class="ses-meta-unit">MIN</div>
+      </div>
+      <div class="ses-meta-cell">
+        <div class="ses-meta-lbl">Ø HR</div>
+        <div class="ses-meta-val">${kardio.avgHR}</div>
+        <div class="ses-meta-unit">BPM</div>
+      </div>
+      <div class="ses-meta-cell">
+        <div class="ses-meta-lbl">LOAD</div>
+        <div class="ses-meta-val" id="hub-load">${load}</div>
+        <div class="ses-meta-unit">AU</div>
+      </div>
+    </div>
+    <div class="ses-rpe-row">
+      <span class="ses-rpe-lbl">sRPE</span>
+      <div class="ses-rpe-ctrl">
+        <button class="rpe-btn" data-act="rpe-dec" type="button">−</button>
+        <span class="rpe-val" id="hub-rpe">${rpe}</span>
+        <button class="rpe-btn" data-act="rpe-inc" type="button">+</button>
+      </div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(241,236,223,.4);letter-spacing:.14em;font-weight:700;margin-left:auto">sRPE × ${kardio.dur} MIN</span>
+    </div>
+    <div class="zone-bar-lbl">HERZFREQUENZ-ZONEN</div>
+    <svg viewBox="0 0 360 32" width="100%" style="display:block;border-radius:2px;overflow:hidden">${zoneRects}</svg>
+    <div class="zone-legend">
+      ${ZONE_COLORS.map((c,i)=>`<div class="zone-leg-item">
+        <div class="zone-leg-dot" style="background:${c}"></div>
+        <span class="zone-leg-lbl">${ZONE_LABELS[i]}</span>
+        <span class="zone-leg-time">${ZONE_TIMES_FMT[i]}</span>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="hub-week">
+    <div class="hub-section-lbl"><span>WOCHE KW17</span><span class="hub-section-num">III</span></div>
+    <div class="week-strip">${weekDays}</div>
+  </div>
+
+  <div class="session-footer"><div class="footer-txt">— REBUILD° MONITORING SYSTEM · V1 —</div></div>
+  `;
+}
+
 // ── FULL RENDER ───────────────────────────────────────────────────────────────
 function renderHeader(){
   const now=new Date();
@@ -605,6 +826,10 @@ function renderHeader(){
 }
 
 function renderMain(){
+  if(S.day==='HUB'){
+    document.getElementById('appMain').innerHTML=renderHub();
+    return;
+  }
   const d=DAYS[S.day];
   const wi=S.week-1;
   let html='';
@@ -685,6 +910,26 @@ document.addEventListener('click',e=>{
     lsSet('rb_co',S.coOpen?'1':'0');
     document.querySelector('.cond-body-wrap')?.classList.toggle('open',S.coOpen);
     document.querySelector('.cond-icon').textContent=S.coOpen?'[−]':'[+]';
+  } else if(act==='rd-inc'){
+    const field=btn.dataset.field;
+    const h=hubEnsureToday();
+    h[TODAY].readiness[field]=((h[TODAY].readiness[field]||0)%5)+1;
+    hubSet(h);render();
+  } else if(act==='kp-cycle'){
+    const key=btn.dataset.key;
+    const h=hubEnsureToday();
+    const cycle={gruen:'gelb',gelb:'rot',rot:'gruen'};
+    h[TODAY].koerper[key]=cycle[h[TODAY].koerper[key]];
+    hubSet(h);render();
+  } else if(act==='rpe-inc'||act==='rpe-dec'){
+    const h=hubEnsureToday();
+    const k=h[TODAY].kardio[0];
+    k.rpe=Math.max(1,Math.min(10,k.rpe+(act==='rpe-inc'?1:-1)));
+    hubSet(h);
+    const rpeEl=document.getElementById('hub-rpe');
+    const ldEl=document.getElementById('hub-load');
+    if(rpeEl)rpeEl.textContent=k.rpe;
+    if(ldEl)ldEl.textContent=k.rpe*k.dur;
   } else if(act==='toggle-set'){
     const dk=btn.dataset.dk;
     const ik=btn.dataset.ik;
