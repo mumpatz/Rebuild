@@ -155,6 +155,22 @@ body{background:var(--ink);color:var(--ink);font-family:"Archivo Narrow","Helvet
 .cond-cell-val{font-family:"Oswald",sans-serif;font-size:36px;color:var(--fire);font-style:italic;letter-spacing:-.03em;font-weight:700;margin-top:2px;line-height:1}
 .cond-cell-mode{font-family:"Oswald",sans-serif;font-size:20px;color:var(--ink);font-weight:700;margin-top:4px;line-height:1.1}
 
+/* COOLDOWN */
+.cool-wrap{background:var(--paper);border-bottom:1px solid var(--ink)}
+.cool-toggle{appearance:none;cursor:pointer;border:0;background:transparent;width:100%;padding:20px 24px 18px;display:flex;justify-content:space-between;align-items:flex-end;color:var(--ink)}
+.cool-toggle-label{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.cool-marker{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--fire);letter-spacing:.22em;font-weight:700}
+.cool-title-hd{font-family:"Oswald",sans-serif;font-size:22px;color:var(--ink);font-weight:700;text-transform:uppercase}
+.cool-icon{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink2)}
+.cool-body{display:none;border-top:1px solid var(--rule);padding:10px 24px 20px}
+.cool-body.open{display:block}
+.cool-row{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:10px;padding:12px 0;border-bottom:1px dotted var(--rule)}
+.cool-row:last-child{border-bottom:none}
+.cool-n{font-family:"Oswald",sans-serif;font-size:32px;color:var(--sky);line-height:.9;font-style:italic;letter-spacing:-.04em;font-weight:700}
+.cool-name{font-size:14px;color:var(--ink);font-weight:700;line-height:1.2}
+.cool-reps{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--fire);font-weight:700;letter-spacing:.12em;margin-top:3px}
+.cool-breath{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink2);font-weight:600;padding:14px 0 0;font-style:italic}
+
 /* MOBILITY */
 .mob-section{background:var(--ink);color:var(--paper);padding:24px 24px 20px}
 .mob-eyebrow{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--fire);letter-spacing:.2em;font-weight:700}
@@ -284,40 +300,62 @@ const L={
   rntSquat:"https://www.youtube.com/watch?v=fjuZGrlWLbY",
   balanceReach:"https://www.youtube.com/watch?v=epbrO1cau9A",
   kbSwing:"https://www.youtube.com/watch?v=bDCeXbMJVNs",
+  tibiaRotation:"https://www.youtube.com/watch?v=9kLGeCAlouE",
+  hipFlexorStr:"https://www.youtube.com/watch?v=UWIYsL5ewug",
+  sidePlankClamshell:"https://www.youtube.com/watch?v=WDGC2HlXzpk",
+  kbWeightShiftSq:"https://www.youtube.com/watch?v=9KzZD_n2r64",
+  hipAirplane:"https://www.youtube.com/watch?v=x_Fr29mMam0",
 };
 const PB={
-  b1:{title:"Block 1 — T-Spine",time:"4 Min",exercises:[
-    {name:"Peanut Mobilization BWS (2 Tennisbälle)",reps:"2×15/Segment",video:L.peanut},
-    {name:"Prayer Stretch (kniend, Foam Roller)",reps:"3×30 Sek",video:L.prayer},
-    {name:"Quadruped Downward Rotation Stretch",reps:"10×10 Sek/Seite",video:L.quadrupedRot},
-  ]},
-  b2f:{title:"Block 2 — Schulter (voll)",time:"4 Min",exercises:[
-    {name:"Side-Lying External Rotation (Handtuch unter Arm)",reps:"2×15–20/Seite",video:L.sideLyingER},
-    {name:"Banded \"W\" (Ellenbogen am Körper, 5 Sek Hold)",reps:"2×15–20",video:L.bandedW},
-    {name:"Prone Lateral Raise (1–2 kg, 5 Sek Hold oben)",reps:"2×10–15",video:L.proneLateralR},
-  ]},
-  b2s:{title:"Block 2 — Schulter (kurz)",time:"1 Min",exercises:[
-    {name:"Banded \"W\" (5 Sek Hold)",reps:"1×15",video:L.bandedW},
-  ]},
-  b3f:{title:"Block 3 — Knie (voll)",time:"4 Min",exercises:[
-    {name:"Foam Roll Quads + lateraler Oberschenkel",reps:"1×60 Sek/Seite",video:L.foamRollQuads},
-    {name:"Spanish Squat (Band hinter Knie, isometrisch)",reps:"3×45 Sek",video:L.spanishSquat},
-    {name:"Lateral Band Walk (Mini-Squat)",reps:"2×15 Schritte/Richtung",video:L.lateralBandWalk},
-  ]},
-  b3s:{title:"Block 3 — Knie (kurz)",time:"2 Min",exercises:[
-    {name:"Spanish Squat (Band hinter Knie, isometrisch)",reps:"2×30 Sek",video:L.spanishSquat},
-  ]},
-  b4:{title:"Block 4 — HWS",time:"4 Min",exercises:[
+  hwsFull:{title:"Block 1 — HWS",time:"3 Min",exercises:[
     {name:"Chin Tucks (liegend, 3 Sek halten)",reps:"2×10",video:L.chinTucks},
-    {name:"HWS-Mobilität: 10× Rotation + 10× Nicken + 10× Neigen (Physio, sitzend)",reps:"1 Sequenz",video:L.cervGazeMob},
-    {name:"Wand-Retraktion + Thorax-Atmung (FR zwischen Knien, tief ein → Brustkorb öffnet, gerade aufbauen)",reps:"1×10 Atemzüge",video:L.chinTucks},
+    {name:"HWS-Mobilität: 10× Rotation + 10× Nicken + 10× Neigen (sitzend)",reps:"1 Sequenz",video:L.cervGazeMob},
+    {name:"Neural Flossing C7 (Ulnaris-Glide, Finger III–V)",reps:"2×10/Seite",video:L.neuralFlossC7},
+  ]},
+  hwsShort:{title:"Block 1 — HWS",time:"3 Min",exercises:[
+    {name:"Chin Tucks (liegend, 3 Sek halten)",reps:"2×10",video:L.chinTucks},
+    {name:"HWS-Mobilität: 10× Rotation + 10× Nicken + 10× Neigen (sitzend)",reps:"1 Sequenz",video:L.cervGazeMob},
+    {name:"Wand-Retraktion + Thorax-Atmung (gerade aufbauen)",reps:"1×10 Atemzüge",video:L.chinTucks},
+  ]},
+  schulterFull:{title:"Block 2 — Schulter",time:"5 Min",exercises:[
+    {name:"Side-Lying External Rotation (Handtuch unter Arm)",reps:"2×15/Seite",video:L.sideLyingER},
+    {name:"Banded \"W\" (Ellenbogen am Körper, 5 Sek Hold)",reps:"2×15",video:L.bandedW},
+    {name:"Prone Lateral Raise (1–2 kg, 5 Sek Hold oben)",reps:"2×10",video:L.proneLateralR},
+    {name:"Quadruped Downward Rotation Stretch",reps:"8×10 Sek/Seite",video:L.quadrupedRot},
+  ]},
+  schulterShort:{title:"Block 2 — Schulter",time:"2 Min",exercises:[
+    {name:"Banded \"W\" (5 Sek Hold)",reps:"1×15",video:L.bandedW},
+    {name:"Band Pull-Apart",reps:"1×15",video:L.bandPullApart},
+  ]},
+  tspine:{title:"Block 3 — T-Spine",time:"2 Min",exercises:[
+    {name:"Peanut Mobilization BWS (2 Tennisbälle)",reps:"2×15/Segment",video:L.peanut},
+    {name:"Prayer Stretch (kniend, Foam Roller)",reps:"2×30 Sek",video:L.prayer},
+  ]},
+  tspineLower:{title:"Block 3 — T-Spine",time:"2 Min",exercises:[
+    {name:"Peanut Mobilization BWS (2 Tennisbälle)",reps:"2×15/Segment",video:L.peanut},
+    {name:"Cat/Cow (langsam, Atmung)",reps:"1×10",video:L.catCow},
+  ]},
+  knieA:{title:"Block 4 — Knie-Aktivierung",time:"3 Min",exercises:[
+    {name:"Tibia Rotation",reps:"1×10/Seite, 5 Sek Hold",video:L.tibiaRotation},
+    {name:"Spanish Squat isometrisch (Band hinter Knie)",reps:"2×30 Sek",video:L.spanishSquat},
+    {name:"Hip Flexor Stretch",reps:"1×30 Sek/Seite",video:L.hipFlexorStr},
+  ]},
+  knieB:{title:"Block 4 — Knie",time:"5 Min",exercises:[
+    {name:"Tibia Rotation",reps:"1×10/Seite, 5 Sek Hold",video:L.tibiaRotation},
+    {name:"Side Plank Clamshell",reps:"1×10/Seite, 3 Sek Hold",video:L.sidePlankClamshell},
+    {name:"Spanish Squat iso + exzentrisch (HSR, Band hinter Knie)",reps:"2×45 Sek",video:L.spanishSquat},
+    {name:"KB Weight Shift Squat (ROM unter 60° Flexion)",reps:"1×10, kontrolliert",video:L.kbWeightShiftSq},
+  ]},
+  neuralStretch:{title:"Block 5 — Neural + Stretch",time:"3 Min",exercises:[
+    {name:"Neural Flossing C7 (Ulnaris-Glide)",reps:"2×10/Seite",video:L.neuralFlossC7},
+    {name:"Hip Flexor Stretch",reps:"1×30 Sek/Seite",video:L.hipFlexorStr},
   ]},
 };
 const PREHAB_CFG={
-  A:{blocks:['b1','b2f','b3s','b4'],total:'~12 Min'},
-  B:{blocks:['b1','b2s','b3f','b4'],total:'~15 Min'},
-  C:{blocks:['b1','b2f','b3s','b4'],total:'~12 Min'},
-  D:{blocks:['b1','b2s','b3f','b4'],total:'~15 Min'},
+  A:{blocks:['hwsFull','schulterFull','tspine','knieA'],total:'~12 Min'},
+  B:{blocks:['hwsShort','schulterShort','tspineLower','knieB','neuralStretch'],total:'~15 Min'},
+  C:{blocks:['hwsFull','schulterFull','tspine','knieA'],total:'~12 Min'},
+  D:{blocks:['hwsShort','schulterShort','tspineLower','knieB','neuralStretch'],total:'~15 Min'},
 };
 const PHASES=[
   {name:"Anpassung",rpe:"RPE 6–7",focus:"Technik + Feedback"},
@@ -340,21 +378,17 @@ const DAYS={
     {id:'A2',cat:'intensity',title:'A2 — Hauptbewegung',note:'Ersetzt Barbell OHP. Schräger Vektor entlastet Schulter + HWS.',exercises:[
       {name:'Landmine Press (stehend, 1-Arm)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-0-1-1',v:L.landminePress},
     ]},
-    {id:'A3',cat:'balance',title:'A3 — Superset: Push + Korrektur',superset:true,note:'Neutraler Griff. Ellenbogen stoppen auf Schulterhöhe — kein tiefer Stretch.',exercises:[
+    {id:'A3',cat:'balance',title:'A3 — Superset: Push + Core',superset:true,note:'Neutraler Griff. Ellenbogen stoppen auf Schulterhöhe. Kein tiefer Stretch.',exercises:[
       {name:'Incline DB Press 30° (neutral grip)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-1-1-0',v:L.inclineDB},
-      {name:'Band Pull-Apart',w:['3×15','3×15','3×15','3×15','3×15','2×15'],t:'2-1-1-0',v:L.bandPullApart},
-    ]},
-    {id:'A4',cat:'accessory',title:'A4 — Superset: Accessory',superset:true,note:'Floor Press: ROM durch Boden begrenzt — schützt Schulter.',exercises:[
-      {name:'Floor Press (DB, neutral grip)',w:['3×12','3×12','3×10','3×10','3×8','2×12'],t:'3-0-1-1',v:L.floorPress},
       {name:'Tall Kneeling Pallof Press',w:['3×10/S','3×10/S','3×10/S','3×10/S','3×12/S','2×10/S'],t:'2-2-2-0',v:L.pallof},
     ]},
     {id:'A5',cond:true,weeks:[
-      {text:"3 Runden For Quality: Suitcase Carry 30 m/Seite + 8 Tempo Push-ups + 6 Dead Bug/Seite | 90 Sek Pause",dur:"9 Min",note:"Tempo Push-ups: 3-1-1-0. Schulterblätter stabil."},
-      {text:"EMOM 8: Odd = Ski Erg 12 Cal, Even = Push-ups ×10 + Pallof Hold 10 Sek/Seite",dur:"8 Min",note:"Pallof: Hüfte nicht rotieren."},
-      {text:"4 Runden For Quality: Bike Erg 15 Cal + Russian KB Swing ×10 + Suitcase Carry 20 m/Seite | 75 Sek Pause",dur:"12 Min",note:"Russian KB Swing = Hüfthöhe. Kein American Swing."},
-      {text:"AMRAP 10 (easy pace): 12 Cal Ski Erg + 8 Tempo Push-ups + Farmers Carry 30 m",dur:"10 Min",note:"Easy Pace: Nase-Atmung möglich."},
+      {text:"3 Runden For Quality: Suitcase Carry 30 m/Seite + 8 Tempo Push-ups (3-1-1-0) + 6 Dead Bug/Seite | 90 Sek Pause",dur:"9 Min",note:"Tempo Push-ups: 3-1-1-0. Schulterblätter stabil."},
+      {text:"EMOM 10: Odd = Ski Erg 15 Cal, Even = 10 Push-ups + Pallof Hold 10 Sek/Seite",dur:"10 Min",note:"Pallof: Hüfte nicht rotieren."},
+      {text:"4 Runden: Bike Erg 15 Cal + Russian KB Swing ×12 + Suitcase Carry 20 m/Seite | 75 Sek Pause",dur:"12 Min",note:"Russian KB Swing = Hüfthöhe. Kein American Swing."},
+      {text:"AMRAP 12 (moderate pace): 15 Cal Ski Erg + 10 Tempo Push-ups + Farmers Carry 40 m",dur:"12 Min",note:"Moderate Pace: Gespräch schwer möglich."},
       {text:"5 × Bike Erg 40 Sek max / 80 Sek easy — danach 2 Runden: Push-ups ×12 + Carry 30 m/Seite",dur:"12 Min",note:"Intervall: max Effort auf Bike."},
-      {text:"2 Runden For Quality: Ski Erg 10 Cal + Tempo Push-ups ×6 + Dead Bug ×4/Seite",dur:"5 Min",note:"Deload: Technik vor Output."},
+      {text:"2 Runden For Quality: Ski Erg 10 Cal + 6 Tempo Push-ups + Dead Bug ×4/Seite",dur:"5 Min",note:"Deload: Technik vor Output."},
     ]},
   ]},
   B:{id:'B',sections:[
@@ -364,19 +398,15 @@ const DAYS={
     {id:'B2b',cat:'bfr',bfr:true,note:'Ersetzt ab Woche 3 die Box Squats (B2) — kein zusätzliches Volumen, nur diese Variante statt der schweren Sätze. 20–30 % 1RM, Manschette an der Oberschenkel-Basis.',exercises:[
       {name:'SSB Box Squat mit BFR-Manschette',w:['–','–','4×30-15-15-15','4×30-15-15-15','4×30-15-15-15','2×30-15-15-15'],t:'3-1-3-0',v:L.ssbBoxSquat},
     ]},
-    {id:'B3',cat:'balance',title:'B3 — Superset: Hip Dominant',superset:true,note:'Trap Bar erhöhte Griffe. Hip Thrust vor Quad-Arbeit.',exercises:[
+    {id:'B3',cat:'balance',title:'B3 — Superset: Hip Dominant',superset:true,note:'Trap Bar erhöhte Griffe. Nordic Curl exzentrisch kontrolliert.',exercises:[
       {name:'Trap Bar RDL (erhöhte Griffe)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-1-1-0',v:L.trapBarRDL},
-      {name:'Single-Leg Hip Thrust',w:['3×10/S','3×10/S','3×12/S','3×12/S','3×12/S','2×10/S'],t:'2-2-1-0',v:L.singleLegHipT},
-    ]},
-    {id:'B4',cat:'accessory',title:'B4 — Superset: Knie-Rehab',superset:true,note:'Box-Pause eliminiert Federwirkung der Sehne → minimale patellofemorale Last.',exercises:[
-      {name:'Box Squat parallel (moderat-schwer)',w:['4×15','4×15','4×12','4×12','4×10','2×15'],t:'3-1-3-0',v:L.ssbBoxSquat},
       {name:'Nordic Hamstring Curl (exzentrisch)',w:['3×5','3×5','3×6','3×6','3×6','2×5'],t:'5-0-assist-0',v:L.nordicCurl},
     ]},
     {id:'B5',cond:true,weeks:[
-      {text:"EMOM 8: Odd = Russian KB Swing ×10, Even = Ski Erg 10 Cal",dur:"8 Min",note:"KB Swing = Hüfthöhe. Kein American Swing."},
-      {text:"3 Runden For Quality: Sled Push 40 m + KB Swing ×12 + Farmers Carry 40 m | 90 Sek Pause",dur:"9 Min",note:"Sled Push = konzentrisch-dominant. Kein Knie."},
-      {text:"EMOM 10: Odd = Ski Erg 15 Cal, Even = Russian KB Swing ×15",dur:"10 Min",note:"KB Swing = Hüfthöhe. Kein American Swing."},
-      {text:"4 Runden For Quality: Sled Push 40 m + Farmers Carry 40 m + KB Swing ×12 | 90 Sek Pause",dur:"12 Min",note:"Sled Push kontrolliert, ohne Kniestress."},
+      {text:"EMOM 10: Odd = Russian KB Swing ×12, Even = Ski Erg 12 Cal",dur:"10 Min",note:"KB Swing = Hüfthöhe. Kein American Swing."},
+      {text:"3 Runden: Sled Push 40 m + KB Swing ×12 + Farmers Carry 40 m | 90 Sek Pause",dur:"9 Min",note:"Sled Push = konzentrisch-dominant. Kein Knie."},
+      {text:"EMOM 12 (3er-Rotation): Ski Erg 15 Cal / KB Swing ×15 / Sled Push 30 m",dur:"12 Min",note:"3er-Rotation: jede Minute wechseln."},
+      {text:"4 Runden: Sled Push 40 m + Farmers Carry 40 m + KB Swing ×15 | 75 Sek Pause",dur:"12 Min",note:"Sled Push kontrolliert, ohne Kniestress."},
       {text:"6 × Ski Erg 30 Sek max / 60 Sek Pause — danach 2 Runden: Sled Push 40 m + Carry 30 m",dur:"12 Min",note:"Intervall: max Effort auf Ski Erg."},
       {text:"EMOM 6: Odd = KB Swing ×8, Even = Ski Erg 8 Cal",dur:"6 Min",note:"Deload: leicht und sauber."},
     ]},
@@ -389,14 +419,10 @@ const DAYS={
       {name:'Banded Lat Pulldown (neutral grip, kniend)',w:['3×12','3×12','4×10','4×10','4×8','2×12'],t:'3-0-1-1',v:L.bandedLatPD},
       {name:'External Rotation Press (Band, nach Horschig)',w:['2×10','2×10','3×10','3×10','3×10','2×10'],t:'3-3-3-3',v:L.extRotPress},
     ]},
-    {id:'C4',cat:'accessory',title:'C4 — Superset: Arm Pump',superset:true,note:'Hammer Curl entlastet Bizepssehne. Pushdown statt Overhead Extension.',exercises:[
-      {name:'Hammer Curl (DB)',w:['3×12','3×12','3×10','3×10','3×10','2×12'],t:'3-0-1-1',v:L.hammerCurl},
-      {name:'Cable Tricep Pushdown',w:['3×12','3×12','3×10','3×10','3×10','2×12'],t:'3-0-1-0',v:L.tricepPD},
-    ]},
     {id:'C5',cond:true,weeks:[
-      {text:"3 Runden For Quality: Ring Row ×8 + Bike Erg 12 Cal + Banded TKE ×10/Seite | 90 Sek Pause",dur:"9 Min",note:"Ring Row: Brust zur Ringhöhe. Keine HWS-Kompression."},
-      {text:"AMRAP 8 (easy pace): Ring Row ×6 + Row 150 m + Pallof Press ×8/Seite",dur:"8 Min",note:"Easy Pace: Nase-Atmung möglich."},
-      {text:"EMOM 12 (4 Runden à 3 Min): Min 1 = Ring Row ×10, Min 2 = Bike Erg 15 Cal, Min 3 = Dead Bug ×6/Seite",dur:"12 Min",note:"Dead Bug: LWS am Boden — kein Hohlkreuz."},
+      {text:"3 Runden: Ring Row ×8 + Bike Erg 15 Cal + Banded TKE ×10/Seite | 90 Sek Pause",dur:"9 Min",note:"Ring Row: Brust zur Ringhöhe. Keine HWS-Kompression."},
+      {text:"AMRAP 10 (moderate pace): Ring Row ×6 + Row 200 m + Pallof Press ×8/Seite",dur:"10 Min",note:"Moderate Pace: Gespräch schwer möglich."},
+      {text:"EMOM 12 (3er-Rotation): Ring Row ×10 / Bike Erg 15 Cal / Dead Bug ×8/Seite",dur:"12 Min",note:"Dead Bug: LWS am Boden — kein Hohlkreuz."},
       {text:"4 Runden: Bike Erg 20 Cal + Ring Row ×10 + Suitcase Carry 30 m/Seite | 75 Sek Pause",dur:"12 Min",note:"Suitcase: Schulter passiv ziehen, nicht hochziehen."},
       {text:"5 × Row 250 m / 90 Sek Pause",dur:"12 Min",note:"Row: Beine zuerst, dann Hüfte, dann Arme."},
       {text:"2 Runden: Ring Row ×6 + Bike 10 Cal + Dead Bug ×4/Seite",dur:"6 Min",note:"Deload: Technik vor Output."},
@@ -406,20 +432,16 @@ const DAYS={
     {id:'D2',cat:'intensity',title:'D2 — Komplexe Bewegung',note:'KB vor Brust = weniger axiale Kompression. ROM steigern wenn schmerzfrei.',exercises:[
       {name:'Goblet Squat auf Box (60–70° Flexion max)',w:['3×12','3×12','3×10','3×10','3×10','2×12'],t:'3-1-1-0',v:L.gobletSquat},
     ]},
-    {id:'D3',cat:'balance',title:'D3 — Superset: Push/Pull',superset:true,note:'',exercises:[
+    {id:'D3',cat:'balance',title:'D3 — Superset: Row + Unilateral',superset:true,note:'Touchdown Squat: Ferse tippt Boden. Hüfte zurück, Brust vor.',exercises:[
       {name:'Half-Kneeling Landmine Row (1-Arm)',w:['3×10/S','3×10/S','3×10/S','3×10/S','4×8/S','2×10/S'],t:'3-0-1-1',v:L.landmineRow},
-      {name:'Tempo Push-up (evtl. erhöht)',w:['3×10','3×10','3×12','3×12','3×15','2×10'],t:'3-1-1-0',v:null},
-    ]},
-    {id:'D4',cat:'accessory',title:'D4 — Superset: Unilateral Lower',superset:true,note:'Touchdown Squat: Ferse tippt Boden. Hüfte zurück, Brust vor.',exercises:[
       {name:'Touchdown Squat (Horschig, Plattenstapel)',w:['3×10/S','3×10/S','3×12/S','3×12/S','3×15/S','2×10/S'],t:'3-0-1-0',v:L.touchdownSq},
-      {name:'Single-Leg Calf Raise',w:['3×15/S','3×15/S','3×15/S','3×15/S','3×20/S','2×15/S'],t:'2-1-2-0',v:L.singleLegCalf},
     ]},
     {id:'D5',cond:true,weeks:[
-      {text:"2 Runden: Ski Erg 15 Cal + KB Swing ×10 + Step-up low Box ×8/Seite + Dead Bug ×6/Seite | 2 Min Pause",dur:"8 Min",note:"Step-up: niedrige Box ~20 cm, kontrolliert."},
-      {text:"EMOM 10: Min 1 = Bike 15 Cal, Min 2 = KB Swing ×12, Min 3 = Step-up ×8/Seite, Min 4 = Farmers Hold 30 Sek, Min 5 = Pause",dur:"10 Min",note:"Step-up: niedrige Box ~20 cm, kontrolliert."},
-      {text:"3 Runden: Bike 20 Cal + KB Swing ×12 + Step-up ×10/Seite + Suitcase Carry 20 m/Seite | 90 Sek Pause",dur:"12 Min",note:"Step-up Box unverändert. KB = Hüfthöhe."},
+      {text:"3 Runden: Ski Erg 15 Cal + KB Swing ×12 + Step-up low Box ×8/Seite | 90 Sek Pause",dur:"9 Min",note:"Step-up: niedrige Box ~20 cm, kontrolliert."},
+      {text:"EMOM 10 (5er-Rotation): Bike 15 Cal / KB Swing ×12 / Step-up ×8/Seite / Farmers Hold 30 Sek / Pause",dur:"10 Min",note:"Step-up: niedrige Box ~20 cm, kontrolliert."},
+      {text:"4 Runden: Bike 20 Cal + KB Swing ×15 + Suitcase Carry 30 m/Seite | 75 Sek Pause",dur:"12 Min",note:"KB = Hüfthöhe. Kein American Swing."},
       {text:"AMRAP 12 (moderate pace): 18 Cal Bike + KB Swing ×12 + Step-up ×8/Seite + Carry 30 m",dur:"12 Min",note:"Moderate Pace: Gespräch schwer möglich."},
-      {text:"5 Runden: Ski Erg 12 Cal + KB Swing ×10 + Step-up ×8/Seite | 60 Sek Pause",dur:"12 Min",note:"Intensivierung: Pausen knapp halten."},
+      {text:"5 Runden: Ski Erg 15 Cal + KB Swing ×12 + Step-up ×10/Seite | 60 Sek Pause",dur:"12 Min",note:"Intensivierung: Pausen knapp halten."},
       {text:"2 Runden: Bike 12 Cal + KB Swing ×8 + Dead Bug ×6/Seite",dur:"6 Min",note:"Deload: Technik vor Output."},
     ]},
   ]},
@@ -427,7 +449,7 @@ const DAYS={
     {name:"Foam Roll Lats (Arm in Außenrotation)",reps:"1×90 Sek/Seite",v:L.foamRollLats},
     {name:"Lacrosse Ball Pec (an Wand, mit Armbewegung)",reps:"1×90 Sek/Seite",v:L.lacrossePec},
     {name:"Peanut Mobilization BWS",reps:"2×15/Segment",v:L.peanut},
-    {name:"Box T-Spine / Lat Stretch (PVC, kniend — T-Spine-Variante + V-Griff-Variante)",reps:"3–4×30 Sek",v:L.boxTSpine},
+    {name:"Box T-Spine / Lat Stretch (PVC, kniend, T-Spine + V-Griff)",reps:"3–4×30 Sek",v:L.boxTSpine},
     {name:"Corner Pec Stretch (Ellenbogen L, in Ecke)",reps:"3×20 Sek",v:L.cornerPec},
     {name:"Cross-Body Stretch (Schulterblatt fixiert)",reps:"3×30 Sek/Seite",v:L.crossBodyStr},
     {name:"Prone Floor Angel (bäuchlings, volle Sequenz)",reps:"2×8",v:L.proneAngel},
@@ -435,6 +457,7 @@ const DAYS={
     {name:"Quadruped Upward Rotation (Rotation + Hold)",reps:"10–20/Seite",v:L.quadrupedRot},
     {name:"Passive Dead Hang (bei HWS-Symptomen sofort stoppen)",reps:"2×15–20 Sek",v:L.deadHang},
     {name:"Chin Tucks (liegend)",reps:"2×10",v:L.chinTucks},
+    {name:"Meditation / Box Breathing (4-7-8)",reps:"5 Min",v:null},
   ]},
   RE2:{id:'RE2',mob:true,focus:'Lower Body + Hüfte + Knie',exercises:[
     {name:"Foam Roll Quads (oberhalb Kniescheibe, langsam)",reps:"1×90 Sek/Seite",v:L.foamRollQuads},
@@ -444,13 +467,36 @@ const DAYS={
     {name:"Couch Stretch (Quad/Hüftbeuger)",reps:"3×30 Sek/Seite",v:L.couchStretch},
     {name:"Waden-Mobilität (Wand, gerade + gebeugt)",reps:"2×30 Sek/Seite",v:L.calfStretch},
     {name:"RNT Banded Squat (1.5 Reps, Band um Knie)",reps:"3 Runden",v:L.rntSquat},
+    {name:"Supported Hip Airplane",reps:"1×5/Seite",v:L.hipAirplane},
     {name:"Balance and Reach (T-Pattern, Single-Leg)",reps:"2×5/Richtung/S",v:L.balanceReach},
     {name:"Lateral Band Walk",reps:"2×15/Richtung",v:L.lateralBandWalk},
-    {name:"Unilateral Abduction (Mini-Squat, Bein seitlich)",reps:"2×15/Seite",v:L.lateralBandWalk},
     {name:"Single-Leg Bridge (5–10 Sek Hold)",reps:"2×12/Seite",v:L.singleLegBridge},
     {name:"Cat/Cow (langsam)",reps:"1×10",v:L.catCow},
     {name:"Chin Tucks (liegend)",reps:"2×10",v:L.chinTucks},
+    {name:"Meditation / Box Breathing (4-7-8)",reps:"5 Min",v:null},
   ]},
+};
+const COOLDOWN={
+  A:[
+    {name:"Corner Pec Stretch (Ellenbogen L, in Ecke)",reps:"2×20 Sek",v:L.cornerPec},
+    {name:"Box T-Spine/Lat Stretch (kniend, PVC)",reps:"2×30 Sek",v:L.boxTSpine},
+    {name:"Prone Floor Angel (bäuchlings, volle Sequenz)",reps:"1×8",v:L.proneAngel},
+  ],
+  B:[
+    {name:"Couch Stretch (Quad/Hüftbeuger)",reps:"2×30 Sek/Seite",v:L.couchStretch},
+    {name:"Pigeon Stretch (knieschonend)",reps:"2×30 Sek/Seite",v:L.pigeonStretch},
+    {name:"Waden-Mobilität (Wand, gerade + gebeugt)",reps:"2×20 Sek/Seite",v:L.calfStretch},
+  ],
+  C:[
+    {name:"Cross-Body Stretch (Schulterblatt fixiert)",reps:"2×30 Sek/Seite",v:L.crossBodyStr},
+    {name:"Foam Roll Lats (Arm in Außenrotation)",reps:"1×60 Sek/Seite",v:L.foamRollLats},
+    {name:"Dead Hang passiv (HWS-Symptome = stoppen)",reps:"2×15 Sek",v:L.deadHang},
+  ],
+  D:[
+    {name:"90/90 Hip Switch",reps:"2×8/Seite",v:L.hip9090},
+    {name:"Box Lat Stretch (kniend, V-Griff)",reps:"2×30 Sek",v:L.boxLatStretch},
+    {name:"Single-Leg Calf Raise (Loaded Stretch, langsam)",reps:"2×10/Seite",v:L.singleLegCalf},
+  ],
 };
 
 // ── STATE ────────────────────────────────────────────────────────────────────
@@ -460,6 +506,7 @@ const S={
   phOpen:localStorage.getItem('rb_ph')!=='0',
   strOpen:localStorage.getItem('rb_str')!=='0',
   coOpen:localStorage.getItem('rb_co')!=='0',
+  clOpen:localStorage.getItem('rb_cl')!=='0',
   done:{},
 };
 const lsSet=(k,v)=>localStorage.setItem(k,String(v));
@@ -614,7 +661,7 @@ function renderPrehab(dayId){
 function renderMob(dayData){
   const isRE1=dayData.id==='RE1';
   const heading=isRE1?`Restore<br><span>& Flow</span>`:`Lower<br><span>Restore</span>`;
-  const sub=isRE1?'RE 1 · SCHULTER + T-SPINE · ~30 MIN':'RE 2 · LOWER + KNIE · ~30 MIN';
+  const sub=isRE1?'RE 1 · SCHULTER + T-SPINE · ~35 MIN':'RE 2 · LOWER + KNIE · ~35 MIN';
   const rows=dayData.exercises.map((ex,i)=>`
     <div class="mob-row">
       <span class="mob-n">${String(i+1).padStart(2,'0')}</span>
@@ -626,6 +673,29 @@ function renderMob(dayData){
     <h2 class="mob-heading">${heading}</h2>
     <div class="mob-list">${rows}</div>
   </section>`;
+}
+
+function renderCooldown(dayId){
+  const items=COOLDOWN[dayId];if(!items)return'';
+  const rows=items.map((ex,i)=>`
+    <div class="cool-row">
+      <span class="cool-n">${String(i+1).padStart(2,'0')}</span>
+      <div><div class="cool-name">${ex.name}</div><div class="cool-reps">${ex.reps}</div></div>
+      ${vidBtn(ex.v,false)}
+    </div>`).join('');
+  return`<div class="cool-wrap">
+    <button class="cool-toggle" data-act="toggle-cl" type="button">
+      <span class="cool-toggle-label">
+        <span class="cool-marker">IV</span>
+        <span class="cool-title-hd">Cooldown</span>
+      </span>
+      <span class="cool-icon">${S.clOpen?'[−]':'[+]'}</span>
+    </button>
+    <div class="cool-body${S.clOpen?' open':''}">
+      ${rows}
+      <div class="cool-breath">10 tiefe Atemzüge (4 ein, 7 aus, Nase)</div>
+    </div>
+  </div>`;
 }
 
 function renderPhase(wi){
@@ -675,7 +745,7 @@ function renderMain(){
     const strengthSecs=d.sections.filter(s=>!s.cond);
     const condSecs=d.sections.filter(s=>s.cond);
     if(strengthSecs.length){
-      const catLbl={intensity:'Strength Intensity',balance:'Strength Balance',accessory:'Strength Accessory',bfr:'BFR Option'};
+      const catLbl={intensity:'Strength Intensity',balance:'Strength Balance',bfr:'BFR Option'};
       let strBody='';
       for(let i=0;i<strengthSecs.length;i++){
         const sec=strengthSecs[i];
@@ -708,6 +778,7 @@ function renderMain(){
         <div class="cond-body-wrap${S.coOpen?' open':''}">${condBody}</div>
       </div>`;
     }
+    html+=renderCooldown(S.day);
   }
   const now=new Date();
   html+=`<div class="session-footer"><div class="footer-txt">— FIN · W0${S.week} · ${S.day} · ${now.getFullYear()} —</div></div>`;
@@ -744,6 +815,11 @@ document.addEventListener('click',e=>{
     lsSet('rb_co',S.coOpen?'1':'0');
     document.querySelector('.cond-body-wrap')?.classList.toggle('open',S.coOpen);
     document.querySelector('.cond-icon').textContent=S.coOpen?'[−]':'[+]';
+  } else if(act==='toggle-cl'){
+    S.clOpen=!S.clOpen;
+    lsSet('rb_cl',S.clOpen?'1':'0');
+    document.querySelector('.cool-body')?.classList.toggle('open',S.clOpen);
+    document.querySelector('.cool-icon').textContent=S.clOpen?'[−]':'[+]';
   } else if(act==='toggle-set'){
     const dk=btn.dataset.dk;
     const ik=btn.dataset.ik;
