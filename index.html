@@ -154,6 +154,9 @@ body{background:var(--ink);color:var(--ink);font-family:"Archivo Narrow","Helvet
 .cond-cell-lbl{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--ink2);letter-spacing:.2em;font-weight:700;opacity:.75}
 .cond-cell-val{font-family:"Oswald",sans-serif;font-size:36px;color:var(--fire);font-style:italic;letter-spacing:-.03em;font-weight:700;margin-top:2px;line-height:1}
 .cond-cell-mode{font-family:"Oswald",sans-serif;font-size:20px;color:var(--ink);font-weight:700;margin-top:4px;line-height:1.1}
+.cond-variant-lbl{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--fire);letter-spacing:.22em;font-weight:700;text-transform:uppercase;margin-bottom:8px}
+.cond-variant-sub{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--ink2);letter-spacing:.16em;font-weight:600;text-transform:uppercase;margin-bottom:12px;opacity:.85}
+.cond-section + .cond-section{border-top:2px dashed var(--rule)}
 
 /* COOLDOWN */
 .cool-wrap{background:var(--paper);border-bottom:1px solid var(--ink)}
@@ -383,12 +386,36 @@ const DAYS={
       {name:'Tall Kneeling Pallof Press',w:['3×10/S','3×10/S','3×10/S','3×10/S','3×12/S','2×10/S'],t:'2-2-2-0',v:L.pallof},
     ]},
     {id:'A5',cond:true,weeks:[
-      {text:"V1 leicht — 3 Runden: Bike Erg 10 Cal + Tempo Push-up ×6 (3-1-1-0) + Suitcase Carry 30 m/Seite | 90 Sek Pause",dur:"10 Min",note:"Variante 1: Bike + Push + Carry. Tempo Push-up sauber, Schulterblätter stabil."},
-      {text:"V2 leicht — 3 Runden: Ski Erg 12 Cal + Push-up ×8 + Med Ball Slam ×10 | 90 Sek Pause",dur:"10 Min",note:"Variante 2: Ski + Push + Slam. Slam aus Brusthöhe, kein Overhead."},
-      {text:"V1 moderat — 4 Runden: Bike Erg 12 Cal + Tempo Push-up ×8 + Suitcase Carry 30 m/Seite | 75 Sek Pause",dur:"12 Min",note:"Variante 1: Pause knapper, Reps hoch."},
-      {text:"V2 moderat — 4 Runden: Ski Erg 15 Cal + Push-up ×10 + Med Ball Slam ×12 | 75 Sek Pause",dur:"12 Min",note:"Variante 2: Slam mit Power, Hüft-Snap nutzen."},
-      {text:"V1 hart — 5 Runden: Bike Erg 15 Cal + Tempo Push-up ×10 + Suitcase Carry 40 m/Seite | 60 Sek Pause",dur:"13 Min",note:"Variante 1 Peak: Pausen knapp, Form vor Speed."},
-      {text:"V2 deload — 2 Runden: Ski Erg 10 Cal + Push-up ×6 + Med Ball Slam ×8",dur:"6 Min",note:"Variante 2 Deload: Technik vor Output."},
+      // Wk 1 leicht
+      {
+        v1:{label:"V1 · Bike + Push + Carry",sub:"Anpassung — Technik & Feedback",fmt:"3 ROUNDS",text:"3 Runden: Bike Erg 10 Cal + Tempo Push-up ×6 (3-1-1-0) + Suitcase Carry 30 m/Seite | 90 Sek Pause",dur:"10 Min",note:"Tempo Push-up: 3-1-1-0. Schulterblätter stabil. Carry mit aufrechter Wirbelsäule."},
+        v2:{label:"V2 · Ski + Push + Slam",sub:"Anpassung — Technik & Feedback",fmt:"EMOM 10",text:"EMOM 10: Min 1 = Ski Erg 12 Cal · Min 2 = Push-up ×8 + Med Ball Slam ×10",dur:"10 Min",note:"Slam aus Brusthöhe, kein Overhead. Push-up sauber, Hüfte stabil."}
+      },
+      // Wk 2 leicht
+      {
+        v1:{label:"V1 · Bike + Push + Carry",sub:"Anpassung — Volumen rauf",fmt:"AMRAP 9",text:"AMRAP 9 (moderate pace): Bike Erg 12 Cal + Tempo Push-up ×6 + Suitcase Carry 30 m/Seite",dur:"9 Min",note:"Moderate Pace: Gespräch schwer möglich. Runden zählen."},
+        v2:{label:"V2 · Ski + Push + Slam",sub:"Anpassung — Volumen rauf",fmt:"3 ROUNDS",text:"3 Runden: Ski Erg 12 Cal + Push-up ×8 + Med Ball Slam ×10 | 90 Sek Pause",dur:"10 Min",note:"Slam aus Brusthöhe. Hüft-Snap nutzen."}
+      },
+      // Wk 3 moderat
+      {
+        v1:{label:"V1 · Bike + Push + Carry",sub:"Aufbau — Gewicht steigern",fmt:"4 ROUNDS",text:"4 Runden: Bike Erg 12 Cal + Tempo Push-up ×8 + Suitcase Carry 30 m/Seite | 75 Sek Pause",dur:"12 Min",note:"Pause knapper. Tempo trotzdem halten."},
+        v2:{label:"V2 · Ski + Push + Slam",sub:"Aufbau — Gewicht steigern",fmt:"AMRAP 10",text:"AMRAP 10 (moderate pace): Ski Erg 15 Cal + Push-up ×10 + Med Ball Slam ×12",dur:"10 Min",note:"Slam mit Power. Pause nur wenn nötig."}
+      },
+      // Wk 4 moderat
+      {
+        v1:{label:"V1 · Bike + Push + Carry",sub:"Aufbau — Density erhöhen",fmt:"EMOM 12",text:"EMOM 12 (3er-Rotation): Min 1 = Bike Erg 15 Cal · Min 2 = Tempo Push-up ×10 · Min 3 = Suitcase Carry 40 m/Seite",dur:"12 Min",note:"Jede Minute neue Station. Übergang zügig."},
+        v2:{label:"V2 · Ski + Push + Slam",sub:"Aufbau — Density erhöhen",fmt:"4 ROUNDS",text:"4 Runden: Ski Erg 15 Cal + Push-up ×10 + Med Ball Slam ×12 | 75 Sek Pause",dur:"12 Min",note:"Volumen rauf, Form bleibt."}
+      },
+      // Wk 5 hart
+      {
+        v1:{label:"V1 · Bike + Push + Carry",sub:"Intensivierung — Peak",fmt:"INTERVALS",text:"5 × Bike Erg 40 Sek max / 80 Sek easy — danach 2 Runden: Tempo Push-up ×10 + Suitcase Carry 40 m/Seite",dur:"13 Min",note:"Bike-Intervalle voll, dann sauberes Finish."},
+        v2:{label:"V2 · Ski + Push + Slam",sub:"Intensivierung — Peak",fmt:"5 ROUNDS",text:"5 Runden: Ski Erg 15 Cal + Push-up ×10 + Med Ball Slam ×12 | 60 Sek Pause",dur:"13 Min",note:"Pausen knapp. Form vor Speed."}
+      },
+      // Wk 6 deload
+      {
+        v1:{label:"V1 · Bike + Push + Carry",sub:"Deload — 50% Volumen",fmt:"FOR QUALITY",text:"2 Runden For Quality: Bike Erg 10 Cal + Tempo Push-up ×6 + Suitcase Carry 20 m/Seite",dur:"6 Min",note:"Technik vor Output. Lange Pausen ok."},
+        v2:{label:"V2 · Ski + Push + Slam",sub:"Deload — 50% Volumen",fmt:"FOR QUALITY",text:"2 Runden For Quality: Ski Erg 10 Cal + Push-up ×6 + Med Ball Slam ×8",dur:"6 Min",note:"Technik vor Output."}
+      },
     ]},
   ]},
   B:{id:'B',sections:[
@@ -403,12 +430,36 @@ const DAYS={
       {name:'Nordic Hamstring Curl (exzentrisch)',w:['3×5','3×5','3×6','3×6','3×6','2×5'],t:'5-0-assist-0',v:L.nordicCurl},
     ]},
     {id:'B5',cond:true,weeks:[
-      {text:"V1 leicht — EMOM 10: Odd = Russian KB Swing ×12, Even = Ski Erg 12 Cal",dur:"10 Min",note:"Variante 1: KB + Ski. Russian Swing = Hüfthöhe."},
-      {text:"V2 leicht — 3 Runden: Sled Push 30 m + KB Pull Through ×12 + Sandbag Bear Hug Carry 30 m | 90 Sek Pause",dur:"10 Min",note:"Variante 2: Sled + Pull Through + Sandbag. Hinge ohne Schwung."},
-      {text:"V1 moderat — 4 Runden: KB Swing ×15 + Ski Erg 15 Cal + Farmers Carry 40 m | 75 Sek Pause",dur:"12 Min",note:"Variante 1: Volumen rauf, Pause knapper."},
-      {text:"V2 moderat — 4 Runden: Sled Push 40 m + KB Pull Through ×15 + Sandbag Carry 40 m | 75 Sek Pause",dur:"12 Min",note:"Variante 2: Sled kontrolliert, ohne Kniestress."},
-      {text:"V1 hart — 6 × Ski Erg 30 Sek max / 60 Sek Pause + danach 2 Runden: KB Swing ×15 + Farmers Carry 30 m",dur:"12 Min",note:"Variante 1 Peak: Intervall max Effort auf Ski Erg."},
-      {text:"V2 deload — 2 Runden: Sled Push 30 m + KB Pull Through ×10 + Sandbag Carry 20 m",dur:"6 Min",note:"Variante 2 Deload: Technik vor Output."},
+      // Wk 1 leicht
+      {
+        v1:{label:"V1 · KB + Ski + Farmers",sub:"Anpassung — Technik & Feedback",fmt:"EMOM 10",text:"EMOM 10: Min 1 = Russian KB Swing ×12 · Min 2 = Ski Erg 12 Cal",dur:"10 Min",note:"Russian Swing = Hüfthöhe, kein American."},
+        v2:{label:"V2 · Sled + Pull Through + Sandbag",sub:"Anpassung — Technik & Feedback",fmt:"3 ROUNDS",text:"3 Runden: Sled Push 30 m + KB Pull Through ×12 + Sandbag Bear Hug Carry 30 m | 90 Sek Pause",dur:"10 Min",note:"Sled konzentrisch-dominant. Pull Through = Hinge ohne Schwung."}
+      },
+      // Wk 2 leicht
+      {
+        v1:{label:"V1 · KB + Ski + Farmers",sub:"Anpassung — Volumen rauf",fmt:"3 ROUNDS",text:"3 Runden: KB Swing ×12 + Ski Erg 12 Cal + Farmers Carry 30 m | 90 Sek Pause",dur:"10 Min",note:"Carry mit aufrechter Wirbelsäule, nicht hochziehen."},
+        v2:{label:"V2 · Sled + Pull Through + Sandbag",sub:"Anpassung — Volumen rauf",fmt:"AMRAP 9",text:"AMRAP 9 (moderate pace): Sled Push 30 m + KB Pull Through ×12 + Sandbag Carry 30 m",dur:"9 Min",note:"Moderate Pace: Gespräch schwer möglich."}
+      },
+      // Wk 3 moderat
+      {
+        v1:{label:"V1 · KB + Ski + Farmers",sub:"Aufbau — Gewicht steigern",fmt:"4 ROUNDS",text:"4 Runden: KB Swing ×15 + Ski Erg 15 Cal + Farmers Carry 40 m | 75 Sek Pause",dur:"12 Min",note:"Volumen rauf, Pause knapper."},
+        v2:{label:"V2 · Sled + Pull Through + Sandbag",sub:"Aufbau — Gewicht steigern",fmt:"EMOM 12",text:"EMOM 12 (3er-Rotation): Min 1 = Sled Push 30 m · Min 2 = KB Pull Through ×15 · Min 3 = Sandbag Carry 30 m",dur:"12 Min",note:"Jede Minute Wechsel, Übergang zügig."}
+      },
+      // Wk 4 moderat
+      {
+        v1:{label:"V1 · KB + Ski + Farmers",sub:"Aufbau — Density erhöhen",fmt:"AMRAP 12",text:"AMRAP 12 (moderate pace): KB Swing ×15 + Ski Erg 15 Cal + Farmers Carry 40 m",dur:"12 Min",note:"Pause nur wenn nötig. Runden zählen."},
+        v2:{label:"V2 · Sled + Pull Through + Sandbag",sub:"Aufbau — Density erhöhen",fmt:"4 ROUNDS",text:"4 Runden: Sled Push 40 m + KB Pull Through ×15 + Sandbag Carry 40 m | 75 Sek Pause",dur:"12 Min",note:"Sled kontrolliert, kein Kniestress."}
+      },
+      // Wk 5 hart
+      {
+        v1:{label:"V1 · KB + Ski + Farmers",sub:"Intensivierung — Peak",fmt:"INTERVALS",text:"6 × Ski Erg 30 Sek max / 60 Sek Pause — danach 2 Runden: KB Swing ×15 + Farmers Carry 30 m",dur:"12 Min",note:"Ski-Intervalle voll. Finish-Runden sauber."},
+        v2:{label:"V2 · Sled + Pull Through + Sandbag",sub:"Intensivierung — Peak",fmt:"5 ROUNDS",text:"5 Runden: Sled Push 40 m + KB Pull Through ×15 + Sandbag Carry 40 m | 60 Sek Pause",dur:"13 Min",note:"Pausen knapp. Form vor Speed."}
+      },
+      // Wk 6 deload
+      {
+        v1:{label:"V1 · KB + Ski + Farmers",sub:"Deload — 50% Volumen",fmt:"FOR QUALITY",text:"2 Runden For Quality: KB Swing ×8 + Ski Erg 8 Cal + Farmers Carry 20 m",dur:"5 Min",note:"Technik vor Output."},
+        v2:{label:"V2 · Sled + Pull Through + Sandbag",sub:"Deload — 50% Volumen",fmt:"FOR QUALITY",text:"2 Runden For Quality: Sled Push 20 m + KB Pull Through ×8 + Sandbag Carry 20 m",dur:"6 Min",note:"Technik vor Output."}
+      },
     ]},
   ]},
   C:{id:'C',sections:[
@@ -420,12 +471,36 @@ const DAYS={
       {name:'External Rotation Press (Band, nach Horschig)',w:['2×10','2×10','3×10','3×10','3×10','2×10'],t:'3-3-3-3',v:L.extRotPress},
     ]},
     {id:'C5',cond:true,weeks:[
-      {text:"V1 leicht — 3 Runden: Inverted Row ×6 + Bike Erg 12 Cal + Med Ball Slam ×10 + Sandbag Bear Hug Carry 30 m | 90 Sek Pause",dur:"12 Min",note:"Variante 1: Row + Bike + Slam + Sandbag. Inverted Row: Brust zur Stange, Schulterblätter aktiv."},
-      {text:"V2 leicht — 3 Runden: Inverted Row ×6 + Reverse Sled Drag 20 m + Med Ball Slam ×10 | 90 Sek Pause",dur:"9 Min",note:"Variante 2: Row + Sled Drag + Slam. Reverse Sled Drag = Quad/VMO-Reha mit Cardio."},
-      {text:"V1 moderat — 4 Runden: Inverted Row ×8 + Bike Erg 15 Cal + Med Ball Slam ×12 + Sandbag Carry 30 m | 75 Sek Pause",dur:"13 Min",note:"Variante 1: Pause knapper, alle 4 Stationen sauber durch."},
-      {text:"V2 moderat — 4 Runden: Inverted Row ×8 + Reverse Sled Drag 30 m + Med Ball Slam ×12 | 75 Sek Pause",dur:"12 Min",note:"Variante 2: Sled-Last erhöhen, Schritte kontrolliert."},
-      {text:"V1 hart — 5 × Row Erg 250 m / 90 Sek Pause + danach 2 Runden: Inverted Row ×10 + Sandbag Carry 30 m",dur:"13 Min",note:"Variante 1 Peak: Row Sprints — Beine zuerst, dann Hüfte, dann Arme."},
-      {text:"V2 deload — 2 Runden: Inverted Row ×6 + Reverse Sled Drag 20 m + Med Ball Slam ×6",dur:"6 Min",note:"Variante 2 Deload: Technik vor Output."},
+      // Wk 1 leicht
+      {
+        v1:{label:"V1 · Row + Bike + Slam + Sandbag",sub:"Anpassung — Technik & Feedback",fmt:"3 ROUNDS",text:"3 Runden: Inverted Row ×6 + Bike Erg 12 Cal + Med Ball Slam ×10 + Sandbag Bear Hug Carry 30 m | 90 Sek Pause",dur:"12 Min",note:"Inverted Row: Brust zur Stange, Schulterblätter aktiv."},
+        v2:{label:"V2 · Row + Sled Drag + Slam",sub:"Anpassung — Technik & Feedback",fmt:"EMOM 9",text:"EMOM 9 (3er-Rotation): Min 1 = Inverted Row ×8 · Min 2 = Reverse Sled Drag 20 m · Min 3 = Med Ball Slam ×10",dur:"9 Min",note:"Reverse Sled Drag = Quad/VMO-Reha mit Cardio."}
+      },
+      // Wk 2 leicht
+      {
+        v1:{label:"V1 · Row + Bike + Slam + Sandbag",sub:"Anpassung — Volumen rauf",fmt:"AMRAP 10",text:"AMRAP 10 (moderate pace): Inverted Row ×6 + Bike Erg 12 Cal + Med Ball Slam ×10 + Sandbag Carry 30 m",dur:"10 Min",note:"Moderate Pace: Gespräch schwer möglich."},
+        v2:{label:"V2 · Row + Sled Drag + Slam",sub:"Anpassung — Volumen rauf",fmt:"3 ROUNDS",text:"3 Runden: Inverted Row ×6 + Reverse Sled Drag 20 m + Med Ball Slam ×10 | 90 Sek Pause",dur:"9 Min",note:"Sled rückwärts, Knie weich, Schritte kurz."}
+      },
+      // Wk 3 moderat
+      {
+        v1:{label:"V1 · Row + Bike + Slam + Sandbag",sub:"Aufbau — Gewicht steigern",fmt:"4 ROUNDS",text:"4 Runden: Inverted Row ×8 + Bike Erg 15 Cal + Med Ball Slam ×12 + Sandbag Carry 30 m | 75 Sek Pause",dur:"13 Min",note:"Pause knapper, 4 Stationen sauber durch."},
+        v2:{label:"V2 · Row + Sled Drag + Slam",sub:"Aufbau — Gewicht steigern",fmt:"AMRAP 10",text:"AMRAP 10 (moderate pace): Inverted Row ×8 + Reverse Sled Drag 30 m + Med Ball Slam ×12",dur:"10 Min",note:"Sled-Last anziehen. Pause nur wenn nötig."}
+      },
+      // Wk 4 moderat
+      {
+        v1:{label:"V1 · Row + Bike + Slam + Sandbag",sub:"Aufbau — Density erhöhen",fmt:"EMOM 12",text:"EMOM 12 (4er-Rotation): Min 1 = Inverted Row ×8 · Min 2 = Bike Erg 15 Cal · Min 3 = Med Ball Slam ×12 · Min 4 = Sandbag Carry 30 m",dur:"12 Min",note:"Jede Minute Wechsel. Übergang zügig."},
+        v2:{label:"V2 · Row + Sled Drag + Slam",sub:"Aufbau — Density erhöhen",fmt:"4 ROUNDS",text:"4 Runden: Inverted Row ×8 + Reverse Sled Drag 30 m + Med Ball Slam ×12 | 75 Sek Pause",dur:"12 Min",note:"Sled mit mehr Last. Schritte kontrolliert."}
+      },
+      // Wk 5 hart
+      {
+        v1:{label:"V1 · Row + Bike + Slam + Sandbag",sub:"Intensivierung — Peak",fmt:"INTERVALS",text:"5 × Row Erg 250 m / 90 Sek Pause — danach 2 Runden: Inverted Row ×10 + Sandbag Carry 30 m",dur:"13 Min",note:"Row Sprint: Beine, dann Hüfte, dann Arme."},
+        v2:{label:"V2 · Row + Sled Drag + Slam",sub:"Intensivierung — Peak",fmt:"5 ROUNDS",text:"5 Runden: Inverted Row ×8 + Reverse Sled Drag 30 m + Med Ball Slam ×12 | 60 Sek Pause",dur:"13 Min",note:"Pausen knapp. Form vor Speed."}
+      },
+      // Wk 6 deload
+      {
+        v1:{label:"V1 · Row + Bike + Slam + Sandbag",sub:"Deload — 50% Volumen",fmt:"FOR QUALITY",text:"2 Runden For Quality: Inverted Row ×6 + Bike Erg 10 Cal + Med Ball Slam ×6 + Sandbag Carry 20 m",dur:"6 Min",note:"Technik vor Output."},
+        v2:{label:"V2 · Row + Sled Drag + Slam",sub:"Deload — 50% Volumen",fmt:"FOR QUALITY",text:"2 Runden For Quality: Inverted Row ×6 + Reverse Sled Drag 20 m + Med Ball Slam ×6",dur:"6 Min",note:"Technik vor Output."}
+      },
     ]},
   ]},
   D:{id:'D',sections:[
@@ -437,12 +512,36 @@ const DAYS={
       {name:'Touchdown Squat (Horschig, Plattenstapel)',w:['3×10/S','3×10/S','3×12/S','3×12/S','3×15/S','2×10/S'],t:'3-0-1-0',v:L.touchdownSq},
     ]},
     {id:'D5',cond:true,weeks:[
-      {text:"V1 leicht — 3 Runden: Bike Erg 15 Cal + KB Swing ×12 + Step-up low Box ×8/Seite | 90 Sek Pause",dur:"10 Min",note:"Variante 1: Bike + KB + Step-up. Step-up: niedrige Box ~20 cm, kontrolliert."},
-      {text:"V2 leicht — 3 Runden: Sandbag Clean to Shoulder ×6 + Ski Erg 15 Cal + Reverse Sled Drag 20 m | 90 Sek Pause",dur:"10 Min",note:"Variante 2: Sandbag + Ski + Sled Drag. Clean Seite je Runde wechseln."},
-      {text:"V1 moderat — 4 Runden: Bike Erg 20 Cal + KB Swing ×15 + Step-up ×10/Seite | 75 Sek Pause",dur:"12 Min",note:"Variante 1: Volumen rauf, Pause knapper."},
-      {text:"V2 moderat — 4 Runden: Sandbag Clean ×8 + Ski Erg 15 Cal + Reverse Sled Drag 30 m | 75 Sek Pause",dur:"12 Min",note:"Variante 2: Sled mit mehr Last, Schritte sauber."},
-      {text:"V1 hart — 5 Runden: Bike Erg 18 Cal + KB Swing ×15 + Step-up ×10/Seite | 60 Sek Pause",dur:"13 Min",note:"Variante 1 Peak: Pausen knapp, Form vor Speed."},
-      {text:"V2 deload — 2 Runden: Sandbag Clean ×4 + Ski Erg 10 Cal + Reverse Sled Drag 20 m",dur:"6 Min",note:"Variante 2 Deload: Technik vor Output."},
+      // Wk 1 leicht
+      {
+        v1:{label:"V1 · Bike + KB + Step-up",sub:"Anpassung — Technik & Feedback",fmt:"3 ROUNDS",text:"3 Runden: Bike Erg 15 Cal + KB Swing ×12 + Step-up low Box ×8/Seite | 90 Sek Pause",dur:"10 Min",note:"Step-up: niedrige Box ~20 cm, kontrolliert hochkommen."},
+        v2:{label:"V2 · Sandbag + Ski + Sled Drag",sub:"Anpassung — Technik & Feedback",fmt:"EMOM 9",text:"EMOM 9 (3er-Rotation): Min 1 = Sandbag Clean ×4 · Min 2 = Ski Erg 15 Cal · Min 3 = Reverse Sled Drag 20 m",dur:"9 Min",note:"Sandbag Clean Seite je Runde wechseln."}
+      },
+      // Wk 2 leicht
+      {
+        v1:{label:"V1 · Bike + KB + Step-up",sub:"Anpassung — Volumen rauf",fmt:"AMRAP 10",text:"AMRAP 10 (moderate pace): Bike Erg 15 Cal + KB Swing ×12 + Step-up low Box ×8/Seite",dur:"10 Min",note:"Moderate Pace: Gespräch schwer möglich."},
+        v2:{label:"V2 · Sandbag + Ski + Sled Drag",sub:"Anpassung — Volumen rauf",fmt:"3 ROUNDS",text:"3 Runden: Sandbag Clean to Shoulder ×6 + Ski Erg 15 Cal + Reverse Sled Drag 20 m | 90 Sek Pause",dur:"10 Min",note:"Clean Seite je Runde wechseln."}
+      },
+      // Wk 3 moderat
+      {
+        v1:{label:"V1 · Bike + KB + Step-up",sub:"Aufbau — Gewicht steigern",fmt:"4 ROUNDS",text:"4 Runden: Bike Erg 20 Cal + KB Swing ×15 + Step-up low Box ×10/Seite | 75 Sek Pause",dur:"12 Min",note:"Volumen rauf, Pause knapper."},
+        v2:{label:"V2 · Sandbag + Ski + Sled Drag",sub:"Aufbau — Gewicht steigern",fmt:"AMRAP 12",text:"AMRAP 12 (moderate pace): Sandbag Clean ×6 + Ski Erg 15 Cal + Reverse Sled Drag 30 m",dur:"12 Min",note:"Sled-Last anziehen. Pause nur wenn nötig."}
+      },
+      // Wk 4 moderat
+      {
+        v1:{label:"V1 · Bike + KB + Step-up",sub:"Aufbau — Density erhöhen",fmt:"EMOM 12",text:"EMOM 12 (3er-Rotation): Min 1 = Bike Erg 20 Cal · Min 2 = KB Swing ×15 · Min 3 = Step-up ×10/Seite",dur:"12 Min",note:"Jede Minute Wechsel, Übergang zügig."},
+        v2:{label:"V2 · Sandbag + Ski + Sled Drag",sub:"Aufbau — Density erhöhen",fmt:"4 ROUNDS",text:"4 Runden: Sandbag Clean ×8 + Ski Erg 15 Cal + Reverse Sled Drag 30 m | 75 Sek Pause",dur:"12 Min",note:"Sled mit mehr Last, Schritte sauber."}
+      },
+      // Wk 5 hart
+      {
+        v1:{label:"V1 · Bike + KB + Step-up",sub:"Intensivierung — Peak",fmt:"5 ROUNDS",text:"5 Runden: Bike Erg 18 Cal + KB Swing ×15 + Step-up ×10/Seite | 60 Sek Pause",dur:"13 Min",note:"Pausen knapp. Form vor Speed."},
+        v2:{label:"V2 · Sandbag + Ski + Sled Drag",sub:"Intensivierung — Peak",fmt:"INTERVALS",text:"6 × Ski Erg 30 Sek max / 60 Sek Pause — danach 2 Runden: Sandbag Clean ×6 + Reverse Sled Drag 30 m",dur:"12 Min",note:"Ski-Intervalle voll. Finish-Runden sauber."}
+      },
+      // Wk 6 deload
+      {
+        v1:{label:"V1 · Bike + KB + Step-up",sub:"Deload — 50% Volumen",fmt:"FOR QUALITY",text:"2 Runden For Quality: Bike Erg 12 Cal + KB Swing ×8 + Step-up ×6/Seite",dur:"6 Min",note:"Technik vor Output."},
+        v2:{label:"V2 · Sandbag + Ski + Sled Drag",sub:"Deload — 50% Volumen",fmt:"FOR QUALITY",text:"2 Runden For Quality: Sandbag Clean ×4 + Ski Erg 10 Cal + Reverse Sled Drag 20 m",dur:"6 Min",note:"Technik vor Output."}
+      },
     ]},
   ]},
   RE1:{id:'RE1',mob:true,focus:'Schulter + T-Spine',exercises:[
@@ -528,12 +627,13 @@ function vidBtn(url,large){
   return`<a href="${url}" target="_blank" rel="noopener" class="vid-btn vid-sm">${tri()}</a>`;
 }
 function condFmt(text){
-  const t=text.toUpperCase();
-  if(t.startsWith('EMOM'))return'EMOM';
-  if(t.startsWith('AMRAP'))return'AMRAP';
+  const t=(text||'').toUpperCase();
   if(t.includes('FOR QUALITY'))return'FOR QUALITY';
-  const m=t.match(/^(\d+)\s*RUNDEN/);if(m)return m[1]+' ROUNDS';
-  const m2=t.match(/^(\d+)\s*[×X]/);if(m2)return'INTERVALS';
+  if(t.includes('EMOM'))return t.match(/EMOM\s*(\d+)/)?.[0]||'EMOM';
+  if(t.includes('AMRAP'))return t.match(/AMRAP\s*(\d+)/)?.[0]||'AMRAP';
+  if(t.includes('INTERVAL'))return'INTERVALS';
+  const m=t.match(/(\d+)\s*RUNDEN/);if(m)return m[1]+' ROUNDS';
+  const m2=t.match(/(\d+)\s*[×X]\s*\d/);if(m2)return'INTERVALS';
   return'CONDITIONING';
 }
 
@@ -593,21 +693,26 @@ function renderExCard(ex,dayId,secId,exIdx,badge){
   </article>`;
 }
 
-function renderCond(sec,weekIdx){
-  const w=sec.weeks[weekIdx];
-  const fmt=condFmt(w.text);
-  const note=w.note||sec.note||'';
+function renderCondCard(c){
+  const fmt=c.fmt||condFmt(c.text);
   return`<section class="cond-section">
-    ${note?`<div class="sec-note" style="padding-top:14px">${note}</div>`:''}
     <div class="cond-hero">
+      ${c.label?`<div class="cond-variant-lbl">${c.label}</div>`:''}
+      ${c.sub?`<div class="cond-variant-sub">${c.sub}</div>`:''}
       <h2 class="cond-title">${fmt}</h2>
-      <p class="cond-body">${w.text}</p>
+      <p class="cond-body">${c.text}</p>
       <div class="cond-grid">
-        <div class="cond-cell"><div class="cond-cell-lbl">DURATION</div><div class="cond-cell-val">${w.dur}</div></div>
+        <div class="cond-cell"><div class="cond-cell-lbl">DURATION</div><div class="cond-cell-val">${c.dur}</div></div>
         <div class="cond-cell"><div class="cond-cell-lbl">FORMAT</div><div class="cond-cell-mode">${fmt}</div></div>
       </div>
+      ${c.note?`<div class="sec-note" style="padding-top:14px">${c.note}</div>`:''}
     </div>
   </section>`;
+}
+function renderCond(sec,weekIdx){
+  const w=sec.weeks[weekIdx];
+  if(w.text)return renderCondCard(w);
+  return`${w.v1?renderCondCard(w.v1):''}${w.v2?renderCondCard(w.v2):''}`;
 }
 
 function renderSection(sec,dayId,weekIdx){
